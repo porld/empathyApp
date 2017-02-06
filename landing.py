@@ -187,7 +187,7 @@ def launch_neo4j_docker():
 		freePort = PickUnusedPort()
 		#print 'DOCKER: found port', freePort
 		port_bind = "--publish=" + freePort + ":7474"
-		docker = ["docker", "run", port_bind, "--volume=/Users/paul/Fire/FS/" + fsid + ":/data", "--name", fsid, "neo4j:latest"]
+		docker = ["docker", "run", port_bind, "--volume=/Users/paul/Fire/FS/" + fsid + ":/data", "--name", fsid, "neo4j:3.0.0"]
 		try:
 			print 'Start subprocess'
 			subprocess.Popen(docker)
@@ -1122,6 +1122,6 @@ def index():
 
 # Run the app.
 if __name__ == '__main__':
-	socketio.run(app,debug=True, port=5000,threaded=True)
+	socketio.run(app,debug=True, host='0.0.0.0', port=5000,threaded=True)
 	#app.run(debug=True, port=5000)
 	#app.run(host='0.0.0.0',debug=False, port=5000)
