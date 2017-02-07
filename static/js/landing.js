@@ -6,6 +6,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//ENV
 	//$scope.static_url = 'localhost:5000';
 	$scope.static_url = '35.187.33.1:8080';
+	$scope.external_static_url = '35.187.33.1:8081';
 
 	//Connect to broadcast server
 	console.log('SOCKET Connecting to broadcast server');
@@ -76,7 +77,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//Password strength test
 	$scope.pwdStrength = function() {
 		if($scope.passwords.a.length > 0) {
-			response = $http.get('http://localhost:5000/pwdStrength/'+$scope.passwords.a)
+			response = $http.get('http://' + $scope.static_url + '/pwdStrength/'+$scope.passwords.a)
 				.success(function(data) {
 					if(data < 0.2) {
 						$scope.strength = 'red';
@@ -1201,7 +1202,7 @@ landingApp.directive('smilesViewer', function ($parse, $http) {
 							};
 
 						//Send for structure
-						url = 'http://localhost:5001/chemistry/smiles_post/' + scope.dim;
+						url = 'http://' + $scope.external_static_url + '/chemistry/smiles_post/' + scope.dim;
 						$http.post(url, angular.toJson({"smiles":smiles}) )
 							.success(function(data) {
 								console.log('Triggered: smiles2PDB', smiles, data);
