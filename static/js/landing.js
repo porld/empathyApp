@@ -1203,7 +1203,7 @@ landingApp.directive('smilesViewer', function ($parse, $http) {
 							};
 
 						//Send for structure
-						url = 'http://' + scope.external_url + '/chemistry/smiles_post/' + scope.dim;
+						url = 'http://' + scope.external + '/chemistry/smiles_post/' + scope.dim;
 						$http.post(url, angular.toJson({"smiles":smiles}) )
 							.success(function(data) {
 								console.log('Triggered: smiles2PDB', smiles, data);
