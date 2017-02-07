@@ -1156,7 +1156,8 @@ landingApp.directive('smilesViewer', function ($parse, $http) {
 		scope: {record: '=',
 				dim: '=',
 				rotate: '=',
-				ngid: '='},
+				ngid: '=',
+				external: '='},
 		link: function (scope, element, attrs) {
 			scope.$watch('record', function(record) {
 				//Look for SMILES in record
@@ -1202,7 +1203,7 @@ landingApp.directive('smilesViewer', function ($parse, $http) {
 							};
 
 						//Send for structure
-						url = 'http://' + $scope.external_static_url + '/chemistry/smiles_post/' + scope.dim;
+						url = 'http://' + scope.external_url + '/chemistry/smiles_post/' + scope.dim;
 						$http.post(url, angular.toJson({"smiles":smiles}) )
 							.success(function(data) {
 								console.log('Triggered: smiles2PDB', smiles, data);
