@@ -2,7 +2,7 @@ from flask import abort, Flask, url_for, request, make_response, send_file, Mark
 from flask_restful import Resource, Api, reqparse
 import json, logging, requests, xmltodict, uuid, time
 from requests.auth import HTTPBasicAuth
-from flask.ext.cors import CORS
+from flask_cors import CORS
 from rdkit import Chem
 from rdkit.Chem import AllChem
 
