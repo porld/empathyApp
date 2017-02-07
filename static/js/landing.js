@@ -4,7 +4,8 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 
 	//-------------------------------------------------
 	//ENV
-	$scope.static_url = 'localhost:5000';
+	//$scope.static_url = 'localhost:5000';
+	$scope.static_url = 'http://35.187.33.1:8080/';
 
 	//Connect to broadcast server
 	console.log('SOCKET Connecting to broadcast server');

@@ -4,12 +4,18 @@ from flask_socketio import SocketIO, emit
 from flask_httpauth import HTTPBasicAuth
 from passlib.hash import sha256_crypt
 from flask_mail import Mail, Message
-import subprocess, uuid, os, json, requests, socket, time, pickle, passwordmeter, copy, datetime
+import sys, subprocess, uuid, os, json, requests, socket, time, pickle, passwordmeter, copy, datetime
 import empathy_actions as actions
 
 #Initialise app
 app = Flask(__name__, static_url_path='')
 app.config['SECRET_KEY'] = 'big_secret'
+
+if len(sys.argv) != 2:
+	print 'Missing arguments (landing.py <email password>)'
+
+mail_username = 'empathy@gmail.com'
+mail_password = sys.argv[1]
 
 #-----------------------------------------------------------------------------------------
 #Mail config
@@ -18,8 +24,8 @@ app.config.update(
 	MAIL_SERVER='smtp.gmail.com',
 	MAIL_PORT=465,
 	MAIL_USE_SSL=True,
-	MAIL_USERNAME = '****',
-	MAIL_PASSWORD = '****'
+	MAIL_USERNAME = mail_username,
+	MAIL_PASSWORD = mail_password
 	)
 mail = Mail(app)
 #Collaborator tokens
@@ -1120,8 +1126,8 @@ def index():
 	return app.send_static_file('index.html')
 #-----------------------------------------------------------------------------------------
 
-# Run the app
+# Run the app.
 if __name__ == '__main__':
-	socketio.run(app,debug=False, host='0.0.0.0', port=8080,threaded=True)
+	socketio.run(app,debug=False, host='0.0.0.0', port=5000,threaded=True)
 	#app.run(debug=True, port=5000)
 	#app.run(host='0.0.0.0',debug=False, port=5000)
