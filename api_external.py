@@ -1,5 +1,4 @@
 from flask import abort, Flask, url_for, request, make_response, send_file, Markup
-from flask.ext import restful
 from flask_restful import Resource, Api, reqparse
 import json, logging, requests, xmltodict, uuid, time
 from requests.auth import HTTPBasicAuth
