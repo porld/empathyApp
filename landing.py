@@ -17,7 +17,7 @@ app.config['SECRET_KEY'] = 'big_secret'
 if len(sys.argv) != 2:
 	print 'Missing arguments (landing.py <email password>)'
 
-mail_username = 'empathy@gmail.com'
+mail_username = 'empathy.manchester@gmail.com'
 mail_password = sys.argv[1]
 
 #-----------------------------------------------------------------------------------------
@@ -309,8 +309,8 @@ def msgNewUser():
 	new_token = str(uuid.uuid4()) + '_' + str(uuid.uuid4())
 	tokens[new_token] = {"recon":recon,"port":port,"fsid":fsid}
 	try:
-		msg = Message("You have been invited to collaborate on a metabolic reconstruction for " + recon, sender=("EMPATHY simple metabolic networks","empathy@gmail.com"),recipients=[user_email])
-		msg.html = 	'<b>EMPATHY Metabolic Network Reconstruction</b><br><br>You have been invited by ' + username + ' to collaborate on a reconstruction of ' + recon + ' metabolism.<br><br>Follow the link below to start collaborating.<br><br>http://localhost:8080/index.html?token=' + new_token
+		msg = Message("You have been invited to collaborate on a metabolic reconstruction for " + recon, sender=("EMPATHY simple metabolic networks","empathy.manchester@gmail.com"),recipients=[user_email])
+		msg.html = 	'<b>EMPATHY Metabolic Network Reconstruction</b><br><br>You have been invited by ' + username + ' to collaborate on a reconstruction of ' + recon + ' metabolism.<br><br>Follow the link below to start collaborating.<br><br>http://35.187.33.1:8080/index.html?token=' + new_token
 		mail.send(msg)
 		time.sleep(2)
 		return json.dumps([True,new_token])
