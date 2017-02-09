@@ -1139,9 +1139,11 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 
 	//-------------------------------------------------
 
+	/*
 	$scope.$watch('selection', function(newValue, oldValue) {
 		console.log('SOCKET NOW',socket);
 		});
+	*/
 
 	//End controller
 	}]);
