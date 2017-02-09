@@ -3,7 +3,7 @@ from flask_restful import Resource
 from flask_socketio import SocketIO, emit
 
 #Initialise app
-app = Flask(__name__, static_url_path='')
+app = Flask(__name__)
 app.config['SECRET_KEY'] = 'big_secret'
 
 print 'Socket handler for messaging and push'
@@ -32,4 +32,4 @@ def socketHandler():
 
 # Run the app.
 if __name__ == '__main__':
-	socketio.run(app,host='0.0.0.0',debug=False, port=8082)
+	socketio.run(app,debug=False, port=8082)
