@@ -276,9 +276,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				})
 			.then(function(data, status) {
 				console.log('Port:', $scope.port);
-				//Create socket namespace for port
-				socketConnect($scope.port);
-				
 				console.log('Check live and activate');
 				url = 'http://' + $scope.username + ':' + $scope.password +'@' + $scope.static_url + '/checkLive';
 				$http.post(url,angular.toJson({"username":$scope.username,"port":$scope.port,"recon_name":recon_name,"notes":notes}))
@@ -340,6 +337,8 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.port = reconstruction.port;
 		$scope.fsid = reconstruction.fsid;
 		$scope.recon_spinner = false;
+		//Create socket namespace for port
+		socketConnect($scope.port);
 		attachChat();
 		run_app();
 		};
