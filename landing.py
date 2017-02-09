@@ -97,7 +97,7 @@ def send_cypher(cypher,parameters,port):
 #Socket  function
 def send_message(handle,message,port):
 	headers = {'content-type': 'application/json'}
-	url = 'http://localhost:8082/socket'
+	url = 'http://' + HOST + ':8082/socket'
 	try:
 		requests.post(url, data=json.dumps({"handle":handle,"message":message,"port":port}), headers=headers)
 		return True
