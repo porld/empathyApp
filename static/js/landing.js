@@ -4,13 +4,15 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 
 	//-------------------------------------------------
 	//ENV
-	//$scope.static_url = 'localhost:5000';
-	$scope.static_url = '35.187.33.1:8080';
-	$scope.external_static_url = '35.187.33.1:8081';
+	$scope.static_url = 'localhost:8080';
+	$scope.socket_static_url = 'localhost:8082';
+	$scope.external_static_url = 'localhost:8081';
+	//$scope.static_url = '35.187.33.1:8080';
+	//$scope.external_static_url = '35.187.33.1:8081';
 
 	//Connect to broadcast server
 	console.log('SOCKET Connecting to broadcast server');
-	var socket = io.connect('http://' + $scope.static_url + '/mq', {reconnection: false})
+	var socket = io.connect('http://' + $scope.socket_static_url + '/mq', {reconnection: false})
 	console.log('SOCKET Connected to broadcast server', socket);
 	//Connect to message socket	
 	$scope.socketId = 'No connection';

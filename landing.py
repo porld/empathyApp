@@ -1,11 +1,14 @@
 from flask import Flask, make_response, url_for, request
 from flask_restful import Resource
-from flask_socketio import SocketIO, emit
 from flask_httpauth import HTTPBasicAuth
 from passlib.hash import sha256_crypt
 from flask_mail import Mail, Message
 import sys, subprocess, uuid, os, json, requests, socket, time, pickle, passwordmeter, copy, datetime
 import empathy_actions as actions
+
+HOST = 'localhost'
+PORT = 8080
+
 
 #Initialise app
 app = Flask(__name__, static_url_path='')
@@ -90,6 +93,16 @@ def send_cypher(cypher,parameters,port):
 	query = { "statements" : [ { "statement" : cypher, "parameters" : parameters } ] }
 	#print url, NEO_USERNAME, NEO_PASSWORD
 	return requests.post(url, auth=(NEO_USERNAME,NEO_PASSWORD), data=json.dumps(query), headers=headers)
+
+#Socket  function
+def send_message(handle,message,port):
+	headers = {'content-type': 'application/json'}
+	url = 'http://localhost:8082/socket'
+	try:
+		requests.post(url, data=json.dumps({"handle":handle,"message":message,"port":port}), headers=headers)
+		return True
+	except:
+		return False
 #-----------------------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------------------------
@@ -295,7 +308,7 @@ def msgNewUser():
 	tokens[new_token] = {"recon":recon,"port":port,"fsid":fsid}
 	try:
 		msg = Message("You have been invited to collaborate on a metabolic reconstruction for " + recon, sender=("EMPATHY simple metabolic networks","empathy@gmail.com"),recipients=[user_email])
-		msg.html = 	'<b>EMPATHY Metabolic Network Reconstruction</b><br><br>You have been invited by ' + username + ' to collaborate on a reconstruction of ' + recon + ' metabolism.<br><br>Follow the link below to start collaborating.<br><br>http://localhost:5000/index.html?token=' + new_token
+		msg.html = 	'<b>EMPATHY Metabolic Network Reconstruction</b><br><br>You have been invited by ' + username + ' to collaborate on a reconstruction of ' + recon + ' metabolism.<br><br>Follow the link below to start collaborating.<br><br>http://localhost:8080/index.html?token=' + new_token
 		mail.send(msg)
 		time.sleep(2)
 		return json.dumps([True,new_token])
@@ -342,16 +355,6 @@ nodeBlank = {"id":"", "type":"", "source":"", "sourceId":"", "name":"",	"synonym
 
 
 #-----------------------------------------------------------------------------------------
-#SOCKET APP
-socketio = SocketIO(app)
-@socketio.on('connect', namespace='/mq')
-def test_connect():
-    print 'Client connected'
-
-@socketio.on('disconnect', namespace='/chat')
-def test_disconnect():
-    print 'Client disconnected'
-    
 @app.route('/makeConnection', methods=['POST'])
 @auth.login_required
 def makeConnection():
@@ -370,7 +373,7 @@ def makeConnection():
 		
 	#Emit updated record
 	print 'BROADCAST:', record_handle
-	socketio.emit(record_handle, {"key":"","value":"","id":reaction},  namespace='/mq')
+	send_message(record_handle, {"key":"","value":"","id":reaction}, port)
 	return json.dumps(True)
 
 @app.route('/fetchSYNBIOCHEM', methods=['POST'])
@@ -455,7 +458,7 @@ def fetchFromSYNBIOCHEM():
 		new_list.append({"id":id,"name":name,"tags":tags})
 
 	print 'Broadcast enzymes (2)', port+"_molecule"
-	socketio.emit(port+"_molecule", new_list,  namespace='/mq')
+	send_message(port+"_molecule", new_list,  port)
 	#--------------------------------------------
 
 	#--------------------------------------------
@@ -530,7 +533,7 @@ def fetchFromSYNBIOCHEM():
 	#print new_list
 
 	print 'Broadcast chemicals (2)', port+"_molecule"
-	socketio.emit(port+"_molecule", new_list,  namespace='/mq')
+	send_message(port+"_molecule", new_list,  port)
 	#--------------------------------------------
 
 	#--------------------------------------------
@@ -603,7 +606,7 @@ def fetchFromSYNBIOCHEM():
 		new_list.append({"id":id,"name":name,"tags":tags})
 	#print new_list
 	print 'Broadcast reactions (2)', port+"_reaction"	
-	socketio.emit(port+"_reaction", new_list,  namespace='/mq')
+	send_message(port+"_reaction", new_list,  port)
 	#--------------------------------------------
 
 	#--------------------------------------------
@@ -716,7 +719,7 @@ def createNode():
 		tags = row["row"][2]
 		new_list.append({"id":id,"name":name,"tags":tags})
 	print new_list
-	socketio.emit(message_handle, new_list,  namespace='/mq')
+	send_message(message_handle, new_list,  port)
 	return properties["id"]
 
 @app.route('/subcell', methods=['POST'])
@@ -766,7 +769,7 @@ def subCell():
 		tags = row["row"][2]
 		new_list.append({"id":id,"name":name,"tags":tags})
 	print new_list
-	socketio.emit(message_handle, new_list,  namespace='/mq')
+	send_message(message_handle, new_list,  port)
 	return json.dumps(True)
 
 @app.route('/listNode', methods=['POST'])
@@ -792,7 +795,7 @@ def listNode():
 	
 	#Broadcast if we have a message handle (we don't when the request comes from fetchCompartmentList)
 	if message_handle != '':
-		socketio.emit(message_handle, new_list, namespace='/mq')
+		send_message(message_handle, new_list,  port)
 	return json.dumps(new_list)
 
 @app.route('/destroyNode', methods=['POST'])
@@ -822,7 +825,7 @@ def destroyNode():
 		tags = row["row"][2]
 		new_list.append({"id":id,"name":name,"tags":tags})
 	print new_list
-	socketio.emit(message_handle, new_list,  namespace='/mq')
+	send_message(message_handle, new_list,  port)
 	return json.dumps(True)
 
 @app.route('/updateText', methods=['POST'])
@@ -841,7 +844,7 @@ def updateText():
 	parameters = {"value":value}
 	response = send_cypher(cypher,parameters,port)
 	print 'BROADCAST:', record_handle, key, value
-	socketio.emit(record_handle, {'key':key,'value':value, 'id': id},  namespace='/mq')
+	send_message(record_handle, {'key':key,'value':value, 'id': id},  port)
 	return json.dumps(True)
 
 @app.route('/fetchSelection', methods=['POST'])
@@ -925,7 +928,7 @@ def listPop():
 	parameters = {"value":value}
 	response = send_cypher(cypher,parameters,port)
 	print 'BROADCAST:', record_handle, key, value
-	socketio.emit(record_handle, {'key':key,'value':value, 'id': id},  namespace='/mq')
+	send_message(record_handle, {'key':key,'value':value, 'id': id},  port)
 	return json.dumps(True)
 
 @app.route('/listPush', methods=['POST'])
@@ -945,7 +948,7 @@ def listPush():
 	parameters = {"value":value}
 	response = send_cypher(cypher,parameters,port)
 	print 'BROADCAST:', record_handle, key, value
-	socketio.emit(record_handle, {'key':key,'value':value, 'id': id},  namespace='/mq')
+	send_message(record_handle, {'key':key,'value':value, 'id': id},  port)
 	return json.dumps(True)
 	
 @app.route('/queryMolecules', methods=['POST'])
@@ -1039,7 +1042,7 @@ def chat():
 	chat = json_data['chat']
 	chat['unique'] = str(uuid.uuid4())
 	print 'BROADCAST:', chat_handle, chat
-	socketio.emit(chat_handle, chat,  namespace='/mq')
+	send_message(chat_handle, chat,  port)
 
 	return json.dumps(True)
 #-----------------------------------------------------------------------------------------
@@ -1048,14 +1051,16 @@ def chat():
 #Action stations
 
 def actionPush(port,record_handle,record,key,value,username,password,message):
-	#Push out new list
+	#Push out new list to record
+	print 'Update record'
 	headers = {'content-type': 'application/json'}
-	url = 'http://' + username + ':' + password + '@localhost:5000/listPush'
+	url = 'http://' + username + ':' + password + '@' + HOST + ':' + str(PORT) + '/listPush'
 	bundle = {"port":port,"record_handle":record_handle,"id":record['id'],"key":key,"value":value}
 	requests.post(url, data=json.dumps(bundle), headers=headers)
 
 	#Push out message notification
-	url = 'http://' + username + ':' + password + '@localhost:5000/listPush'
+	print 'Send notification message'
+	url = 'http://' + username + ':' + password + '@' + HOST + ':' + str(PORT) + '/listPush'
 	notifications = record['notifications']
 	notifications.append(message)
 	bundle = {"port":port,"record_handle":record_handle,"id":record['id'],"key":"notifications","value":notifications}
@@ -1128,6 +1133,5 @@ def index():
 
 # Run the app.
 if __name__ == '__main__':
-	socketio.run(app,debug=True, host='0.0.0.0', port=8080,threaded=True)
-	#app.run(debug=True, port=5000)
-	#app.run(host='0.0.0.0',debug=False, port=5000)
+	app.run(debug=True, port=PORT, threaded=True)
+	#app.run(host='0.0.0.0',debug=False, port=PORT, threaded=True)
