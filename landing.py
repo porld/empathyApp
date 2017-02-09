@@ -6,7 +6,7 @@ from flask_mail import Mail, Message
 import sys, subprocess, uuid, os, json, requests, socket, time, pickle, passwordmeter, copy, datetime
 import empathy_actions as actions
 
-HOST = 'localhost'
+HOST = '35.187.33.1'
 PORT = 8080
 
 
@@ -1133,5 +1133,5 @@ def index():
 
 # Run the app.
 if __name__ == '__main__':
-	app.run(debug=True, port=PORT, threaded=True)
-	#app.run(host='0.0.0.0',debug=False, port=PORT, threaded=True)
+	#app.run(debug=True, port=PORT, threaded=True)
+	app.run(host='0.0.0.0',debug=False, port=PORT, threaded=True)
