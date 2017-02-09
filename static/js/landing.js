@@ -1111,7 +1111,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			console.log('CHAT emit:', chit);
 			chitter = {"name":$scope.username,"chat":chit};
 			url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/chat'
-			$http.post(url, angular.toJson({"chat_handle":$scope.port + '_chat',"chat":chitter}) )
+			$http.post(url, angular.toJson({"chat_handle":$scope.port + '_chat',"chat":chitter, "port":$scope.port}) )
 				.success(function(data) {
 					console.log('Triggered: chat emit', data);
 					})

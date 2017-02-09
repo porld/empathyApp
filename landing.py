@@ -1042,6 +1042,7 @@ def chat():
 	json_data = request.get_json(force=True)
 	chat_handle = json_data['chat_handle']
 	chat = json_data['chat']
+	port = json_data['port']
 	chat['unique'] = str(uuid.uuid4())
 	print 'BROADCAST:', chat_handle, chat
 	send_message(chat_handle, chat,  port)
