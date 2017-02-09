@@ -32,4 +32,4 @@ def socketHandler():
 
 # Run the app.
 if __name__ == '__main__':
-	socketio.run(app,debug=False, port=8082)
+	socketio.run(app,host='35.187.33.1',debug=False, port=8082)
