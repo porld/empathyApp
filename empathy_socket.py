@@ -23,7 +23,7 @@ def socketHandler():
 	port = json_data['port'] #Use this to define a port-specific namespace
 	print 'EMIT:', handle, message, port
 	try:
-		socketio.emit(handle, message,  namespace='/mq')
+		socketio.emit(handle, message,  namespace='/mq_' + port)
 		return str(True)
 	except:
 		return str(False)

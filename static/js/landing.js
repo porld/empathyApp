@@ -12,24 +12,21 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	$scope.external_static_url = '35.187.33.1:8081';
 
 	//Connect to broadcast server
-	console.log('SOCKET Connecting to broadcast server');
-	var socket = io.connect('http://' + $scope.socket_static_url + '/mq', {reconnection: false})
-	console.log('SOCKET Connected to broadcast server', socket);
-	//Connect to message socket	
-	$scope.socketId = 'No connection';
-	socket.on('connect', function() {
-		console.log('SOCKET Connected to socket:', socket.id);
-		console.log('SOCKET', socket);
-		$scope.socketId = socket.id;
-		$scope.socket = true;
-		$scope.$apply();
-		});
+	function socketConnect(port) {
+		console.log('SOCKET Connecting to broadcast server');
+		var socket = io.connect('http://' + $scope.socket_static_url + '/mq_' + port, {reconnection: false})
+		console.log('SOCKET Connected to broadcast server', socket);
+		//Connect to message socket	
+		$scope.socketId = 'No connection';
+		socket.on('connect', function() {
+			console.log('SOCKET Connected to socket:', socket.id);
+			console.log('SOCKET', socket);
+			$scope.socketId = socket.id;
+			$scope.socket = true;
+			$scope.$apply();
+			});
+		}
 
-	$scope.disconnect = function() {
-		console.log('Disconnecting');
-		socket.disconnect();
-		console.log(socket);
-		};
 	//-------------------------------------------------
 
 	//-------------------------------------------------
@@ -279,6 +276,9 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				})
 			.then(function(data, status) {
 				console.log('Port:', $scope.port);
+				//Create socket namespace for port
+				socketConnect($scope.port);
+				
 				console.log('Check live and activate');
 				url = 'http://' + $scope.username + ':' + $scope.password +'@' + $scope.static_url + '/checkLive';
 				$http.post(url,angular.toJson({"username":$scope.username,"port":$scope.port,"recon_name":recon_name,"notes":notes}))
