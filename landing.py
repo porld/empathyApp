@@ -99,9 +99,11 @@ def send_message(handle,message,port):
 	headers = {'content-type': 'application/json'}
 	url = 'http://' + HOST + ':8082/socket'
 	try:
+		print 'Hitting socket:', url
 		requests.post(url, data=json.dumps({"handle":handle,"message":message,"port":port}), headers=headers)
 		return True
 	except:
+		print 'Could not hit socket:', url
 		return False
 #-----------------------------------------------------------------------------------------
 
