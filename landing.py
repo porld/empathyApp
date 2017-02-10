@@ -592,23 +592,6 @@ def fetchFromSYNBIOCHEM():
 		cypher = "CREATE (n:reaction {props}) RETURN n"
 		parameters = {"props": properties}
 		response = send_cypher(cypher,parameters,port)
-
-	#Broadcast list of reactions
-	print 'Broadcast reactions (1)'
-	cypher2 = "MATCH (n:reaction) RETURN n.id AS id, n.name AS name, n.name_level AS name_level, n.tags AS tags, n.tags_level AS tags_level"
-	response2 = send_cypher(cypher2,{},port)
-	cypher_response = response2.json()
-	new_list = []
-	for row in cypher_response["results"][0]["data"]:
-		id = row["row"][0]
-		name = row["row"][1]
-		name_level = row["row"][2]
-		tags = row["row"][3]
-		tags_level = row["row"][4]
-		new_list.append({"id":id,"name":name,"tags":tags})
-	#print new_list
-	print 'Broadcast reactions (2)', port+"_reaction"	
-	send_message(port+"_reaction", new_list,  port)
 	#--------------------------------------------
 
 	#--------------------------------------------
@@ -682,6 +665,25 @@ def fetchFromSYNBIOCHEM():
 	cypher = "MATCH (r:reaction) WHERE NOT (r)-[:hasReactant|hasProduct]-() DELETE(r)"
 	parameters = {}
 	response = send_cypher(cypher,parameters,port)
+	#--------------------------------------------
+
+	#--------------------------------------------
+	#Broadcast list of reactions
+	print 'Broadcast reactions (1)'
+	cypher2 = "MATCH (n:reaction) RETURN n.id AS id, n.name AS name, n.name_level AS name_level, n.tags AS tags, n.tags_level AS tags_level"
+	response2 = send_cypher(cypher2,{},port)
+	cypher_response = response2.json()
+	new_list = []
+	for row in cypher_response["results"][0]["data"]:
+		id = row["row"][0]
+		name = row["row"][1]
+		name_level = row["row"][2]
+		tags = row["row"][3]
+		tags_level = row["row"][4]
+		new_list.append({"id":id,"name":name,"tags":tags})
+	#print new_list
+	print 'Broadcast reactions (2)', port+"_reaction"	
+	send_message(port+"_reaction", new_list,  port)
 	#--------------------------------------------
 
 	print 'SYNBIOCHEM-DB import complete'
