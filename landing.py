@@ -1139,5 +1139,4 @@ def index():
 # Run the app.
 if __name__ == '__main__':
 	#app.run(debug=True, port=PORT, threaded=True)
-	context = ('cert.crt', 'key.key')
-	app.run(host='0.0.0.0',debug=False, ssl_context=context, port=PORT, threaded=True)
+	app.run(host='0.0.0.0',debug=False, ssl_context='adhoc', port=PORT, threaded=True)
