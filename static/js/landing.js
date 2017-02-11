@@ -13,7 +13,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 
 	//Connect to broadcast server
 	console.log('SOCKET Connecting to broadcast server');
-	var socket = io.connect('http://' + $scope.socket_static_url + '/mq', {reconnection: false})
+	var socket = io.connect('https://' + $scope.socket_static_url + '/mq', {reconnection: false})
 	console.log('SOCKET Connected to broadcast server', socket);
 	//Connect to message socket	
 	$scope.socketId = 'No connection';
