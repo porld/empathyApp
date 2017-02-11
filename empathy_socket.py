@@ -32,4 +32,4 @@ def socketHandler():
 
 # Run the app.
 if __name__ == '__main__':
-	socketio.run(app,host='0.0.0.0',debug=False, port=8082)
+	socketio.run(app,host='0.0.0.0',debug=False, ssl_context='adhoc', port=8082)
