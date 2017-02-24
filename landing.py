@@ -7,7 +7,7 @@ import sys, subprocess, uuid, os, json, requests, socket, time, pickle, password
 import empathy_actions as actions
 
 HOST = '35.187.33.1'
-PORT = sys.argv[2]
+PORT = 8080
 
 
 #Initialise app
@@ -15,7 +15,7 @@ app = Flask(__name__, static_url_path='')
 app.config['SECRET_KEY'] = 'big_secret'
 
 if len(sys.argv) != 2:
-	print 'Missing arguments (landing.py <email password>)'
+	print 'Missing arguments (landing.py <email password> <port>)'
 
 mail_username = 'empathy.manchester@gmail.com'
 mail_password = sys.argv[1]
