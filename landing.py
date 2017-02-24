@@ -7,7 +7,7 @@ import sys, subprocess, uuid, os, json, requests, socket, time, pickle, password
 import empathy_actions as actions
 
 HOST = '35.187.33.1'
-PORT = 8080
+PORT = sys.argv[2]
 
 
 #Initialise app
