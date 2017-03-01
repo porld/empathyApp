@@ -1,0 +1,70 @@
+SETTING UP THE EMPATHY WEB APP
+
+1. Expose GCE instance on static port. Make ports 80, 8080, 8081 and 8082 open to TCP.
+
+2. Register URL and map to static IP of GCE instance.
+
+3. SSH into GCE instance and pull from Git.
+
+4. Run miniconda to use RDKit
+4.1 source activate cheminformatics
+4.2 pip freeze lists...
+	aadict==0.2.3
+	aniso8601==1.2.0
+	asset==0.6.11
+	blinker==1.4
+	cffi==1.9.1
+	click==6.7
+	cryptography==1.7.2
+	enum-compat==0.0.2
+	enum34==1.1.6
+	eventlet==0.20.1
+	Flask==0.12
+	Flask-Cors==3.0.2
+	Flask-HTTPAuth==3.2.2
+	Flask-Mail==0.9.1
+	Flask-RESTful==0.3.5
+	Flask-SocketIO==2.8.2
+	globre==0.1.5
+	greenlet==0.4.12
+	idna==2.2
+	ipaddress==1.0.18
+	itsdangerous==0.24
+	Jinja2==2.9.5
+	MarkupSafe==0.23
+	numpy==1.11.3
+	passlib==1.7.1
+	passwordmeter==0.1.8
+	pyasn1==0.2.2
+	pycparser==2.17
+	pyOpenSSL==16.2.0
+	python-dateutil==2.6.0
+	python-engineio==1.1.2
+	python-socketio==1.6.3
+	pytz==2016.10
+	requests==2.13.0
+	six==1.10.0
+	Werkzeug==0.11.15
+	xmltodict==0.10.2
+
+5. Set up port redirect (cannot run Werkzeug on 80)
+5.1 sudo /sbin/iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+
+6. Generate security certificates using certbot/letsencrypt (https://certbot.eff.org/#ubuntuxenial-other)
+6.1 Use certbot in standalone mode:  sudo letsencrypt certonly --standalone -d metabolicjamboree.co.uk -d www.metabolicjamboree.co.uk
+6.2 Check landing.py is pointing to the certificates
+6.3 Set up daily cronjob to renew certificates
+
+
+7. Run Flask-socket
+python empathy_socket.py &
+
+8. Run external functions
+python api_external.py &
+
+9. Run core
+python landing.py <Gmail password> &
+
+#NOTES
+#http://werkzeug.pocoo.org/docs/0.10/serving/
+#http://stackoverflow.com/questions/7340784/easy-install-pyopenssl-error
