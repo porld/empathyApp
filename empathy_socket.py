@@ -32,5 +32,4 @@ def socketHandler():
 
 # Run the app.
 if __name__ == '__main__':
-	context = ('certs/fullchain.pem', 'certs/privkey.pem')
-	socketio.run(app,host='0.0.0.0',debug=False, ssl_context=context, port=8082)
+	socketio.run(app,host='0.0.0.0',debug=False, port=8082)
