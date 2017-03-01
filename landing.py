@@ -310,7 +310,7 @@ def msgNewUser():
 	tokens[new_token] = {"recon":recon,"port":port,"fsid":fsid}
 	try:
 		msg = Message("You have been invited to collaborate on a metabolic reconstruction for " + recon, sender=("EMPATHY simple metabolic networks","empathy.manchester@gmail.com"),recipients=[user_email])
-		msg.html = 	'<b>EMPATHY Metabolic Network Reconstruction</b><br><br>You have been invited by ' + username + ' to collaborate on a reconstruction of ' + recon + ' metabolism.<br><br>Follow the link below to start collaborating.<br><br>http://metabolicjamboree.co.uk/index.html?token=' + new_token
+		msg.html = 	'<b>EMPATHY Metabolic Network Reconstruction</b><br><br>You have been invited by ' + username + ' to collaborate on a reconstruction of ' + recon + ' metabolism.<br><br>Follow the link below to start collaborating.<br><br>https://metabolicjamboree.co.uk/index.html?token=' + new_token
 		mail.send(msg)
 		time.sleep(2)
 		return json.dumps([True,new_token])
@@ -1059,13 +1059,13 @@ def actionPush(port,record_handle,record,key,value,username,password,message):
 	#Push out new list to record
 	print 'Update record'
 	headers = {'content-type': 'application/json'}
-	url = 'http://' + username + ':' + password + '@' + HOST + ':' + str(PORT) + '/listPush'
+	url = 'https://' + username + ':' + password + '@' + HOST + ':' + str(PORT) + '/listPush'
 	bundle = {"port":port,"record_handle":record_handle,"id":record['id'],"key":key,"value":value}
 	requests.post(url, data=json.dumps(bundle), headers=headers)
 
 	#Push out message notification
 	print 'Send notification message'
-	url = 'http://' + username + ':' + password + '@' + HOST + ':' + str(PORT) + '/listPush'
+	url = 'https://' + username + ':' + password + '@' + HOST + ':' + str(PORT) + '/listPush'
 	notifications = record['notifications']
 	notifications.append(message)
 	bundle = {"port":port,"record_handle":record_handle,"id":record['id'],"key":"notifications","value":notifications}
