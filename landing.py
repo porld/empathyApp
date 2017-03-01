@@ -1139,6 +1139,7 @@ def index():
 # Run the app.
 if __name__ == '__main__':
 	#app.run(debug=True, port=PORT, threaded=True)
-	context = ('/etc/letsencrypt/live/metabolicjamboree.co.uk/cert1.pem', '/etc/letsencrypt/live/metabolicjamboree.co.uk/privkey.pem')
+	#https://github.com/enginebai/PyMessager
+	context = ('certs//cert.pem', 'certs/privkey.pem')
 	app.run(host='0.0.0.0',debug=False, ssl_context=context, port=PORT, threaded=True)
 	#app.run(host='0.0.0.0',debug=False, port=PORT, threaded=True)
