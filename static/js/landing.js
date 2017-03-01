@@ -510,7 +510,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			console.log('Fetching node', selection);
 			bundle = {"port":$scope.port, "selection":selection, "label":$scope.label};
 			console.log('SURELY THIS DOES NOT WORK!?');
-			url = 'https://' + $scope.username + ':' $scope.password + '@' + $scope.static_url + '/fetchSelection';
+			url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/fetchSelection';
 			$http.post(url, angular.toJson(bundle) )
 				.success(function(data) {
 					console.log('Triggered: fetch node', data);
