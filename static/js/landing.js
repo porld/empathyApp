@@ -13,7 +13,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 
 	//Connect to broadcast server
 	console.log('SOCKET Connecting to broadcast server');
-	var socket = io.connect('https://' + $scope.socket_static_url + '/mq', {reconnection: false})
+	var socket = io.connect('http://' + $scope.socket_static_url + '/mq', {reconnection: false})
 	console.log('SOCKET Connected to broadcast server', socket);
 	//Connect to message socket	
 	$scope.socketId = 'No connection';
@@ -80,7 +80,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//Password strength test
 	$scope.pwdStrength = function() {
 		if($scope.passwords.a.length > 0) {
-			response = $http.get('https://' + $scope.static_url + '/pwdStrength/'+$scope.passwords.a)
+			response = $http.get('http://' + $scope.static_url + '/pwdStrength/'+$scope.passwords.a)
 				.success(function(data) {
 					if(data < 0.2) {
 						$scope.strength = 'red';
@@ -105,7 +105,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	$scope.signUp = function() {
 		bundle = {"username":$scope.username, "password":$scope.passwords.a};
 		console.log('Registration bundle:', bundle);
-		url = 'https://' + $scope.static_url + '/registerUser';
+		url = 'http://' + $scope.static_url + '/registerUser';
 		response = $http.post(url, angular.toJson(bundle) )
 			.success(function(data) {
 				if(data[0] == true) {
@@ -128,7 +128,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	$scope.signIn = function() {
 		bundle = {"username":$scope.username, "password":$scope.password};
 		console.log('Bundle:', $scope.username, $scope.password);
-		url = 'https://' + $scope.static_url + '/signIn';
+		url = 'http://' + $scope.static_url + '/signIn';
 		response = $http.post(url, angular.toJson(bundle) )
 			.success(function(data) {
 				console.log('Sign in response', data);
@@ -153,7 +153,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 						if(token != '') {
 							console.log('Found token', token);
 							//Resolve token
-							url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/addNewUser'
+							url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/addNewUser'
 							response = $http.post(url, angular.toJson({"username":$scope.username,"token":token}))
 								.success(function(data) {
 									console.log('Resolved token', data);
@@ -267,7 +267,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.recon_spinner = true;
 		initialise();
 		console.log('Launch Docker', $scope.recon_spinner);
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/docker'
+		url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/docker'
 		$http.post(url, angular.toJson({"username":$scope.username,"recon_name":recon_name}) )
 			.success(function(data) {
 				console.log('Triggered: launch Docker', data);
@@ -280,7 +280,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			.then(function(data, status) {
 				console.log('Port:', $scope.port);
 				console.log('Check live and activate');
-				url = 'https://' + $scope.username + ':' + $scope.password +'@' + $scope.static_url + '/checkLive';
+				url = 'http://' + $scope.username + ':' + $scope.password +'@' + $scope.static_url + '/checkLive';
 				$http.post(url,angular.toJson({"username":$scope.username,"port":$scope.port,"recon_name":recon_name,"notes":notes}))
 					.success(function(data) {
 						console.log('Response', data);
@@ -302,7 +302,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.recon_spinner = true;
 		console.log('Add generic cellular organisation', cell);
 		message_handle = $scope.port + '_compartment';
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/subcell'
+		url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/subcell'
 		$http.post(url, angular.toJson({"port":$scope.port,"message_handle":message_handle,"cell":cell}) )
 			.success(function(data) {
 				console.log('Triggered: load_cell', data);
@@ -319,7 +319,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//Get existing reconstructions
 	$scope.user_recons = function() {
 		console.log('Fetch user reconstructions');
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/userRecons'
+		url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/userRecons'
 		$http.post(url, angular.toJson({"username":$scope.username}) )
 			.success(function(data) {
 				$scope.reconstruction_list = data[1];
@@ -348,7 +348,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	$scope.synbiochem_import = function(ncbi) {
 		console.log('Importing from SYNBIOCHEM-DB', ncbi);
 		$scope.recon_spinner = true;
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/fetchSYNBIOCHEM'
+		url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/fetchSYNBIOCHEM'
 		$http.post(url, angular.toJson({"port":$scope.port,"ncbi":ncbi}) )
 			.success(function(data) {
 				console.log('Initiated');
@@ -370,7 +370,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.invitation = 'Sending invitation';
 		console.log('Inviting', $scope.collaborator);
 		bundle = {"username": $scope.username, "recon": $scope.recon, "fsid": $scope.fsid, "port": $scope.port, "user_email": $scope.collaborator };		
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/msgNewUser'
+		url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/msgNewUser'
 		$http.post(url, angular.toJson(bundle) )
 			.success(function(data) {
 				console.log('Invitation sent');
@@ -421,7 +421,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.list_message_handle = $scope.port + '_' + $scope.label;
 		console.log('Fetch list', $scope.list_message_handle);
 		bundle = {"label":$scope.label, "message_handle": $scope.list_message_handle, "port": $scope.port};
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listNode'
+		url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listNode'
 		console.log('Hitting url:', url, 'with message handle', $scope.list_message_handle);
 		$http.post(url, angular.toJson(bundle) )
 			.success(function(data) {
@@ -446,7 +446,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		console.log('Create new node');
 		message_handle = $scope.port + '_' + $scope.label;
 		bundle = {"label":$scope.label, "message_handle": message_handle, "port":$scope.port};
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/createNode'
+		url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/createNode'
 		$http.post(url, angular.toJson(bundle) )
 			.success(function(data) {
 				console.log('Triggered: create node', data);
@@ -467,7 +467,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		record_handle = $scope.port + '_' + $scope.selection;
 		message_handle = $scope.port + '_' + $scope.label;
 		bundle = {"target":$scope.selection, "label":$scope.label, "record_handle": record_handle, "message_handle": message_handle, "port":$scope.port};
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/destroyNode';
+		url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/destroyNode';
 		$http.post(url, angular.toJson(bundle) )
 			.success(function(data) {
 				console.log('Triggered: destroy node', data);
@@ -619,7 +619,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	$scope.updateText = function(key,value) {
 		console.log('Update text', $scope.selection, 'with', key, ':', value);
 		bundle = {"port": $scope.port, "record_handle": $scope.record_handle, "id":$scope.selection, "key":key, "value":value};
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/updateText';
+		url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/updateText';
 		$http.post(url, angular.toJson(bundle) )
 			.success(function(data) {
 				console.log('Triggered: update node property', data);
@@ -642,7 +642,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			};
 		//console.log('New list:', newList);
 		bundle = {"port": $scope.port, "record_handle": $scope.record_handle, "id":$scope.selection, "key":key, "value":newList};
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPop';
+		url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPop';
 		$http.post(url, angular.toJson(bundle) )
 			.success(function(data) {
 				console.log('Triggered: list pop', data);
@@ -668,7 +668,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			newList = $scope.record[key];
 			newList.push(value);
 			bundle = {"port": $scope.port, "record_handle": $scope.record_handle, "id":$scope.selection, "key":key, "value":newList};
-			url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPush';
+			url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPush';
 			$http.post(url, angular.toJson(bundle) )
 				.success(function(data) {
 					console.log('Triggered: list push', data);
@@ -704,7 +704,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				};
 			newList.push( angular.toJson([source,id]) );
 			bundle = {"port": $scope.port, "record_handle": $scope.record_handle, "id":$scope.selection, "key":field, "value":newList};
-			url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPush';
+			url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPush';
 			$http.post(url, angular.toJson(bundle) )
 				.success(function(data) {
 					console.log('Triggered: json list push', data);
@@ -743,7 +743,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				newList.push( angular.toJson([subfield,value]) );
 				}
 			bundle = {"port": $scope.port, "record_handle": $scope.record_handle, "id":$scope.selection, "key":field, "value":newList};
-			url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPush';
+			url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPush';
 			$http.post(url, angular.toJson(bundle) )
 				.success(function(data) {
 					console.log('Triggered: update json text', data);
@@ -767,7 +767,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			};
 		//console.log('New list:', newList);
 		bundle = {"port": $scope.port, "record_handle": $scope.record_handle, "id":$scope.selection, "key":field, "value":newList};
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPop';
+		url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPop';
 		$http.post(url, angular.toJson(bundle) )
 			.success(function(data) {
 				console.log('Triggered: json list pop', data);
@@ -867,7 +867,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	function fetchCompartmentList() {
 		console.log('Fetch compartment list');
 		bundle = {"label":"compartment", "message_handle": "", "port": $scope.port};
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listNode';
+		url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listNode';
 		console.log('Hitting url:', url, 'without message handle');
 		$http.post(url, angular.toJson(bundle) )
 			.success(function(data) {
@@ -923,7 +923,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			console.log('Query:', query);
 			$scope.queryMatches = [];
 			bundle = {"query":query,"port":$scope.port};
-			url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/queryMolecules';
+			url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/queryMolecules';
 			$http.post(url, angular.toJson(bundle) )
 				.success(function(data) {
 					console.log('Triggered: search molecules', data);
@@ -1018,7 +1018,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			console.log('Add', $scope.participant, 'with id', participant, 'to', $scope.selection);
 			record_handle = $scope.port + '_' + $scope.selection;
 			bundle = {"port":$scope.port,"record_handle":record_handle,"reaction":$scope.selection,"molecule":participant,"role":hasRole};
-			url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/makeConnection';
+			url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/makeConnection';
 			$http.post(url, angular.toJson(bundle) )
 				.success(function(data) {
 					console.log('Making connection', data);
@@ -1039,7 +1039,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		console.log('Retrieve thread list');
 		$scope.threadList = [];
 		bundle = {"port":$scope.port};
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/threadList';
+		url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/threadList';
 		$http.post(url, angular.toJson(bundle) )
 			.success(function(data) {
 				console.log('Triggered: thread list');
@@ -1057,7 +1057,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		console.log('Retrieve thread', thread);
 		$scope.thread = {};
 		bundle = {"port":$scope.port,"thread":thread};
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/getThread';
+		url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/getThread';
 		$http.post(url, angular.toJson(bundle) )
 			.success(function(data) {
 				console.log('Triggered: get thread');
@@ -1074,7 +1074,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	$scope.createThread = function() {
 		console.log('Add thread', $scope.newMessage);
 		bundle = {"port":$scope.port,"parentMessage":"","poster":$scope.username,"message":$scope.newMessage}; //No parent triggers new thread
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/createMessage';
+		url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/createMessage';
 		$http.post(url, angular.toJson(bundle) )
 			.success(function(data) {
 				console.log('Triggered: new thread');
@@ -1111,7 +1111,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		if(chit.length > 0) {
 			console.log('CHAT emit:', chit);
 			chitter = {"name":$scope.username,"chat":chit};
-			url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/chat'
+			url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/chat'
 			$http.post(url, angular.toJson({"chat_handle":$scope.port + '_chat',"chat":chitter, "port":$scope.port}) )
 				.success(function(data) {
 					console.log('Triggered: chat emit', data);
@@ -1128,7 +1128,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//Actions
 	$scope.moleculeAction = function(action) {
 		console.log('Run molecule action:', action);
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/actionMolecule'
+		url = 'http://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/actionMolecule'
 		$http.post(url, angular.toJson({"port":$scope.port,"record":$scope.record,"action":action.run, "username":$scope.username,"password":$scope.password, "record_handle":$scope.port+'_'+$scope.selection}) )
 			.success(function(data) {
 				console.log('Triggered:', action.run);
