@@ -6,7 +6,7 @@ from flask_mail import Mail, Message
 import sys, subprocess, uuid, os, json, requests, socket, time, pickle, passwordmeter, copy, datetime
 import empathy_actions as actions
 
-HOST = '35.187.33.1'
+HOST = 'www.metabolicjamboree.co.uk'
 PORT = 8080
 
 
