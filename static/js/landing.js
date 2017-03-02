@@ -9,7 +9,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//$scope.external_static_url = 'localhost:8081';
 	$scope.static_url = 'www.metabolicjamboree.co.uk:80';
 	$scope.socket_static_url = 'www.metabolicjamboree.co.uk:8082';
-	$scope.external_static_url = '35.187.33.1:8081';
+	$scope.external_static_url = 'www.metabolicjamboree.co.uk:8081';
 
 	//Connect to broadcast server
 	console.log('SOCKET Connecting to broadcast server');
@@ -1207,7 +1207,7 @@ landingApp.directive('smilesViewer', function ($parse, $http) {
 							};
 
 						//Send for structure
-						url = 'http://' + scope.external + '/chemistry/smiles_post/' + scope.dim;
+						url = 'https://' + scope.external + '/chemistry/smiles_post/' + scope.dim;
 						$http.post(url, angular.toJson({"smiles":smiles}) )
 							.success(function(data) {
 								console.log('Triggered: smiles2PDB', smiles, data);
