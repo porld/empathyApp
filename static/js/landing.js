@@ -4,9 +4,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 
 	//-------------------------------------------------
 	//ENV
-	//$scope.static_url = 'localhost:8080';
-	//$scope.socket_static_url = 'localhost:8082';
-	//$scope.external_static_url = 'localhost:8081';
 	$scope.static_url = 'www.metabolicjamboree.co.uk:443';
 	$scope.socket_static_url = 'www.metabolicjamboree.co.uk:8082';
 	$scope.external_static_url = 'www.metabolicjamboree.co.uk:8081';

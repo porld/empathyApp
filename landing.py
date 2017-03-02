@@ -310,7 +310,7 @@ def msgNewUser():
 	tokens[new_token] = {"recon":recon,"port":port,"fsid":fsid}
 	try:
 		msg = Message("You have been invited to collaborate on a metabolic reconstruction for " + recon, sender=("EMPATHY simple metabolic networks","empathy.manchester@gmail.com"),recipients=[user_email])
-		msg.html = 	'<b>EMPATHY Metabolic Network Reconstruction</b><br><br>You have been invited by ' + username + ' to collaborate on a reconstruction of ' + recon + ' metabolism.<br><br>Follow the link below to start collaborating.<br><br>https://metabolicjamboree.co.uk:80/index.html?token=' + new_token
+		msg.html = 	'<b>EMPATHY Metabolic Network Reconstruction</b><br><br>You have been invited by ' + username + ' to collaborate on a reconstruction of ' + recon + ' metabolism.<br><br>Follow the link below to start collaborating.<br><br>https://metabolicjamboree.co.uk/index.html?token=' + new_token
 		mail.send(msg)
 		time.sleep(2)
 		return json.dumps([True,new_token])
