@@ -50,17 +50,15 @@ def relaunch_dockers(user_credentials):
 		print 'User:', user
 		reconstructions = user_credentials[user]['reconstructions']
 		print reconstructions
-		'''
-		for recon in user['reconstructions']:
-			print 'Resurrecting', recon['name'], 'for', user, 'on', recon['port'], 'as', recon['fsid']
+		for recon in reconstructions:
+			print 'Resurrecting', recon['name'], 'for', user, 'on', recon['port'], 'as', recon['fsid'], '>>>',
 			try:
 				subprocess.Popen(["docker", "start", recon['fsid'] ])
-				print 'Success'
+				print 'success'
 				return True
 			except:
-				print 'Failed'
+				print 'failed'
 				return False
-		'''
 
 #Load previous credentials
 try:
