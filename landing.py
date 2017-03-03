@@ -263,7 +263,10 @@ def checkLive():
 	username = json_data['username']
 	recon_name = json_data['recon_name']
 	port = json_data['port']
-	notes = json_data['notes']
+	if json_data['notes']:
+		notes = json_data['notes']
+	else:
+		notes = 'None provided'
 
 	url = 'http://localhost:' + port + '/db/data/transaction/commit'
 	print 'Hitting', url
