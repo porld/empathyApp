@@ -62,7 +62,12 @@ def relaunch_dockers(user_credentials):
 try:
 	user_credentials = pickle.load( open( "users.pickle", "rb" ) )
 	print user_credentials
-	print 'RESURRECT DOCKER CONTAINERS HERE!'
+	print 'Resurrecting previous Dockers'
+	try:
+		relaunch_dockers(user_credentials)
+		print 'Relaunched previous Dockers'
+	except:
+		print 'Could not relaunch previous Dockers'
 except:
 	user_credentials  = {}
 	pickle.dump( user_credentials, open( "users.pickle", "wb" ) )
