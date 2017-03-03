@@ -46,30 +46,36 @@ NEO_PASSWORD = 'empathy_donkey'
 auth = HTTPBasicAuth()
 
 def relaunch_dockers(user_credentials):
+	#First collect a list of unique Docker names
+	dockers = []
 	for user in user_credentials:
 		print 'User:', user
 		reconstructions = user_credentials[user]['reconstructions']
-		print reconstructions
 		for recon in reconstructions:
-			print 'Resurrecting', recon['name'], 'for', user, 'on', recon['port'], 'as', recon['fsid'], '>>>',
-			try:
-				subprocess.Popen(["docker", "start", recon['fsid'] ])
-				print 'success'
-				return True
-			except:
-				print 'failed'
-				return False
+			print recon['fsid']
+			dockers.append(recon['fsid'])
+	#Unique
+	dockers = list(set(dockers))
+	successes = []
+	failures = []
+	for d in dockers
+		try:
+			subprocess.Popen(["docker", "start", d ])
+			print d, 'success'
+			successes.append(d)
+		except:
+			print d, 'failed'
+			failures.append(d)
+	return successes, failures
 
 #Load previous credentials
 try:
 	user_credentials = pickle.load( open( "users.pickle", "rb" ) )
 	print user_credentials
 	print 'Resurrecting previous Dockers...'
-	try:
-		relaunch_dockers(user_credentials)
-		print 'Relaunched previous Dockers'
-	except:
-		print 'Could not relaunch previous Dockers'
+	successes, failures = relaunch_dockers(user_credentials)
+	print 'Relaunched Dockers:', successes
+	print 'Failed to relaunch:', failures
 except:
 	user_credentials  = {}
 	pickle.dump( user_credentials, open( "users.pickle", "wb" ) )
