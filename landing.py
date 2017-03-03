@@ -47,9 +47,10 @@ auth = HTTPBasicAuth()
 
 def relaunch_dockers(user_credentials):
 	for user in user_credentials:
-		for recon in user["reconstructions"]:
+		print 'User:', user, user['reconstructions']
+		'''
+		for recon in user['reconstructions']:
 			print 'Resurrecting', recon['name'], 'for', user, 'on', recon['port'], 'as', recon['fsid']
-			'''
 			try:
 				subprocess.Popen(["docker", "start", recon['fsid'] ])
 				print 'Success'
@@ -57,13 +58,13 @@ def relaunch_dockers(user_credentials):
 			except:
 				print 'Failed'
 				return False
-			'''
+		'''
 
 #Load previous credentials
 try:
 	user_credentials = pickle.load( open( "users.pickle", "rb" ) )
 	print user_credentials
-	print 'Resurrecting previous Dockers'
+	print 'Resurrecting previous Dockers...'
 	try:
 		relaunch_dockers(user_credentials)
 		print 'Relaunched previous Dockers'
