@@ -58,7 +58,7 @@ def relaunch_dockers(user_credentials):
 	dockers = list(set(dockers))
 	successes = []
 	failures = []
-	for d in dockers
+	for d in dockers:
 		try:
 			subprocess.Popen(["docker", "start", d ])
 			print d, 'success'
