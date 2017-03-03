@@ -53,7 +53,8 @@ except:
 	user_credentials  = {}
 	pickle.dump( user_credentials, open( "users.pickle", "wb" ) )
 
-user_credentials = {}
+#What's this for?
+#user_credentials = {}
 
 @auth.verify_password
 def verify_password(username, password):
