@@ -47,7 +47,9 @@ auth = HTTPBasicAuth()
 
 def relaunch_dockers(user_credentials):
 	for user in user_credentials:
-		print 'User:', user, user['reconstructions']
+		print 'User:', user
+		reconstructions = user_credentials[user]['reconstructions']
+		print reconstructions
 		'''
 		for recon in user['reconstructions']:
 			print 'Resurrecting', recon['name'], 'for', user, 'on', recon['port'], 'as', recon['fsid']
