@@ -48,7 +48,7 @@ SETTING UP THE EMPATHY WEB APP
 	xmltodict==0.10.2
 
 5. Set up port redirect (cannot run Werkzeug on 80)
-5.1 sudo /sbin/iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+5.1 sudo /sbin/iptables -t nat -I PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 8080
 
 6. Generate security certificates using certbot/letsencrypt (https://certbot.eff.org/#ubuntuxenial-other)
 6.1 Use certbot in standalone mode:  sudo letsencrypt certonly --standalone -d metabolicjamboree.co.uk -d www.metabolicjamboree.co.uk
