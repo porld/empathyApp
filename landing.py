@@ -922,7 +922,7 @@ def fetchSelection():
 
 	if label == 'reaction':
 		#Fetch edges
-		cypher = "MATCH (r:reaction)-[l:hasReactant|hasProduct|hasModifier]->(m:molecule) WHERE r.id='" + selection + "' RETURN l,TYPE(l) AS type,m.id AS moleculeId, m.name AS moleculeName"
+		cypher = "MATCH (r:reaction)-[l:hasReactant|hasProduct|hasModifier]->(m:molecule) WHERE r.id='" + selection + "' RETURN l,TYPE(l) AS type,m.id AS moleculeId, m.name AS moleculeName, m.inCompartment AS compartment"
 		edgeResponse = send_cypher(cypher,{},port)
 		edgeData = edgeResponse.json()
 
@@ -935,12 +935,14 @@ def fetchSelection():
 			type = edge[1]
 			moleculeId = edge[2]
 			moleculeName = edge[3]
+			moleculeCompartment = str( edge[4] )
+			moleculeCompartment = moleculeCompartment[0:2]
 			if type == 'hasReactant':
-				reactants.append({"id":moleculeId,"name":moleculeName,"properties":edgeProperties})
+				reactants.append({"id":moleculeId,"name":moleculeName,"properties":edgeProperties,"compartment":moleculeCompartment})
 			elif type == 'hasModifier':
-				modifiers.append({"id":moleculeId,"name":moleculeName,"properties":edgeProperties})
+				modifiers.append({"id":moleculeId,"name":moleculeName,"properties":edgeProperties,"compartment":moleculeCompartment})
 			elif type == 'hasProduct':
-				products.append({"id":moleculeId,"name":moleculeName,"properties":edgeProperties})
+				products.append({"id":moleculeId,"name":moleculeName,"properties":edgeProperties,"compartment":moleculeCompartment})
 			else:
 				pass
 		record["listOfReactants"] = reactants
