@@ -856,9 +856,9 @@
 								<div class="large-4 medium-4 small-4 columns" style="text-align:center">
 									<!-- Reversibility -->
 									<div class="row" style="text-align:center">
-										<span style="margin: 2px 2px 2px 2px; color: #666666" ng-model="reversibility" ng-init="reversibility=true" ng-click="reversibility=!reversibility">
-											<span href="#" ng-if="reversibility" style="text-transform:none"><i style="color: #666666" class="fi-arrow-left"></i><i style="color: #666666" class="fi-arrow-right"></i></span>
-											<span href="#" ng-if="!reversibility" style="text-transform:none"><i style="color: #666666" class="fi-arrow-right"></i></span>
+										<span style="margin: 2px 2px 2px 2px; color: #666666" ng-model="record.reversible" ng-click="updateText('reversible',record.reversible); ">
+											<span href="#" ng-if="record.reversible" style="text-transform:none"><i style="color: #666666" class="fi-arrow-left"></i><i style="color: #666666" class="fi-arrow-right"></i></span>
+											<span href="#" ng-if="!record.reversible" style="text-transform:none"><i style="color: #666666" class="fi-arrow-right"></i></span>
 										</span>
 									</div>
 									<div class="row" style="text-align:center">
