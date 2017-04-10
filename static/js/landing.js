@@ -507,6 +507,9 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			console.log('Fetching node', selection);
 			bundle = {"port":$scope.port, "selection":selection, "label":$scope.label};
 			console.log('SURELY THIS DOES NOT WORK!?');
+			//Reset a few selections to enable selection of same value as previous
+			$scope.typeChoice = '';
+			$scope.compChoice = '';
 			url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/fetchSelection';
 			$http.post(url, angular.toJson(bundle) )
 				.success(function(data) {
