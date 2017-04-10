@@ -458,11 +458,29 @@
 						<!-- Record name -->
 						<div class="row" style="padding:5px">
 							
-							<!-- Compartment or Reaction Name -->
-							<div ng-if="label!='molecule'" class="large-12 medium-12 small-12 columns" style="padding: 0px; margin: 0px">
+							<!-- Compartment Name -->
+							<div ng-if="label=='compartment'" class="large-12 medium-12 small-12 columns" style="padding: 0px; margin: 0px">
 								<b><input style="font-size:20pt;border:none; outline:none; padding: 0px; margin: 0px" type="text" ng-model="record.name" ng-blur="updateText('name',record.name); "></b>
 							</div>
-							
+
+							<!-- Reaction Name and balance -->
+							<div ng-if="label=='reaction'" class="large-12 medium-12 small-12 columns" style="padding: 0px; margin: 0px">
+								<!-- Name -->
+								<div class="row">
+									<div class="small-12 medium-12 large-12 columns" style="color: #666666">
+										<b>
+											<input style="font-size:20pt;border:none; outline:none; padding: 0px; margin: 0px" type="text" ng-model="record.name" ng-blur="updateText('name',record.name); ">
+										</b>
+									</div>
+								</div>
+								<!-- Balanced or not -->
+								<div class="row">
+									<div class="small-12 medium-12 large-12 columns" style="color: #666666">
+										<i>{{record.balance}}</i>
+									</div>
+								</div>
+							</div>
+
 							<!-- Molecule Name and type-->
 							<div ng-if="label=='molecule'" class="large-6 medium-6 small-6 columns" style="padding: 0px; margin: 0px">
 								<!-- Name -->
