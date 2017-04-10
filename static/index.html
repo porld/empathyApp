@@ -512,6 +512,7 @@
 							</div>
 
 						</div>
+
 						<!-- Record -->
 						<div class="row">
 						
@@ -836,11 +837,11 @@
 							<!-- Reaction row -->
 							<div ng-if="label=='reaction' && selection!=''" class="row" style="padding: 0px;">
 								<!-- Reactants -->
-								<div class="large-5 medium-5 small-5 columns" style="text-align:right">
+								<div class="large-4 medium-4 small-4 columns" style="text-align:right">
 									<span ng-repeat="part in record.listOfReactants | orderBy">
 										<small>
 											<span style="margin: 2px 2px 2px 2px; background: #e4e4e4;" class="round label">
-												<span style="text-transform:none; color:#c8c8c8">{{part.properties.stoichiometry}}</span>&nbsp;<span ng-click="selection=part.id" style="text-transform:none; color:#555555">{{part.name}}</span>
+												<span style="text-transform:none; color:#c8c8c8">{{part.properties.stoichiometry}}</span>&nbsp;<span ng-click="selection=part.id" style="text-transform:none; color:#555555;word-wrap: break-word;">{{part.name}}</span>
 												<span ng-click="">
 													<i style="color: #666666" class="fi-x-circle"></i>
 												</span>
@@ -852,7 +853,7 @@
 									</span>
 								</div>
 								<!-- Modifiers -->
-								<div class="large-2 medium-2 small-2 columns" style="text-align:center">
+								<div class="large-4 medium-4 small-4 columns" style="text-align:center">
 									<!-- Reversibility -->
 									<div class="row" style="text-align:center">
 										<span style="margin: 2px 2px 2px 2px; color: #666666" ng-model="reversibility" ng-init="reversibility=true" ng-click="reversibility=!reversibility">
@@ -864,7 +865,7 @@
 										<span ng-repeat="part in record.listOfModifiers | orderBy">
 											<small>
 												<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-													<span style="text-transform:none; color:#c8c8c8">{{part.properties.stoichiometry}}</span>&nbsp;<span ng-click="selection=part.id" style="text-transform:none; color:#555555">{{part.name}}</span>
+													<span style="text-transform:none; color:#c8c8c8">{{part.properties.stoichiometry}}</span>&nbsp;<span ng-click="selection=part.id" style="text-transform:none; color:#555555;word-wrap: break-word;">{{part.name}}</span>
 												</span>
 											</small>
 										</span><br>
@@ -874,11 +875,11 @@
 									</div>
 								</div>
 								<!-- Products -->
-								<div class="large-5 medium-5 small-5 columns" style="text-align:left">
+								<div class="large-4 medium-4 small-4 columns" style="text-align:left">
 									<span ng-repeat="part in record.listOfProducts | orderBy">
 										<small>
 											<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-												<span style="text-transform:none; color:#c8c8c8">{{part.properties.stoichiometry}}</span>&nbsp;<span ng-click="selection=part.id" style="text-transform:none; color:#555555">{{part.name}}</span>
+												<span style="text-transform:none; color:#c8c8c8">{{part.properties.stoichiometry}}</span>&nbsp;<span ng-click="selection=part.id" style="text-transform:none; color:#555555;word-wrap: break-word;">{{part.name}}</span>
 											</span>
 										</small>
 									</span><br>
