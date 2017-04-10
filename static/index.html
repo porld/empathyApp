@@ -638,14 +638,14 @@
 									</div>
 
 							</div>
-
 							<!-- Column 2 -->
 							<div ng-if="label=='molecule' && selection!=''" class="large-6 medium-6 small-6 columns" style="padding: 0px;">
+
 								<!--isDescribedBy-->
 								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
 									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="describedBy_view" ng-click="describedBy_view=!describedBy_view">
 										<div class="row">
-											is described by
+											Described by
 										</div>
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
@@ -679,87 +679,11 @@
 									</div>
 								</div>
 
-								<!--is_a-->
-								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
-									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="is_a_view" ng-click="is_a_view=!is_a_view">
-										<div class="row">
-											is a
-										</div>
-									</div>
-									<div class="large-12 medium-12 small-12 columns">							
-										<div class="row animate-show-hide" ng-show="is_a_view">
-											<!-- isDescribedBy list -->
-											<span ng-repeat="i in record.is_a | orderBy">
-												<small>
-													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
-														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
-														<span ng-click="jsonListPop('is_a',i)">
-															<i style="color: #666666" class="fi-x-circle"></i>
-														</span>
-													</span>
-												</small>
-											</span>
-											<!-- Add is_a -->
-											<span ng_model="add_is_a" ng-init="add_is_a=false" ng-click="add_is_a=!add_is_a">
-												<small><i class="fi-plus"></i></small>
-											</span>
-										</div>
-										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_is_a" ng-model="new_is_a">
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add source" ng-model="new_is_a['source']">
-											</div>
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add identifier" ng-blur="add_is_a=false;jsonListPush('is_a',new_is_a);new_is_a={};" ng-model="new_is_a['id']">
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<!--is-->
-								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
-									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="is_view" ng-click="is_view=!is_view">
-										<div class="row">
-											is
-										</div>
-									</div>
-									<div class="large-12 medium-12 small-12 columns">							
-										<div class="row animate-show-hide" ng-show="is_view">
-											<!-- isDescribedBy list -->
-											<span ng-repeat="i in record.is | orderBy">
-												<small>
-													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
-														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
-														<span ng-click="jsonListPop('is',i)">
-															<i style="color: #666666" class="fi-x-circle"></i>
-														</span>
-													</span>
-												</small>
-											</span>
-											<!-- Add is -->
-											<span ng_model="add_is" ng-init="add_is=false" ng-click="add_is=!add_is">
-												<small><i class="fi-plus"></i></small>
-											</span>
-										</div>
-										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_is" ng-model="new_is">
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add source" ng-model="new_is['source']">
-											</div>
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add identifier" ng-blur="add_is=false;jsonListPush('is',new_is);new_is={};" ng-model="new_is['id']">
-											</div>
-										</div>
-									</div>
-								</div>
-
 								<!--is_versionOf-->
 								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
 									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="is_versionOf_view" ng-click="is_versionOf_view=!is_versionOf_view">
 										<div class="row">
-											is version of
+											Version of
 										</div>
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
@@ -793,7 +717,45 @@
 									</div>
 								</div>
 
-								<!--references-->
+								<!--Notes-->
+								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
+									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="notes_view" ng-click="notes_view=!notes_view">
+										<div class="row">
+											Notes
+										</div>
+									</div>
+									<div class="large-12 medium-12 small-12 columns">							
+										<div class="row animate-show-hide" ng-show="notes_view">
+											<!-- notes list -->
+											<span ng-repeat="i in record.notes | orderBy">
+												<small>
+													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
+														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
+														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
+														<span ng-click="jsonListPop('notes',i)">
+															<i style="color: #666666" class="fi-x-circle"></i>
+														</span>
+													</span>
+												</small>
+											</span>
+											<!-- Add note -->
+											<span ng_model="add_note" ng-init="add_note=false" ng-click="add_note=!add_note">
+												<small><i class="fi-plus"></i></small>
+											</span>
+										</div>
+										<!-- Source -->
+										<div class="row animate-show-hide" ng-show="add_notes" ng-model="new_notes">
+											<div class="large-6 medium-6 small-6 columns">
+												<input type="text" placeholder="Add source" ng-model="new_notes['source']">
+											</div>
+											<div class="large-6 medium-6 small-6 columns">
+												<input type="text" placeholder="Add identifier" ng-blur="add_notes=false;jsonListPush('notes',new_notes);new_notes={};" ng-model="new_notes['id']">
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!--References-->
 								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
 									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="references_view" ng-click="references_view=!references_view">
 										<div class="row">
@@ -802,28 +764,22 @@
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="references_view">
-											<!-- Flicker -->
-											<div class="large-1 medium-1 small-1 columns">
-												<!-- Left -->
-												 <a href="#" ng-click="refTick('down',record.references.length)"><i class="fi-arrow-left"></i></a>
-											</div>
-											<!-- Reference -->
-											<div class="large-10 medium-10 small-10 columns" style="background-color: white">
-												{{reference}}
-											</div>
-											<div class="large-1 medium-1 small-1 columns">
-												<!-- Left -->
-												<a href="#" ng-click="refTick('up',record.references.length)"><i class="fi-arrow-right"></i></a>
-											</div>
-										</div>
-										<div class="row animate-show-hide" ng-show="references_view">										
-											<div class="large-10 medium-10 small-10 columns">
-												<small>{{refTicker}}/{{record.references.length}}</small>
-											</div>
-											<!-- Add references -->
-											<div class="large-2 medium-2 small-2 columns" ng_model="add_references" ng-init="add_references=false" ng-click="add_references=!add_references">
+											<!-- References list -->
+											<span ng-repeat="i in record.references | orderBy">
+												<small>
+													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
+														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
+														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
+														<span ng-click="jsonListPop('references',i)">
+															<i style="color: #666666" class="fi-x-circle"></i>
+														</span>
+													</span>
+												</small>
+											</span>
+											<!-- Add is -->
+											<span ng_model="add_references" ng-init="add_references=false" ng-click="add_references=!add_references">
 												<small><i class="fi-plus"></i></small>
-											</div>
+											</span>
 										</div>
 										<!-- Source -->
 										<div class="row animate-show-hide" ng-show="add_references" ng-model="new_references">
@@ -831,12 +787,12 @@
 												<input type="text" placeholder="Add source" ng-model="new_references['source']">
 											</div>
 											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add identifier/URL" ng-blur="add_references=false;jsonListPush('references',new_references);new_references={};" ng-model="new_references['id']">
+												<input type="text" placeholder="Add identifier" ng-blur="add_is=false;jsonListPush('references',new_references);new_references={};" ng-model="new_references['id']">
 											</div>
 										</div>
 									</div>
+								</div>
 
-							</div>
 							</div>
 
 							<!-- REACTION -->
@@ -894,7 +850,6 @@
 									</span>
 								</div>								
 							</div>
-
 							<!-- Column 1 -->
 							<div ng-if="label=='reaction' && selection!=''" class="large-6 medium-6 small-6 columns" style="padding: 0px;">
 								<!--Synonyms-->
@@ -1050,11 +1005,12 @@
 							</div>
 							<!-- Column 2 -->
 							<div ng-if="label=='reaction' && selection!=''" class="large-6 medium-6 small-6 columns" style="padding: 0px;">
+
 								<!--isDescribedBy-->
 								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
 									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="describedBy_view" ng-click="describedBy_view=!describedBy_view">
 										<div class="row">
-											is described by
+											Described by
 										</div>
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
@@ -1088,87 +1044,11 @@
 									</div>
 								</div>
 
-								<!--is_a-->
-								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
-									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="is_a_view" ng-click="is_a_view=!is_a_view">
-										<div class="row">
-											is a
-										</div>
-									</div>
-									<div class="large-12 medium-12 small-12 columns">							
-										<div class="row animate-show-hide" ng-show="is_a_view">
-											<!-- isDescribedBy list -->
-											<span ng-repeat="i in record.is_a | orderBy">
-												<small>
-													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
-														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
-														<span ng-click="jsonListPop('is_a',i)">
-															<i style="color: #666666" class="fi-x-circle"></i>
-														</span>
-													</span>
-												</small>
-											</span>
-											<!-- Add is_a -->
-											<span ng_model="add_is_a" ng-init="add_is_a=false" ng-click="add_is_a=!add_is_a">
-												<small><i class="fi-plus"></i></small>
-											</span>
-										</div>
-										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_is_a" ng-model="new_is_a">
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add source" ng-model="new_is_a['source']">
-											</div>
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add identifier" ng-blur="add_is_a=false;jsonListPush('is_a',new_is_a);new_is_a={};" ng-model="new_is_a['id']">
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<!--is-->
-								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
-									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="is_view" ng-click="is_view=!is_view">
-										<div class="row">
-											is
-										</div>
-									</div>
-									<div class="large-12 medium-12 small-12 columns">							
-										<div class="row animate-show-hide" ng-show="is_view">
-											<!-- isDescribedBy list -->
-											<span ng-repeat="i in record.is | orderBy">
-												<small>
-													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
-														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
-														<span ng-click="jsonListPop('is',i)">
-															<i style="color: #666666" class="fi-x-circle"></i>
-														</span>
-													</span>
-												</small>
-											</span>
-											<!-- Add is -->
-											<span ng_model="add_is" ng-init="add_is=false" ng-click="add_is=!add_is">
-												<small><i class="fi-plus"></i></small>
-											</span>
-										</div>
-										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_is" ng-model="new_is">
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add source" ng-model="new_is['source']">
-											</div>
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add identifier" ng-blur="add_is=false;jsonListPush('is',new_is);new_is={};" ng-model="new_is['id']">
-											</div>
-										</div>
-									</div>
-								</div>
-
 								<!--is_versionOf-->
 								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
 									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="is_versionOf_view" ng-click="is_versionOf_view=!is_versionOf_view">
 										<div class="row">
-											is version of
+											Version of
 										</div>
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
@@ -1197,6 +1077,82 @@
 											</div>
 											<div class="large-6 medium-6 small-6 columns">
 												<input type="text" placeholder="Add identifier" ng-blur="add_is_versionOf=false;jsonListPush('is_versionOf',new_is_versionOf);new_is_versionOf={};" ng-model="new_is_versionOf['id']">
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!--Notes-->
+								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
+									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="notes_view" ng-click="notes_view=!notes_view">
+										<div class="row">
+											Notes
+										</div>
+									</div>
+									<div class="large-12 medium-12 small-12 columns">							
+										<div class="row animate-show-hide" ng-show="notes_view">
+											<!-- notes list -->
+											<span ng-repeat="i in record.notes | orderBy">
+												<small>
+													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
+														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
+														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
+														<span ng-click="jsonListPop('notes',i)">
+															<i style="color: #666666" class="fi-x-circle"></i>
+														</span>
+													</span>
+												</small>
+											</span>
+											<!-- Add note -->
+											<span ng_model="add_note" ng-init="add_note=false" ng-click="add_note=!add_note">
+												<small><i class="fi-plus"></i></small>
+											</span>
+										</div>
+										<!-- Source -->
+										<div class="row animate-show-hide" ng-show="add_notes" ng-model="new_notes">
+											<div class="large-6 medium-6 small-6 columns">
+												<input type="text" placeholder="Add source" ng-model="new_notes['source']">
+											</div>
+											<div class="large-6 medium-6 small-6 columns">
+												<input type="text" placeholder="Add identifier" ng-blur="add_notes=false;jsonListPush('notes',new_notes);new_notes={};" ng-model="new_notes['id']">
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!--References-->
+								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
+									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="references_view" ng-click="references_view=!references_view">
+										<div class="row">
+											References
+										</div>
+									</div>
+									<div class="large-12 medium-12 small-12 columns">							
+										<div class="row animate-show-hide" ng-show="references_view">
+											<!-- References list -->
+											<span ng-repeat="i in record.references | orderBy">
+												<small>
+													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
+														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
+														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
+														<span ng-click="jsonListPop('references',i)">
+															<i style="color: #666666" class="fi-x-circle"></i>
+														</span>
+													</span>
+												</small>
+											</span>
+											<!-- Add is -->
+											<span ng_model="add_references" ng-init="add_references=false" ng-click="add_references=!add_references">
+												<small><i class="fi-plus"></i></small>
+											</span>
+										</div>
+										<!-- Source -->
+										<div class="row animate-show-hide" ng-show="add_references" ng-model="new_references">
+											<div class="large-6 medium-6 small-6 columns">
+												<input type="text" placeholder="Add source" ng-model="new_references['source']">
+											</div>
+											<div class="large-6 medium-6 small-6 columns">
+												<input type="text" placeholder="Add identifier" ng-blur="add_is=false;jsonListPush('references',new_references);new_references={};" ng-model="new_references['id']">
 											</div>
 										</div>
 									</div>
@@ -1292,15 +1248,13 @@
 								</div>
 
 							</div>
-
 							<!-- Column 2 -->
 							<div ng-if="label=='compartment' && selection!=''" class="large-6 medium-6 small-6 columns" style="padding: 0px;">
-
 								<!--isDescribedBy-->
 								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
 									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="describedBy_view" ng-click="describedBy_view=!describedBy_view">
 										<div class="row">
-											is described by
+											Described by
 										</div>
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
@@ -1334,87 +1288,11 @@
 									</div>
 								</div>
 
-								<!--is_a-->
-								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
-									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="is_a_view" ng-click="is_a_view=!is_a_view">
-										<div class="row">
-											is a
-										</div>
-									</div>
-									<div class="large-12 medium-12 small-12 columns">							
-										<div class="row animate-show-hide" ng-show="is_a_view">
-											<!-- isDescribedBy list -->
-											<span ng-repeat="i in record.is_a | orderBy">
-												<small>
-													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
-														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
-														<span ng-click="jsonListPop('is_a',i)">
-															<i style="color: #666666" class="fi-x-circle"></i>
-														</span>
-													</span>
-												</small>
-											</span>
-											<!-- Add is_a -->
-											<span ng_model="add_is_a" ng-init="add_is_a=false" ng-click="add_is_a=!add_is_a">
-												<small><i class="fi-plus"></i></small>
-											</span>
-										</div>
-										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_is_a" ng-model="new_is_a">
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add source" ng-model="new_is_a['source']">
-											</div>
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add identifier" ng-blur="add_is_a=false;jsonListPush('is_a',new_is_a);new_is_a={};" ng-model="new_is_a['id']">
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<!--is-->
-								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
-									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="is_view" ng-click="is_view=!is_view">
-										<div class="row">
-											is
-										</div>
-									</div>
-									<div class="large-12 medium-12 small-12 columns">							
-										<div class="row animate-show-hide" ng-show="is_view">
-											<!-- isDescribedBy list -->
-											<span ng-repeat="i in record.is | orderBy">
-												<small>
-													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
-														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
-														<span ng-click="jsonListPop('is',i)">
-															<i style="color: #666666" class="fi-x-circle"></i>
-														</span>
-													</span>
-												</small>
-											</span>
-											<!-- Add is -->
-											<span ng_model="add_is" ng-init="add_is=false" ng-click="add_is=!add_is">
-												<small><i class="fi-plus"></i></small>
-											</span>
-										</div>
-										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_is" ng-model="new_is">
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add source" ng-model="new_is['source']">
-											</div>
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add identifier" ng-blur="add_is=false;jsonListPush('is',new_is);new_is={};" ng-model="new_is['id']">
-											</div>
-										</div>
-									</div>
-								</div>
-
 								<!--is_versionOf-->
 								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
 									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="is_versionOf_view" ng-click="is_versionOf_view=!is_versionOf_view">
 										<div class="row">
-											is version of
+											Version of
 										</div>
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
@@ -1447,6 +1325,83 @@
 										</div>
 									</div>
 								</div>
+
+								<!--Notes-->
+								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
+									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="notes_view" ng-click="notes_view=!notes_view">
+										<div class="row">
+											Notes
+										</div>
+									</div>
+									<div class="large-12 medium-12 small-12 columns">							
+										<div class="row animate-show-hide" ng-show="notes_view">
+											<!-- notes list -->
+											<span ng-repeat="i in record.notes | orderBy">
+												<small>
+													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
+														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
+														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
+														<span ng-click="jsonListPop('notes',i)">
+															<i style="color: #666666" class="fi-x-circle"></i>
+														</span>
+													</span>
+												</small>
+											</span>
+											<!-- Add note -->
+											<span ng_model="add_note" ng-init="add_note=false" ng-click="add_note=!add_note">
+												<small><i class="fi-plus"></i></small>
+											</span>
+										</div>
+										<!-- Source -->
+										<div class="row animate-show-hide" ng-show="add_notes" ng-model="new_notes">
+											<div class="large-6 medium-6 small-6 columns">
+												<input type="text" placeholder="Add source" ng-model="new_notes['source']">
+											</div>
+											<div class="large-6 medium-6 small-6 columns">
+												<input type="text" placeholder="Add identifier" ng-blur="add_notes=false;jsonListPush('notes',new_notes);new_notes={};" ng-model="new_notes['id']">
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!--References-->
+								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
+									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="references_view" ng-click="references_view=!references_view">
+										<div class="row">
+											References
+										</div>
+									</div>
+									<div class="large-12 medium-12 small-12 columns">							
+										<div class="row animate-show-hide" ng-show="references_view">
+											<!-- References list -->
+											<span ng-repeat="i in record.references | orderBy">
+												<small>
+													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
+														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
+														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
+														<span ng-click="jsonListPop('references',i)">
+															<i style="color: #666666" class="fi-x-circle"></i>
+														</span>
+													</span>
+												</small>
+											</span>
+											<!-- Add is -->
+											<span ng_model="add_references" ng-init="add_references=false" ng-click="add_references=!add_references">
+												<small><i class="fi-plus"></i></small>
+											</span>
+										</div>
+										<!-- Source -->
+										<div class="row animate-show-hide" ng-show="add_references" ng-model="new_references">
+											<div class="large-6 medium-6 small-6 columns">
+												<input type="text" placeholder="Add source" ng-model="new_references['source']">
+											</div>
+											<div class="large-6 medium-6 small-6 columns">
+												<input type="text" placeholder="Add identifier" ng-blur="add_is=false;jsonListPush('references',new_references);new_references={};" ng-model="new_references['id']">
+											</div>
+										</div>
+									</div>
+								</div>
+
 							</div>
 
 						</div>

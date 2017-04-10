@@ -391,7 +391,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.message_handle = $scope.port + '_' + new_label;
 		socket.on($scope.message_handle, function(latest_list) {
 			console.log('SOCKET', socket);
-			console.log('List update', $scope.message_handle, '>>>', latest_list);
+			//console.log('List update', $scope.message_handle, '>>>', latest_list);
 			$scope.gridOptions.data = latest_list;
 			$scope.grid_data = latest_list;
 			$scope.count = latest_list.length;
@@ -428,7 +428,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				console.log('Error',status,data);
 				})
 			.then(function (data) {
-				console.log('initialiseList RESTful response', data.data);
+				//console.log('initialiseList RESTful response', data.data);
 				$scope.gridOptions.data = data.data; //Commented out because this is the live-filtered list
 				$scope.grid_data = data.data; 
 				$scope.count = data.data.length;
@@ -510,7 +510,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/fetchSelection';
 			$http.post(url, angular.toJson(bundle) )
 				.success(function(data) {
-					console.log('Triggered: fetch node', data);
+					console.log('Triggered: fetch node');
 					})
 				.error(function (data, status) {
 					console.log('Error',status,data);
@@ -642,7 +642,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPop';
 		$http.post(url, angular.toJson(bundle) )
 			.success(function(data) {
-				console.log('Triggered: list pop', data);
+				console.log('Triggered: list pop');
 				})
 			.error(function (data, status) {
 				console.log('Error',status,data);
@@ -668,7 +668,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPush';
 			$http.post(url, angular.toJson(bundle) )
 				.success(function(data) {
-					console.log('Triggered: list push', data);
+					console.log('Triggered: list push');
 					})
 				.error(function (data, status) {
 					console.log('Error',status,data);
