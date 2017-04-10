@@ -861,7 +861,7 @@
 									<div class="row" style="text-align:center">
 										<span style="margin: 2px 2px 2px 2px; color: #666666">
 											<!-- Reversible -->
-											<span href="#" ng-if="record.reversible=='true'" style="text-transform:none" ng-click="updateText('reversible','false')">
+											<span href="#" ng-if="record.reversible!='false'" style="text-transform:none" ng-click="updateText('reversible','false')">
 												<i style="color: #666666" class="fi-arrow-left"></i>
 												<i style="color: #666666" class="fi-arrow-right"></i>
 											</span>
@@ -871,6 +871,7 @@
 											</span>
 										</span>
 									</div>
+									<!-- Modifiers -->
 									<div class="row" style="text-align:center">
 										<span ng-repeat="part in record.listOfModifiers | orderBy">
 											<small>
