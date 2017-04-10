@@ -439,10 +439,10 @@ def fetchFromSYNBIOCHEM():
 		#Create new enzyme
 		properties = copy.deepcopy(nodeBlank)
 		properties["id"] = str(uuid.uuid4())
-		properties["type"] = "enzyme"
+		properties["type"] = "macromolecule"
 		properties["source"] = "SYNBIOCHEM-DB"
 		properties["sourceId"] = enzyme["entry"]
-	 	properties["tags"] = ["enzyme"]
+	 	properties["tags"] = ["macromolecule"]
 
 		#Source into 'is'
 		enzyme["SYNBIOCHEM-DB"] = enzyme["entry"]
@@ -515,10 +515,10 @@ def fetchFromSYNBIOCHEM():
 		#Create new chemical
 		properties = copy.deepcopy(nodeBlank)
 		properties["id"] = str(uuid.uuid4())
-		properties["type"] = "small molecule"
+		properties["type"] = "simple chemical"
 		properties["source"] = "SYNBIOCHEM-DB"
 		properties["sourceId"] = chemical["id"]
-	 	properties["tags"] = ["metabolite"]
+	 	properties["tags"] = ["simple chemical"]
 		
 		#Source into 'is'
 		chemical["SYNBIOCHEM-DB"] = chemical["id"]
