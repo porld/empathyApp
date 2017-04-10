@@ -478,16 +478,16 @@ def fetchFromSYNBIOCHEM():
 		
 	#Broadcast list of molecules
 	#print 'Broadcast enzymes (1)'
-	cypher2 = "MATCH (n:molecule) RETURN n.id AS id, n.name AS name, n.name_level AS name_level, n.tags AS tags, n.tags_level AS tags_level"
+	cypher2 = "MATCH (n:molecule) RETURN n.id AS id, n.name AS name, n.inCompartment AS compartment, n.tags AS tags"
 	response2 = send_cypher(cypher2,{},port)
 	cypher_response = response2.json()
 	new_list = []
 	for row in cypher_response["results"][0]["data"]:
 		id = row["row"][0]
 		name = row["row"][1]
-		name_level = row["row"][2]
+		compartment = str( row["row"][2] )
 		tags = row["row"][3]
-		tags_level = row["row"][4]
+		name = name + '_[' + compartment[0:2] + ']'
 		new_list.append({"id":id,"name":name,"tags":tags})
 
 	#print 'Broadcast enzymes (2)', port+"_molecule"
@@ -552,16 +552,16 @@ def fetchFromSYNBIOCHEM():
 	
 	#Broadcast list of molecules
 	#print 'Broadcast chemicals (1)'
-	cypher2 = "MATCH (n:molecule) RETURN n.id AS id, n.name AS name, n.name_level AS name_level, n.tags AS tags, n.tags_level AS tags_level"
+	cypher2 = "MATCH (n:molecule) RETURN n.id AS id, n.name AS name, n.inCompartment AS compartment, n.tags AS tags"
 	response2 = send_cypher(cypher2,{},port)
 	cypher_response = response2.json()
 	new_list = []
 	for row in cypher_response["results"][0]["data"]:
 		id = row["row"][0]
 		name = row["row"][1]
-		name_level = row["row"][2]
+		compartment = str(row["row"][2])
 		tags = row["row"][3]
-		tags_level = row["row"][4]
+		name = name + '_[' + compartment[0:2] + ']'
 		new_list.append({"id":id,"name":name,"tags":tags})
 	##print new_list
 
@@ -742,16 +742,18 @@ def createNode():
 	parameters = {"props": properties}
 	response = send_cypher(cypher,parameters,port)
 	#print response.json()
-		
+	
 	#Disseminate new list of nodes
-	cypher2 = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.tags AS tags"
+	cypher2 = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.inCompartment AS compartment, n.tags AS tags"
 	response2 = send_cypher(cypher2,{},port)
 	cypher_response = response2.json()
 	new_list = []
 	for row in cypher_response["results"][0]["data"]:
 		id = row["row"][0]
 		name = row["row"][1]
-		tags = row["row"][2]
+		compartment = str( row["row"][2] )
+		tags = row["row"][3]
+		name = name + '_[' + compartment[0:2] + ']'
 		new_list.append({"id":id,"name":name,"tags":tags})
 	#print new_list
 	send_message(message_handle, new_list,  port)
@@ -794,14 +796,16 @@ def subCell():
 		#print response.json()
 		
 	#Disseminate new list of nodes
-	cypher2 = "MATCH (n:compartment) RETURN n.id AS id, n.name AS name, n.tags AS tags"
+	cypher2 = "MATCH (n:compartment) RETURN n.id AS id, n.name AS name, n.inCompartment AS compartment, n.tags AS tags"
 	response2 = send_cypher(cypher2,{},port)
 	cypher_response = response2.json()
 	new_list = []
 	for row in cypher_response["results"][0]["data"]:
 		id = row["row"][0]
 		name = row["row"][1]
-		tags = row["row"][2]
+		compartment = str( row["row"][2] )
+		tags = row["row"][3]
+		name = name + '_[' + compartment[0:2] + ']'
 		new_list.append({"id":id,"name":name,"tags":tags})
 	#print new_list
 	send_message(message_handle, new_list,  port)
@@ -830,7 +834,7 @@ def listNode():
 			compartment = str(row["row"][1])
 			name = row["row"][2]
 			tags = row["row"][3]
-			name = name + '_[' + compartment[0:1] + ']'
+			name = name + '_[' + compartment[0:2] + ']'
 			print {"id":id,"name":name,"tags":tags}
 			new_list.append({"id":id,"name":name,"tags":tags})
 	#Find with compartment and make new name
