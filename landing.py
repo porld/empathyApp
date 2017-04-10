@@ -873,7 +873,7 @@ def destroyNode():
 	#print response.json()
 
 	#Get new list of nodes
-	cypher2 = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.inCompartment AS compartment, n.tags AS tags ORDER BY name"
+	cypher2 = "MATCH (n:'" + label + "') RETURN n.id AS id, n.name AS name, n.inCompartment AS compartment, n.tags AS tags ORDER BY name"
 	response2 = send_cypher(cypher2,{},port)
 	cypher_response = response2.json()
 	new_list = []
