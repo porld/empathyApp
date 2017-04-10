@@ -769,9 +769,9 @@ def subCell():
 	#print 'Create cellular organisation', message_handle
 
 	cells = {}
-	cells["bacterium"] = {	"organelle_system":{"name":"system","inCompartment":"null"}, "organelle_cell_membrane":{"name":"cell membrane","inCompartment":"organelle_system"}, "organelle_cytosol":{"name":"cytosol","inCompartment":"organelle_cell membrane"}	}
-	cells["eukaryote"] = {	"organelle_system":{"name":"system","inCompartment":"null"}, "organelle_cell_membrane":{"name":"cell membrane","inCompartment":"organelle_system"}, "organelle_cytosol":{"name":"cytosol","inCompartment":"organelle_cell membrane"}	}
-	cells["system"] = {	"organelle_system":{"name":"system","inCompartment":"null"}, "organelle_cell_membrane":{"name":"cell_membrane","inCompartment":"organelle_system"}, "organelle_cytosol":{"name":"cytosol","inCompartment":"organelle_cell membrane"}	}
+	cells["bacterium"] = {	"extracellular":{"name":"extracellular space","inCompartment":"null"}, "membrane_cell":{"name":"cell membrane","inCompartment":"extracellular"}, "cytosol":{"name":"cytosol","inCompartment":"membrane_cell"}	}
+	cells["eukaryote"] = {	"extracellular":{"name":"extracellular","inCompartment":"null"}, "membrane_cell":{"name":"cell membrane","inCompartment":"extracellular"}, "cytosol":{"name":"cytosol","inCompartment":"membrane_cell"}	}
+	cells["system"] = {	"extracellular":{"name":"extracellular","inCompartment":"null"}, "membrane_cell":{"name":"cell membrane","inCompartment":"extracellular"}, "cytosol":{"name":"cytosol","inCompartment":"membrane_cell"}	}
 
 	try:
 		organelles = cells[cell]
