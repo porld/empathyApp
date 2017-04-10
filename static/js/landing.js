@@ -1177,8 +1177,8 @@ landingApp.directive('smilesViewer', function ($parse, $http) {
 
 					console.log('PreSMILES:', smiles);
 					console.log('End SMILES:', smiles.substr(smiles.length-1,1) );
-					if( smiles.substr(smiles.length-1,1) == '?') {
-						smiles = smiles.substr(0,smiles.length-1);
+					if( smiles[0] == '?') {
+						smiles = smiles.substr(1,smiles.length);
 						console.log('SMILES chop:', smiles);
 						}
 
