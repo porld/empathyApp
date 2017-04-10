@@ -1017,7 +1017,7 @@ def queryMolecules():
 	query = json_data['query']
 	
 	#Update node
-	cypher = "MATCH (n:molecule) WHERE n.name =~ '.*" + query + ".*' RETURN n.id AS id, n.name AS name"
+	cypher = "MATCH (n:molecule) WHERE n.name =~ '.*" + query + ".*' RETURN n.id AS id, n.name AS name, n.inCompartment AS  compartment"
 	parameters = {}
 	response = send_cypher(cypher,parameters,port)
 	results = response.json()

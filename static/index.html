@@ -178,13 +178,16 @@
 					<div ng-init="queryMatches=[]" class="small-3 medium-3 large-3 columns">
 						{{queryMatches.length}} hits
 					</div>
+					<div class="small-1 medium-1 large-1 columns" ng-click="queryModel=''">
+						clear
+					</div>
 				</div>
 				<div class="row" >
 					<div class="small-12 medium-12 large-12 columns">
 						<span ng-repeat="match in queryMatches | orderBy">
 							<small>
 								<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-									<a href="#" style="text-transform:none" ng-click="reactionBuilder(match[0])">{{match[1]}}</a>
+									<a href="#" style="text-transform:none" ng-click="reactionBuilder(match[0])">{{match[1]}}_[{{match[2]}}]</a>
 								</span>
 							</small>
 						</span>
