@@ -820,6 +820,7 @@ def listNode():
 	#Get new list of nodes
 	#Don't look for compartment (no such thing for reactions)	
 	if label == 'reaction':
+		print label, 'list'
 		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.tags AS tags ORDER BY name"
 		response = send_cypher(cypher,{},port)
 		cypher_response = response.json()
@@ -831,6 +832,7 @@ def listNode():
 			new_list.append({"id":id,"name":name,"tags":tags})
 	#Find with compartment and make new name
 	else:
+		print label, 'list'
 		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.inCompartment AS compartment, n.name AS name, n.tags AS tags ORDER BY name"
 		response = send_cypher(cypher,{},port)
 		cypher_response = response.json()
@@ -843,7 +845,7 @@ def listNode():
 			name = name + '_[' + compartment[0:1] + ']'
 			new_list.append({"id":id,"name":name,"tags":tags})
 
-	##print new_list	
+	print new_list	
 	#Broadcast if we have a message handle (we don't when the request comes from fetchCompartmentList)
 	if message_handle != '':
 		send_message(message_handle, new_list,  port)
