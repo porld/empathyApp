@@ -867,8 +867,8 @@ def destroyNode():
 	port = json_data['port']
 	
 	#Destroy node
-	cypher = "MATCH (n {id:{target}}) DELETE n"
-	parameters = {"target": target }
+	cypher = "MATCH (n {id:'" + target + "'}) DELETE n"
+	parameters = {}
 	response = send_cypher(cypher,parameters,port)
 	#print response.json()
 
