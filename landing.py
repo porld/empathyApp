@@ -807,6 +807,7 @@ def subCell():
 	send_message(message_handle, new_list,  port)
 	return json.dumps(True)
 
+#Fetch pane 1 list of type <label>
 @app.route('/listNode', methods=['POST'])
 @auth.login_required
 def listNode():
@@ -817,17 +818,32 @@ def listNode():
 	#print 'listNode', message_handle
 
 	#Get new list of nodes
-	cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.tags AS tags ORDER BY name"
-	response = send_cypher(cypher,{},port)
-	cypher_response = response.json()
-	new_list = []
-	for row in cypher_response["results"][0]["data"]:
-		id = row["row"][0]
-		name = row["row"][1]
-		tags = row["row"][2]
-		new_list.append({"id":id,"name":name,"tags":tags})
-	##print new_list
-	
+	#Don't look for compartment (no such thing for reactions)	
+	if label == 'reaction':
+		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.tags AS tags ORDER BY name"
+		response = send_cypher(cypher,{},port)
+		cypher_response = response.json()
+		new_list = []
+		for row in cypher_response["results"][0]["data"]:
+			id = row["row"][0]
+			name = row["row"][1]
+			tags = row["row"][2]
+			new_list.append({"id":id,"name":name,"tags":tags})
+	#Find with compartment and make new name
+	else:
+		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.inCompartment AS compartment, n.name AS name, n.tags AS tags ORDER BY name"
+		response = send_cypher(cypher,{},port)
+		cypher_response = response.json()
+		new_list = []
+		for row in cypher_response["results"][0]["data"]:
+			id = row["row"][0]
+			compartment = row["row"][1]
+			name = row["row"][2]
+			tags = row["row"][3]
+			name = name + '_[' + compartment[0:1] + ']'
+			new_list.append({"id":id,"name":name,"tags":tags})
+
+	##print new_list	
 	#Broadcast if we have a message handle (we don't when the request comes from fetchCompartmentList)
 	if message_handle != '':
 		send_message(message_handle, new_list,  port)
