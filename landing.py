@@ -15,7 +15,7 @@ app = Flask(__name__, static_url_path='')
 app.config['SECRET_KEY'] = 'big_secret'
 
 if len(sys.argv) != 2:
-	print'Missing arguments (landing.py <email password> <port>)'
+	print 'Missing arguments (landing.py <email password> <port>)'
 
 mail_username = 'empathy.manchester@gmail.com'
 mail_password = sys.argv[1]
@@ -49,10 +49,10 @@ def relaunch_dockers(user_credentials):
 	#First collect a list of unique Docker names
 	dockers = []
 	for user in user_credentials:
-		#print'User:', user
+		#print 'User:', user
 		reconstructions = user_credentials[user]['reconstructions']
 		for recon in reconstructions:
-			#printrecon['fsid']
+			print recon['fsid']
 			dockers.append(recon['fsid'])
 	#Unique
 	dockers = list(set(dockers))
@@ -61,21 +61,21 @@ def relaunch_dockers(user_credentials):
 	for d in dockers:
 		try:
 			subprocess.Popen(["docker", "start", d ])
-			#printd, 'success'
+			print d, 'success'
 			successes.append(d)
 		except:
-			#printd, 'failed'
+			print d, 'failed'
 			failures.append(d)
 	return successes, failures
 
 #Load previous credentials
 try:
 	user_credentials = pickle.load( open( "users.pickle", "rb" ) )
-	#printuser_credentials
-	#print'Resurrecting previous Dockers...'
+	print user_credentials
+	print 'Resurrecting previous Dockers...'
 	successes, failures = relaunch_dockers(user_credentials)
-	#print'Relaunched Dockers:', successes
-	#print'Failed to relaunch:', failures
+	print 'Relaunched Dockers:', successes
+	print 'Failed to relaunch:', failures
 except:
 	user_credentials  = {}
 	pickle.dump( user_credentials, open( "users.pickle", "wb" ) )
@@ -119,7 +119,7 @@ def send_cypher(cypher,parameters,port):
 	url = 'http://localhost:' + port + '/db/data/transaction/commit'
 	parameters = flatten_parameters(parameters)
 	query = { "statements" : [ { "statement" : cypher, "parameters" : parameters } ] }
-	##printurl, NEO_USERNAME, NEO_PASSWORD
+	##print url, NEO_USERNAME, NEO_PASSWORD
 	return requests.post(url, auth=(NEO_USERNAME,NEO_PASSWORD), data=json.dumps(query), headers=headers)
 
 #Socket  function
@@ -127,11 +127,11 @@ def send_message(handle,message,port):
 	headers = {'content-type': 'application/json'}
 	url = 'https://' + HOST + ':8082/socket'
 	try:
-		#print'Hitting socket:', url
+		#print 'Hitting socket:', url
 		requests.post(url, data=json.dumps({"handle":handle,"message":message,"port":port}), headers=headers)
 		return True
 	except:
-		#print'Could not hit socket:', url
+		#print 'Could not hit socket:', url
 		return False
 #-----------------------------------------------------------------------------------------
 
@@ -143,24 +143,24 @@ def register_user():
 	json_data = request.get_json(force=True)
 	username = json_data['username']
 	password = json_data['password']
-	#printusername, password
+	#print username, password
 	#Add to in-memory list for checking
-	#print'Check username is novel'
+	#print 'Check username is novel'
 	if username in user_credentials:
 		return json.dumps([False, 'Select different username'])
-	#print'Check username is long'
+	#print 'Check username is long'
 	if len(username) < 8:
 		return json.dumps([False, 'Username too short'])
-	#print'Check password strength'
+	#print 'Check password strength'
 	strength, _ = passwordmeter.test(password)
 	if strength < 0.3:
 		return json.dumps([False, 'Password too weak'])
-	#print'Encrypt password'
+	#print 'Encrypt password'
 	hash_pwd = sha256_crypt.encrypt(password)
-	#print'Create user'
+	#print 'Create user'
 	user_credentials[username] = {	"password": hash_pwd, "reconstructions": []	}
 	#Update the pickle
-	#print'Update pickle'
+	#print 'Update pickle'
 	pickle.dump( user_credentials, open( "users.pickle", "wb" ) )
 	return json.dumps([True, username])
 
@@ -206,7 +206,7 @@ def change_pwd():
 
 @app.route('/pwdStrength/<pwd>', methods=['GET'])
 def pwdStrength(pwd):
-	#print'Password:', pwd, 
+	#print 'Password:', pwd, 
 	strength, _ = passwordmeter.test(pwd)
 	return str(strength)
 #-----------------------------------------------------------------------------------------
@@ -218,7 +218,7 @@ def PickUnusedPort():
 	s.bind(('localhost', 0))
 	addr, port = s.getsockname()
 	s.close()
-	#print'Found free:', port
+	#print 'Found free:', port
 	return str(port)
 
 #Bring up a unique docker instance for a reconstruction
@@ -232,26 +232,26 @@ def launch_neo4j_docker():
 		if len(recon_name) == 0:
 			recon_name = 'nemo'
 		fsid = "EMPATHY_" + str(uuid.uuid4())
-		##print'DOCKER: Create Neo4j-Docker instance:', fsid
+		##print 'DOCKER: Create Neo4j-Docker instance:', fsid
 		freePort = PickUnusedPort()
-		##print'DOCKER: found port', freePort
+		##print 'DOCKER: found port', freePort
 		port_bind = "--publish=" + freePort + ":7474"
 		docker = ["docker", "run", port_bind, "--volume=/Users/paul/Fire/FS/" + fsid + ":/data", "--name", fsid, "neo4j:3.0.0"]
 		try:
-			#print'Start subprocess'
+			#print 'Start subprocess'
 			subprocess.Popen(docker)
-			#print'DOCKER: Created on port:', freePort, fsid, 'for', username
+			print 'DOCKER: Created on port:', freePort, fsid, 'for', username
 			user = user_credentials[username]
 			reconstructions = user['reconstructions']
-			#print'Reconstructions (before)', reconstructions
+			#print 'Reconstructions (before)', reconstructions
 			recon = {"name":recon_name,"port":freePort,"fsid":fsid}
-			#print'Recon', recon
+			#print 'Recon', recon
 			reconstructions.append(recon)
-			#print'Reconstructions (after)', reconstructions
+			#print 'Reconstructions (after)', reconstructions
 			user["reconstructions"] = reconstructions
-			#print'User', user
+			#print 'User', user
 			user_credentials[username] = user
-			#print'Credentials', user_credentials
+			#print 'Credentials', user_credentials
 			#Update the pickle
 			pickle.dump( user_credentials, open( "users.pickle", "wb" ) )
 			return json.dumps([freePort, fsid])
@@ -264,7 +264,7 @@ def launch_neo4j_docker():
 @app.route('/checkLive', methods=['POST'])
 @auth.login_required
 def checkLive():
-	#print'Check live'
+	print 'Check live'
 	json_data = request.get_json(force=True)
 	username = json_data['username']
 	recon_name = json_data['recon_name']
@@ -275,50 +275,50 @@ def checkLive():
 		notes = 'None provided'
 
 	url = 'http://localhost:' + port + '/db/data/transaction/commit'
-	#print'Hitting', url
+	print 'Hitting', url
 	i = 1
 	live = [False, i]
 	while not live[0] and i <= 60:
 		try:
 			response = requests.post(url)
-			#printi, 'Live on', port
+			#print i, 'Live on', port
 			live = [True,i]
 		except:
-			#printi, 'Not live on', port
+			#print i, 'Not live on', port
 			live = [False,i]
 		time.sleep(1)
 		i = i + 1
 	if live[0]:
-		#print'Alive'
+		print 'Alive'
 		#Change default password to EMPATHY password
-		#print'Changing default password'
+		#print 'Changing default password'
 		headers = {'content-type': 'application/json'}
 		pwd_response = requests.post('http://localhost:' + port + '/user/neo4j/password', auth=('neo4j','neo4j'), data=json.dumps({"password":NEO_PASSWORD}), headers=headers)
 		
 		#Create recon node
 		time.sleep(3) #Just wait a minute
-		#print'Create reconstruction node'
+		#print 'Create reconstruction node'
 		node_id = str(uuid.uuid4())
 		properties = {"id": node_id, "founder":username,"name":recon_name,"notes":notes}
-		#printproperties
+		#print properties
 		cypher = "CREATE (n:recon {props}) RETURN n"
 		parameters = {"props": properties}
 		response = send_cypher(cypher,parameters,port)
-		#printresponse.json()
+		#print response.json()
 		
 		return json.dumps([True,'Created ' + recon_name + ' on port ' + port])
 	else:
-		#print'Given up'
+		print 'Given up'
 		return json.dumps([False,'Could not create ' + recon_name + ' on port ' + port])
 
 #Fetch the user's list of recons
 @app.route('/userRecons', methods=['POST'])
 @auth.login_required
 def userRecons():
-	#print'Fetch user reconstructions'
+	print 'Fetch user reconstructions'
 	json_data = request.get_json(force=True)
 	username = json_data['username']
-	#print'User recons username:', username
+	#print 'User recons username:', username
 	if username in user_credentials:
 		user = user_credentials[username]
 		reconstructions = user["reconstructions"]
@@ -330,7 +330,7 @@ def userRecons():
 @app.route('/msgNewUser', methods=['POST'])
 @auth.login_required
 def msgNewUser():
-	#print'Add user to reconstruction 1'
+	print 'Add user to reconstruction 1'
 	json_data = request.get_json(force=True)
 	username = json_data["username"]
 	recon = json_data["recon"]
@@ -353,28 +353,28 @@ def msgNewUser():
 @app.route('/addNewUser', methods=['POST'])
 @auth.login_required
 def addNewUser():
-	#print'Add user to reconstruction 2'
+	print 'Add user to reconstruction 2'
 	json_data = request.get_json(force=True)
 	username = json_data["username"]
 	token = json_data["token"]
-	#printusername, token
+	#print username, token
 	user = user_credentials[username]
 	recons = user["reconstructions"]
 	try:
 		#Look up token	
-		#print'Resolve token'
+		print 'Resolve token'
 		recon_details = tokens[token]
-		#print'Resolve recon details', recon_details
+		print 'Resolve recon details', recon_details
 		recons.append(recon_details)
-		#print'Reconstructions', recons
+		print 'Reconstructions', recons
 		user["reconstructions"] = recons
-		#print'Updated user', user
+		print 'Updated user', user
 		user_credentials[username] = user
 		#Write to pickle
-		#print'Write update credentials'
+		#print 'Write update credentials'
 		pickle.dump( user_credentials, open( "users.pickle", "wb" ) )
 		#Remove token
-		#print'Remove token', token
+		#print 'Remove token', token
 		del tokens[token]
 		return json.dumps([True,recon_details])
 	except:
@@ -402,10 +402,10 @@ def makeConnection():
 	cypher = "MATCH (r:reaction {id:'" + reaction + "'}), (e:molecule {id:'" + molecule + "'}) CREATE (r)-[:" + role + "]->(e)"
 	parameters = {}
 	response = send_cypher(cypher,parameters,port)
-	#printresponse.json()
+	#print response.json()
 		
 	#Emit updated record
-	#print'BROADCAST:', record_handle
+	#print 'BROADCAST:', record_handle
 	send_message(record_handle, {"key":"","value":"","id":reaction}, port)
 	return json.dumps(True)
 
@@ -415,18 +415,18 @@ def fetchFromSYNBIOCHEM():
 	json_data = request.get_json(force=True)
 	port = json_data['port']
 	ncbi = json_data['ncbi']
-	#print'Fetch from SYNBIOCHEM-DB:', ncbi
+	print 'Fetch from SYNBIOCHEM-DB:', ncbi
 
 	#--------------------------------------------
 	#ENZYMES
 	#Get enzymes
-	#print'Get enzymes'
+	#print 'Get enzymes'
 	cypher = "MATCH (n:Organism)<-[*]-(o:Organism)-[]-(e:Enzyme) WHERE (n.taxonomy='" + ncbi + "') RETURN DISTINCT(e) AS enzyme"
 	headers = {'content-type': 'application/json'}
 	query = { "statements" : [ { "statement" : cypher } ] }
 	synbiochem = requests.post('http://db.synbiochem.co.uk/db/data/transaction/commit', data=json.dumps(query), headers=headers)
 
-	#print'Put enzymes'
+	#print 'Put enzymes'
 	is_keys = ["SYNBIOCHEM-DB"]
 	is_a_keys = []
 	property_keys = []
@@ -477,7 +477,7 @@ def fetchFromSYNBIOCHEM():
 		response = send_cypher(cypher,parameters,port)
 		
 	#Broadcast list of molecules
-	#print'Broadcast enzymes (1)'
+	#print 'Broadcast enzymes (1)'
 	cypher2 = "MATCH (n:molecule) RETURN n.id AS id, n.name AS name, n.name_level AS name_level, n.tags AS tags, n.tags_level AS tags_level"
 	response2 = send_cypher(cypher2,{},port)
 	cypher_response = response2.json()
@@ -490,21 +490,21 @@ def fetchFromSYNBIOCHEM():
 		tags_level = row["row"][4]
 		new_list.append({"id":id,"name":name,"tags":tags})
 
-	#print'Broadcast enzymes (2)', port+"_molecule"
+	#print 'Broadcast enzymes (2)', port+"_molecule"
 	send_message(port+"_molecule", new_list,  port)
 	#--------------------------------------------
 
 	#--------------------------------------------
 	#CHEMICALS
 	#Get chemicals
-	#print'Get chemicals'
+	#print 'Get chemicals'
 	cypher = "MATCH (n:Organism)<-[*]-(o:Organism)-[]-(e:Enzyme)-[]-(r:Reaction)-[t]-(c:Chemical) WHERE (n.taxonomy='" + ncbi + "') RETURN DISTINCT(c) AS chemical"
 	headers = {'content-type': 'application/json'}
 	query = { "statements" : [ { "statement" : cypher } ] }
 	synbiochem = requests.post('http://db.synbiochem.co.uk/db/data/transaction/commit', data=json.dumps(query), headers=headers)
 	chemicals = synbiochem.json()
 
-	#print'Put chemicals'
+	#print 'Put chemicals'
 	is_keys = []
 	isDescribedBy_keys = ["mnx","metacyc","knapsack","chebi","inchi","smiles","kegg.compound","lipidmaps","hmdb","cas","wikipedia.en"]
 	isVersionOf_keys = []
@@ -551,7 +551,7 @@ def fetchFromSYNBIOCHEM():
 		response = send_cypher(cypher,parameters,port)
 	
 	#Broadcast list of molecules
-	#print'Broadcast chemicals (1)'
+	#print 'Broadcast chemicals (1)'
 	cypher2 = "MATCH (n:molecule) RETURN n.id AS id, n.name AS name, n.name_level AS name_level, n.tags AS tags, n.tags_level AS tags_level"
 	response2 = send_cypher(cypher2,{},port)
 	cypher_response = response2.json()
@@ -563,23 +563,23 @@ def fetchFromSYNBIOCHEM():
 		tags = row["row"][3]
 		tags_level = row["row"][4]
 		new_list.append({"id":id,"name":name,"tags":tags})
-	##printnew_list
+	##print new_list
 
-	#print'Broadcast chemicals (2)', port+"_molecule"
+	#print 'Broadcast chemicals (2)', port+"_molecule"
 	send_message(port+"_molecule", new_list,  port)
 	#--------------------------------------------
 
 	#--------------------------------------------
 	#REACTIONS
 	#Get reactions
-	#print'Get reactions'
+	#print 'Get reactions'
 	cypher = "MATCH (n:Organism)<-[*]-(o:Organism)-[]-(e:Enzyme)-[]-(r:Reaction) WHERE (n.taxonomy='" + ncbi + "') RETURN DISTINCT(r) AS reaction"
 	headers = {'content-type': 'application/json'}
 	query = { "statements" : [ { "statement" : cypher } ] }
 	synbiochem = requests.post('http://db.synbiochem.co.uk/db/data/transaction/commit', data=json.dumps(query), headers=headers)
 	reactions = synbiochem.json()
 
-	#print'Put reactions'
+	#print 'Put reactions'
 	is_keys = []
 	isDescribedBy_keys = ["rhea","kegg.reaction","ec","seed","metacyc","reactome","bigg.reaction"]
 	isVersionOf_keys = []
@@ -628,19 +628,19 @@ def fetchFromSYNBIOCHEM():
 	#--------------------------------------------
 	#MODIFIERS
 	#Build enzyme-reaction links
-	#print'Get modifiers'
+	#print 'Get modifiers'
 	cypher = "MATCH (n:Organism)<-[*]-(o:Organism)-[]-(e:Enzyme)-[l]-(r:Reaction) WHERE (n.taxonomy='" + ncbi + "') RETURN COLLECT(l.source) AS link, r.id AS reactionId, e.entry AS enzymeId"
 	headers = {'content-type': 'application/json'}
 	query = { "statements" : [ { "statement" : cypher } ] }
 	synbiochem = requests.post('http://db.synbiochem.co.uk/db/data/transaction/commit', data=json.dumps(query), headers=headers)
 	links = synbiochem.json()
 
-	#print'Put modifiers'
+	#print 'Put modifiers'
 	for l in links["results"][0]["data"]:
 		properties = l["row"][0]
 		reactionId = l["row"][1]
 		enzymeId = l["row"][2]
-		##print'LINKS', properties, reactionId, enzymeId
+		##print 'LINKS', properties, reactionId, enzymeId
 		cypher = "MATCH (r:reaction {sourceId:'" + reactionId + "'}), (e:molecule {sourceId:'" + enzymeId + "'}) CREATE (r)-[:hasModifier {props}]->(e)"
 		parameters = {"props": {"source":properties} }
 		response = send_cypher(cypher,parameters,port)
@@ -649,15 +649,15 @@ def fetchFromSYNBIOCHEM():
 	#--------------------------------------------
 	#REACTANTS/PRODUCTS
 	#Build reaction-metabolite links
-	#print'Get reactants and products'
+	#print 'Get reactants and products'
 	cypher = "MATCH (n:Organism)<-[*]-(o:Organism)-[]-(e:Enzyme)-[]-(r:Reaction)-[l]-(c:Chemical) WHERE (n.taxonomy='" + ncbi + "') RETURN l AS link, TYPE(l) AS label, r.id AS reactionId, c.id AS chemicalId"
 	headers = {'content-type': 'application/json'}
 	query = { "statements" : [ { "statement" : cypher } ] }
 	synbiochem = requests.post('http://db.synbiochem.co.uk/db/data/transaction/commit', data=json.dumps(query), headers=headers)
 	links = synbiochem.json()
-	##printlinks
+	##print links
 
-	#print'Put reactants and products'
+	#print 'Put reactants and products'
 	#Some weird flattening required
 	uniq = []
 	for l in links["results"][0]["data"]:
@@ -685,7 +685,7 @@ def fetchFromSYNBIOCHEM():
 
 	#--------------------------------------------
 	#CAUTION! ROGUE REACTIONS! (Reactions without participants)
-	#print'Caution! Rogue robots! Removing reactions without reactants or products'
+	#print 'Caution! Rogue robots! Removing reactions without reactants or products'
 
 	#Remove links on dangling reactions
 	cypher = "MATCH (r:reaction) WHERE NOT (r)-[:hasReactant|hasProduct]-() MATCH (r)-[l]-() DELETE(l)"
@@ -700,7 +700,7 @@ def fetchFromSYNBIOCHEM():
 
 	#--------------------------------------------
 	#Broadcast list of reactions
-	#print'Broadcast reactions (1)'
+	#print 'Broadcast reactions (1)'
 	cypher2 = "MATCH (n:reaction) RETURN n.id AS id, n.name AS name, n.name_level AS name_level, n.tags AS tags, n.tags_level AS tags_level"
 	response2 = send_cypher(cypher2,{},port)
 	cypher_response = response2.json()
@@ -712,12 +712,12 @@ def fetchFromSYNBIOCHEM():
 		tags = row["row"][3]
 		tags_level = row["row"][4]
 		new_list.append({"id":id,"name":name,"tags":tags})
-	##printnew_list
-	#print'Broadcast reactions (2)', port+"_reaction"	
+	##print new_list
+	#print 'Broadcast reactions (2)', port+"_reaction"	
 	send_message(port+"_reaction", new_list,  port)
 	#--------------------------------------------
 
-	#print'SYNBIOCHEM-DB import complete'
+	print 'SYNBIOCHEM-DB import complete'
 	return json.dumps(True)
 
 @app.route('/createNode', methods=['POST'])
@@ -727,7 +727,7 @@ def createNode():
 	port = json_data['port']
 	message_handle = json_data['message_handle'] #<port>_<type>
 	label = json_data['label']
-	#print'Create node', message_handle
+	print 'Create node', message_handle
 
 	#Create new node
 	properties = copy.deepcopy(nodeBlank)
@@ -741,7 +741,7 @@ def createNode():
 	cypher = "CREATE (n:" + label + " {props}) RETURN n"
 	parameters = {"props": properties}
 	response = send_cypher(cypher,parameters,port)
-	#printresponse.json()
+	#print response.json()
 		
 	#Disseminate new list of nodes
 	cypher2 = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.tags AS tags"
@@ -753,7 +753,7 @@ def createNode():
 		name = row["row"][1]
 		tags = row["row"][2]
 		new_list.append({"id":id,"name":name,"tags":tags})
-	#printnew_list
+	#print new_list
 	send_message(message_handle, new_list,  port)
 	return properties["id"]
 
@@ -764,7 +764,7 @@ def subCell():
 	port = json_data['port']
 	cell = json_data['cell'] #Use this to build in logic for different cell types
 	message_handle = json_data['message_handle'] #<port>_<type>
-	#print'Create cellular organisation', message_handle
+	#print 'Create cellular organisation', message_handle
 
 	cells = {}
 	cells["bacterium"] = {	"organelle_system":{"name":"system","inCompartment":"null"}, "organelle_cell_membrane":{"name":"cell membrane","inCompartment":"organelle_system"}, "organelle_cytosol":{"name":"cytosol","inCompartment":"organelle_cell membrane"}	}
@@ -791,7 +791,7 @@ def subCell():
 		cypher = "CREATE (n:compartment {props}) RETURN n"
 		parameters = {"props": properties}
 		response = send_cypher(cypher,parameters,port)
-		#printresponse.json()
+		#print response.json()
 		
 	#Disseminate new list of nodes
 	cypher2 = "MATCH (n:compartment) RETURN n.id AS id, n.name AS name, n.tags AS tags"
@@ -803,7 +803,7 @@ def subCell():
 		name = row["row"][1]
 		tags = row["row"][2]
 		new_list.append({"id":id,"name":name,"tags":tags})
-	#printnew_list
+	#print new_list
 	send_message(message_handle, new_list,  port)
 	return json.dumps(True)
 
@@ -814,7 +814,7 @@ def listNode():
 	label = json_data['label']
 	message_handle = json_data['message_handle'] #<port>_<type>
 	port = json_data['port']
-	#print'listNode', message_handle
+	#print 'listNode', message_handle
 
 	#Get new list of nodes
 	cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.tags AS tags ORDER BY name"
@@ -826,7 +826,7 @@ def listNode():
 		name = row["row"][1]
 		tags = row["row"][2]
 		new_list.append({"id":id,"name":name,"tags":tags})
-	##printnew_list
+	##print new_list
 	
 	#Broadcast if we have a message handle (we don't when the request comes from fetchCompartmentList)
 	if message_handle != '':
@@ -847,7 +847,7 @@ def destroyNode():
 	cypher = "MATCH (n {id:{target}}) DELETE n"
 	parameters = {"target": target }
 	response = send_cypher(cypher,parameters,port)
-	#printresponse.json()
+	#print response.json()
 
 	#Get new list of nodes
 	cypher2 = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.tags AS tags ORDER BY name"
@@ -859,7 +859,7 @@ def destroyNode():
 		name = row["row"][1]
 		tags = row["row"][2]
 		new_list.append({"id":id,"name":name,"tags":tags})
-	#printnew_list
+	#print new_list
 	send_message(message_handle, new_list,  port)
 	return json.dumps(True)
 
@@ -872,13 +872,13 @@ def updateText():
 	id = json_data['id']
 	key = json_data['key']
 	value = json_data['value']
-	#print'UPDATE\tid:', id, 'key:', key, 'value:', value
+	#print 'UPDATE\tid:', id, 'key:', key, 'value:', value
 	
 	#Update node
 	cypher = "MATCH (n) WHERE n.id='" + id + "' SET n." + key + "={value} RETURN n"
 	parameters = {"value":value}
 	response = send_cypher(cypher,parameters,port)
-	#print'BROADCAST:', record_handle, key, value
+	#print 'BROADCAST:', record_handle, key, value
 	send_message(record_handle, {'key':key,'value':value, 'id': id},  port)
 	return json.dumps(True)
 
@@ -889,7 +889,7 @@ def fetchSelection():
 	port = json_data['port']
 	selection = json_data['selection']
 	label = json_data['label']
-	#print'Fetch selection:', port, selection, label
+	#print 'Fetch selection:', port, selection, label
 
 	#Fetch core of node
 	cypher = "MATCH (n) WHERE n.id='" + selection + "' RETURN n"
@@ -962,7 +962,7 @@ def listPop():
 	cypher = 'MATCH (n) WHERE n.id="' + id + '" SET n.' + key + '={value} RETURN n'
 	parameters = {"value":value}
 	response = send_cypher(cypher,parameters,port)
-	#print'BROADCAST:', record_handle, key, value
+	#print 'BROADCAST:', record_handle, key, value
 	send_message(record_handle, {'key':key,'value':value, 'id': id},  port)
 	return json.dumps(True)
 
@@ -976,13 +976,13 @@ def listPush():
 	key = json_data['key']
 	value = json_data['value']
 	#value = list(set(value))
-	#print'listPush:', key, value
+	#print 'listPush:', key, value
 	
 	#Update node
 	cypher = 'MATCH (n) WHERE n.id="' + id + '" SET n.' + key + '={value} RETURN n'
 	parameters = {"value":value}
 	response = send_cypher(cypher,parameters,port)
-	#print'BROADCAST:', record_handle, key, value
+	#print 'BROADCAST:', record_handle, key, value
 	send_message(record_handle, {'key':key,'value':value, 'id': id},  port)
 	return json.dumps(True)
 	
@@ -998,7 +998,7 @@ def queryMolecules():
 	parameters = {}
 	response = send_cypher(cypher,parameters,port)
 	results = response.json()
-	##printresults
+	##print results
 	matches = [];
 	for row in results["results"][0]["data"]:
 		match = row["row"]
@@ -1013,7 +1013,7 @@ def createMessage():
 	parent = json_data['parentMessage']
 	poster = json_data['poster']
 	message = json_data['message']
-	#print'Create thread node'
+	#print 'Create thread node'
 	
 	properties = {}
 	properties["id"] = str(uuid.uuid4())
@@ -1025,14 +1025,14 @@ def createMessage():
 	cypher = "CREATE (n:message {props}) RETURN n"
 	parameters = {"props": properties}
 	response = send_cypher(cypher,parameters,port)
-	##printresponse.json()
+	##print response.json()
 
 	#If the message has a parent (is not a new message) add the link	
 	if parent != '':
 		cypher = "MATCH (p:message {id:'" + parent + "'}), (m:message {id:'" + id + "'}) CREATE (p)<-[:thread]-(e)"
 		parameters = {}
 		response = send_cypher(cypher,parameters,port)
-		#printresponse.json()
+		#print response.json()
 	
 	return json.dumps(True)
 
@@ -1041,7 +1041,7 @@ def createMessage():
 def threadList():
 	json_data = request.get_json(force=True)
 	port = json_data['port']
-	#print'Fetch all messages'
+	#print 'Fetch all messages'
 	
 	cypher = "MATCH (n:message) WHERE NOT (n)-[:thread]->(:message) RETURN n"
 	parameters = {}
@@ -1061,7 +1061,7 @@ def getThread():
 	json_data = request.get_json(force=True)
 	port = json_data['port']
 	thread = json_data['thread']
-	#print'Fetch thread', thread	
+	#print 'Fetch thread', thread	
 	cypher = "MATCH (n:message)<-[*0..10000]-(m:message) WHERE n.id='" + thread + "'RETURN n, m"
 	parameters = {}
 	response = send_cypher(cypher,parameters,port)
@@ -1077,7 +1077,7 @@ def chat():
 	chat = json_data['chat']
 	port = json_data['port']
 	chat['unique'] = str(uuid.uuid4())
-	#print'BROADCAST:', chat_handle, chat
+	#print 'BROADCAST:', chat_handle, chat
 	send_message(chat_handle, chat,  port)
 
 	return json.dumps(True)
@@ -1088,14 +1088,14 @@ def chat():
 
 def actionPush(port,record_handle,record,key,value,username,password,message):
 	#Push out new list to record
-	#print'Update record'
+	#print 'Update record'
 	headers = {'content-type': 'application/json'}
 	url = 'https://' + username + ':' + password + '@' + HOST + ':' + str(PORT) + '/listPush'
 	bundle = {"port":port,"record_handle":record_handle,"id":record['id'],"key":key,"value":value}
 	requests.post(url, data=json.dumps(bundle), headers=headers)
 
 	#Push out message notification
-	#print'Send notification message'
+	#print 'Send notification message'
 	url = 'https://' + username + ':' + password + '@' + HOST + ':' + str(PORT) + '/listPush'
 	notifications = record['notifications']
 	notifications.append(message)
@@ -1118,7 +1118,7 @@ def actionMolecule():
 		try:
 			name = record['name']
 			result = actions.smallMoleculeIdentifier(name)
-			#print'ACTION:', result
+			#print 'ACTION:', result
 		except:
 			return json.dumps(False)
 		
@@ -1139,18 +1139,18 @@ def actionMolecule():
 		try:
 			name = record['name']
 			result = actions.smallMoleculeSynonyms(name)
-			#print'ACTION:', result
+			#print 'ACTION:', result
 		except:
 			return json.dumps(False)
 		
 		#Then post result (fetch current then add updates)
 		oldList = record['synonyms']
-		#print"oldList:", oldList
+		#print "oldList:", oldList
 		for row in result:
 			oldList.append(row)
-		#print"newList 1:", oldList
+		#print "newList 1:", oldList
 		newList = list(set(oldList))
-		#print"newList 2:", newList
+		#print "newList 2:", newList
 		#Push out new list and push notification
 		actionPush(port,record_handle,record,"synonyms",newList,username,password,"New synonyms added")			
 		return json.dumps(True)
