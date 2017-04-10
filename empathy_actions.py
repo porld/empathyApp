@@ -11,7 +11,7 @@ def pdbIdentifier(keyword,organism):
 		cols = line.split(';')
 		for pdb in cols:
 			if len(pdb) == 4:
-				matches.append({"pdb":pdb+'?'})
+				matches.append({"pdb":'?'+pdb})
 	return matches[0:2]
 
 def proteinIdentifier(keyword,organism):
@@ -23,7 +23,7 @@ def proteinIdentifier(keyword,organism):
 	matches = []
 	for line in lines[1:(len(lines)-1)]:
 		cols = line.split('\t')
-		matches.append({"uniprot":cols[0]+'?'})
+		matches.append({"uniprot":'?'+cols[0]})
 	return matches
 
 def cactvs_keyword2smiles(keyword):
@@ -49,11 +49,11 @@ def smallMoleculeSynonyms(keyword):
 	lines = content.split('\n')
 	possibles = []
 	for line in lines[1:(len(lines)-1)]:
-		possibles.append(line+'?')
+		possibles.append('?'+line)
 	return possibles[0:9]
 
 def smallMoleculeIdentifier(keyword):
 	matches = []
-	matches.append(["smiles",cactvs_keyword2smiles(keyword)+'?'])
-	matches.append(["InChI",cactvs_keyword2inchi(keyword)+'?'])
+	matches.append(["smiles",'?'+cactvs_keyword2smiles(keyword)])
+	matches.append(["InChI",'?'+cactvs_keyword2inchi(keyword)])
 	return matches
