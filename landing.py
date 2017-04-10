@@ -873,14 +873,16 @@ def destroyNode():
 	#print response.json()
 
 	#Get new list of nodes
-	cypher2 = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.tags AS tags ORDER BY name"
+	cypher2 = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.inCompartment AS compartment, n.tags AS tags ORDER BY name"
 	response2 = send_cypher(cypher2,{},port)
 	cypher_response = response2.json()
 	new_list = []
 	for row in cypher_response["results"][0]["data"]:
 		id = row["row"][0]
 		name = row["row"][1]
-		tags = row["row"][2]
+		compartment = str( row["row"][2] ) 
+		tags = row["row"][3]
+		name = name + '_[' + compartment[0:2] + ']'
 		new_list.append({"id":id,"name":name,"tags":tags})
 	#print new_list
 	send_message(message_handle, new_list,  port)
