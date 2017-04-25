@@ -844,7 +844,8 @@
 									<span ng-repeat="part in record.listOfReactants | orderBy">
 										<small>
 											<span style="margin: 2px 2px 2px 2px; background: #e4e4e4;" class="round label">
-												<span style="text-transform:none; color:#c8c8c8">{{part.properties.stoichiometry}}</span>&nbsp;<span ng-click="selection=part.id" style="text-transform:none; color:#555555;word-wrap: break-word;">{{part.name}}_[{{part.properties.compartment}}]</span>
+												<span style="text-transform:none; color:#c8c8c8">{{part.properties.stoichiometry}}</span>&nbsp;
+												<span ng-click="console.log('selection',part.id);selection=part.id" style="text-transform:none; color:#555555;word-wrap: break-word;">{{part.name}}_[{{part.properties.compartment}}]</span>
 												<span ng-click="">
 													<i style="color: #666666" class="fi-x-circle"></i>
 												</span>

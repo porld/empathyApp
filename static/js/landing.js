@@ -1223,7 +1223,7 @@ landingApp.directive('smilesViewer', function ($parse, $http) {
 								})
 							.then(function(data) {
 								pdb = data.data;
-								console.log(pdb);
+								//console.log(pdb);
 								loadPDB(pdb,scope.rotate);
 								});
 						}
