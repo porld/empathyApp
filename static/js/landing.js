@@ -471,13 +471,15 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				})
 			.error(function (data, status) {
 				console.log('Error',status,data);
+				})
+			.then(function() {
+				//Detach socket callback
+				socket.off(record_handle);
+				$scope.selection = '';
+				$scope.record = '';
+				//Fetch new list
+				initialiseList();
 				});
-		//Detach socket callback
-		socket.off(record_handle);
-		$scope.selection = '';
-		$scope.record = '';
-		//Fetch new list
-		initialiseList();
 		};
 
 	//Change label
