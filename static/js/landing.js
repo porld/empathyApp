@@ -517,7 +517,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		if(selection != '') {
 			console.log('Fetching node', selection);
 			bundle = {"port":$scope.port, "selection":selection, "label":$scope.label};
-			console.log('SURELY THIS DOES NOT WORK!?');
+			//console.log('SURELY THIS DOES NOT WORK!?');
 			//Reset a few selections to enable selection of same value as previous
 			$scope.typeChoice = '';
 			$scope.compChoice = '';
