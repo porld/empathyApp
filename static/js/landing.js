@@ -478,8 +478,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				socket.off(record_handle);
 				$scope.selection = '';
 				$scope.record = '';
-				//Fetch updated list
-				$scope.initialiseList();
 				$scope.spinner = false;
 				});
 		};
@@ -500,9 +498,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				})
 			.then(function() {
 				console.log('Removed');
-				//Refresh record
-				$scope.selection = '';
-				$scope.selecton = rxn_id;
 				$scope.spinner = false;
 				});
 		};

@@ -877,6 +877,36 @@ def destroyNode():
 		print 'DESTROY:', node_cypher
 		parameters = {}
 		response = send_cypher(node_cypher,parameters,port)
+
+		#Push new node list of type <label>
+		#Don't look for compartment (no such thing for reactions)	
+		if label is 'molecule':
+			print label, 'list'
+			cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.inCompartment AS compartment, n.name AS name, n.tags AS tags ORDER BY name"
+			response = send_cypher(cypher,{},port)
+			cypher_response = response.json()
+			new_list = []
+			for row in cypher_response["results"][0]["data"]:
+				id = row["row"][0]
+				compartment = str(row["row"][1])
+				name = row["row"][2]
+				tags = row["row"][3]
+				name = name + '_[' + compartment[0:2] + ']'
+				#print {"id":id,"name":name,"tags":tags}
+				new_list.append({"id":id,"name":name,"tags":tags})
+		#Find with compartment and make new name
+		else:
+			print label, 'list'
+			cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.tags AS tags ORDER BY name"
+			response = send_cypher(cypher,{},port)
+			cypher_response = response.json()
+			new_list = []
+			for row in cypher_response["results"][0]["data"]:
+				id = row["row"][0]
+				name = row["row"][1]
+				tags = row["row"][2]
+				new_list.append({"id":id,"name":name,"tags":tags})
+		send_message(message_handle, new_list,  port)		
 		return json.dumps(True)
 	except:
 		return json.dumps(False)
