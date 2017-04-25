@@ -52,6 +52,7 @@ SETTING UP THE EMPATHY WEB APP
 
 6. Generate security certificates using certbot/letsencrypt (https://certbot.eff.org/#ubuntuxenial-other)
 6.1 Use certbot in standalone mode:  sudo letsencrypt certonly --standalone -d metabolicjamboree.co.uk -d www.metabolicjamboree.co.uk
+certbot certonly --standalone -d metabolicjamboree.co.uk -d www.metabolicjamboree.co.uk --config-dir . --work-dir . --logs-dir .
 6.2 sudo cp certificates into local folder 'certs'
 6.3 Set up and copy over daily cronjob to renew certificates
 

@@ -476,6 +476,8 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		socket.off(record_handle);
 		$scope.selection = '';
 		$scope.record = '';
+		//Fetch new list
+		initialiseList();
 		};
 
 	//Change label

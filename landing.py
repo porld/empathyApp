@@ -835,7 +835,7 @@ def listNode():
 			name = row["row"][2]
 			tags = row["row"][3]
 			name = name + '_[' + compartment[0:2] + ']'
-			print {"id":id,"name":name,"tags":tags}
+			#print {"id":id,"name":name,"tags":tags}
 			new_list.append({"id":id,"name":name,"tags":tags})
 	#Find with compartment and make new name
 	else:
@@ -868,39 +868,11 @@ def destroyNode():
 	
 	#Destroy node
 	cypher = "MATCH (n {id:'" + target + "'}) DELETE n"
+	print 'DESTROY:', cypher
 	parameters = {}
 	response = send_cypher(cypher,parameters,port)
-	#print response.json()
-
-	#Get new list of nodes
-	if label is 'molecule':
-		cypher2 = "MATCH (n:'" + label + "') RETURN n.id AS id, n.name AS name, n.inCompartment AS compartment, n.tags AS tags ORDER BY name"
-		response2 = send_cypher(cypher2,{},port)
-		cypher_response = response2.json()
-		new_list = []
-		for row in cypher_response["results"][0]["data"]:
-			id = row["row"][0]
-			name = row["row"][1]
-			compartment = str( row["row"][2] ) 
-			tags = row["row"][3]
-			name = name + '_[' + compartment[0:2] + ']'
-			new_list.append({"id":id,"name":name,"tags":tags})
-		#print new_list
-		send_message(message_handle, new_list,  port)
-		return json.dumps(True)
-	else:
-		cypher2 = "MATCH (n:'" + label + "') RETURN n.id AS id, n.name AS name, n.tags AS tags ORDER BY name"
-		response2 = send_cypher(cypher2,{},port)
-		cypher_response = response2.json()
-		new_list = []
-		for row in cypher_response["results"][0]["data"]:
-			id = row["row"][0]
-			name = row["row"][1]
-			tags = row["row"][2]
-			new_list.append({"id":id,"name":name,"tags":tags})
-		#print new_list
-		send_message(message_handle, new_list,  port)
-		return json.dumps(True)
+	print response.json()
+	return json.dumps(True)
 
 @app.route('/updateText', methods=['POST'])
 @auth.login_required
