@@ -881,6 +881,25 @@ def destroyNode():
 	except:
 		return json.dumps(False)
 
+@app.route('/destroyEdge', methods=['POST'])
+@auth.login_required
+def destroyEdge():
+	json_data = request.get_json(force=True)
+	targetA = json_data['targetA']
+	targetB = json_data['targetB']
+	record_handle = json_data['record_handle'] #<port>_<record_id>
+	port = json_data['port']
+	
+	try:
+		#Destroy node's relations
+		rel_cypher = "MATCH (n {id:'" + targetA + "'})-[r]-(m {id:'" + targetB + "'}) DELETE r"
+		print 'DESTROY:', rel_cypher
+		parameters = {}
+		response = send_cypher(rel_cypher,parameters,port)
+		return json.dumps(True)
+	except:
+		return json.dumps(False)
+
 @app.route('/updateText', methods=['POST'])
 @auth.login_required
 def updateText():

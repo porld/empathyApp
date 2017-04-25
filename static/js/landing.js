@@ -487,6 +487,24 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//Destroy edge (take molecular species out of reaction)
 	$scope.destroyEdge = function(rxn_id,part_id) {
 		console.log('Remove',part_id,'from',rxn_id);
+		$scope.spinner = true;
+		record_handle = $scope.port + '_' + $scope.selection;
+		bundle = {"targetA":rxn_id, "targetB":part_id, "label":$scope.label, "record_handle": record_handle, "port":$scope.port};
+		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/destroyEdge';
+		$http.post(url, angular.toJson(bundle) )
+			.success(function(data) {
+				console.log('Triggered: removing', part_id, 'from', rxn_id);
+				})
+			.error(function (data, status) {
+				console.log('Error',status,data);
+				})
+			.then(function() {
+				console.log('Removed');
+				//Refresh record
+				$scope.selection = '';
+				$scope.selecton = rxn_id;
+				$scope.spinner = false;
+				});
 		};
 
 	//Change label
