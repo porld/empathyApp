@@ -473,12 +473,13 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				console.log('Error',status,data);
 				})
 			.then(function() {
+				console.log('Destroyed', $scope.selection);
 				//Detach socket callback
 				socket.off(record_handle);
 				$scope.selection = '';
 				$scope.record = '';
-				//Fetch new list
-				initialiseList();
+				//Fetch updated list
+				$scope.initialiseList();
 				$scope.spinner = false;
 				});
 		};
