@@ -479,6 +479,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				$scope.record = '';
 				//Fetch new list
 				initialiseList();
+				$scope.spinner = false;
 				});
 		};
 
