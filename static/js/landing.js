@@ -484,6 +484,11 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				});
 		};
 
+	//Destroy edge (take molecular species out of reaction)
+	$scope.destroyEdge = function(rxn_id,part_id) {
+		console.log('Remove',part_id,'from',rxn_id);
+		};
+
 	//Change label
 	$scope.change_label = function(label) {
 		console.log('Change label');
