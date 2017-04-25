@@ -866,13 +866,20 @@ def destroyNode():
 	record_handle = json_data['record_handle'] #<port>_<record_id>
 	port = json_data['port']
 	
-	#Destroy node
-	cypher = "MATCH (n {id:'" + target + "'}) DELETE n"
-	print 'DESTROY:', cypher
-	parameters = {}
-	response = send_cypher(cypher,parameters,port)
-	print response.json()
-	return json.dumps(True)
+	try:
+		#Destroy node's relations
+		rel_cypher = "MATCH (n {id:'" + target + "'})-[r]-() DELETE r"
+		print 'DESTROY:', rel_cypher
+		parameters = {}
+		response = send_cypher(rel_cypher,parameters,port)
+		#Destroy node
+		node_cypher = "MATCH (n {id:'" + target + "'}) DELETE n"
+		print 'DESTROY:', node_cypher
+		parameters = {}
+		response = send_cypher(node_cypher,parameters,port)
+		return json.dumps(True)
+	except:
+		return json.dumps(False)
 
 @app.route('/updateText', methods=['POST'])
 @auth.login_required
