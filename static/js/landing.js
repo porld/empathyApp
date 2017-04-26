@@ -875,7 +875,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		else {
 			flick = 0;
 			}
-		
 		return flick;
 		};
 	
