@@ -280,6 +280,7 @@
 							<!-- Query -->
 							<li><input ng-model="query" placeholder="Search {{label}}s" ng-change="filterData(query)"></input></li>
 							<li><a href="#" ng-click="filterData('');query=''"  data-tooltip aria-haspopup="true" class="has-tip" title="Search {{label}}s"><i style="color: darkgray" class="fi-x-circle"></i></a></li>
+							<li><a href="#" style="color: darkgray">{{gridOptions.data.length}}</a></li>
 							<!-- Create and delete buttons-->
 							<li data-tooltip aria-haspopup="true" class="has-tip" title="Create new {{label}}"><a href="#" ng-click="createNode()">+</a></li>
 							<li ng-if="selection==''"><a href="#" style="color:gray">-</a></li>
