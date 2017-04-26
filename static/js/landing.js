@@ -589,11 +589,12 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			console.log('Create new record callback', newValue, socket);
 			socket.on($scope.record_handle, function(record_update) {
 				console.log('SOCKET hit socket handle:', $scope.record_handle, socket);
+				console.log('SOCKET record_update content:', record_update);
 				id = record_update['id'];
 				key = record_update['key'];
 				value = record_update['value'];
 				//Look for blank updates (this means refresh the whole record)
-				if(key is '') {
+				if(key === '') {
 					console.log('Blank key means refresh whole record', id);
 					//RESTful trigger an update to the whole of $scope.record
 					fetchNode(id);
