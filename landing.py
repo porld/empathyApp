@@ -388,7 +388,7 @@ nodeBlank = {"id":"", "type":"", "source":"", "sourceId":"", "name":"",	"synonym
 
 
 #-----------------------------------------------------------------------------------------
-def fetchList(label):
+def fetchList(label,port):
 	#Don't look for compartment (no such thing for reactions)	
 	print 'Fetch list:', label
 	new_list = []
@@ -773,7 +773,7 @@ def createNode():
 	#print response.json()
 	
 	#Disseminate new list of nodes
-	new_list = fetchList(label)
+	new_list = fetchList(label,port)
 	send_message(message_handle, new_list,  port)
 	return properties["id"]
 
@@ -814,18 +814,7 @@ def subCell():
 		#print response.json()
 		
 	#Disseminate new list of nodes
-	cypher2 = "MATCH (n:compartment) RETURN n.id AS id, n.name AS name, n.inCompartment AS compartment, n.tags AS tags"
-	response2 = send_cypher(cypher2,{},port)
-	cypher_response = response2.json()
-	new_list = []
-	for row in cypher_response["results"][0]["data"]:
-		id = row["row"][0]
-		name = row["row"][1]
-		compartment = str( row["row"][2] )
-		tags = row["row"][3]
-		name = name + '_[' + compartment[0:2] + ']'
-		new_list.append({"id":id,"name":name,"tags":tags})
-	#print new_list
+	new_list = fetchList('compartment',port)
 	send_message(message_handle, new_list,  port)
 	return json.dumps(True)
 
@@ -837,13 +826,13 @@ def listNode():
 	label = json_data['label']
 	message_handle = json_data['message_handle'] #<port>_<type>
 	port = json_data['port']
-	#print 'listNode', message_handle
+	print 'listNode', message_handle, port
 
 	#Get new list of nodes
-	new_list = fetchList(label)
+	new_list = fetchList(label,port)
 
 	if message_handle != '':
-		send_message(message_handle, new_list,  port)
+		send_message(message_handle, new_list, port)
 	return json.dumps(new_list)
 
 @app.route('/destroyNode', methods=['POST'])
@@ -869,7 +858,7 @@ def destroyNode():
 		response = send_cypher(node_cypher,parameters,port)
 
 		#Push updated list to subscribers
-		new_list = fetchList(label)
+		new_list = fetchList(label,port)
 		send_message(message_handle, new_list,  port)		
 		return json.dumps(True)
 	except:
