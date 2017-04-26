@@ -864,7 +864,6 @@ def destroyNode():
 	except:
 		return json.dumps(False)
 
-
 #Use this to take participants out of reactions
 @app.route('/destroyEdge', methods=['POST'])
 @auth.login_required
@@ -960,6 +959,33 @@ def fetchSelection():
 		record["listOfReactants"] = reactants
 		record["listOfModifiers"] = modifiers
 		record["listOfProducts"] = products
+	elif label === 'molecule':
+		#Fetch edges
+		cypher = "MATCH (m:molecule)<-[l:hasReactant|hasProduct|hasModifier]-(r:reaction) WHERE m.id='" + selection + "' RETURN TYPE(l), r.id, r.name"
+		edgeResponse = send_cypher(cypher,{},port)
+		edgeData = edgeResponse.json()
+
+		reactants = []
+		modifiers = []
+		products = []
+		for row in edgeData['results'][0]['data']:
+			edge = row['row']
+			edgeProperties = edge[0]
+			type = edge[1]
+			rxnId = edge[2]
+			rxnName = edge[3]
+			if type == 'hasReactant':
+				reactants.append({"id":rxnId,"name":rxnName})
+			elif type == 'hasModifier':
+				modifiers.append({"id":rxnId,"name":rxnName})
+			elif type == 'hasProduct':
+				products.append({"id":rxnId,"name":rxnName})
+			else:
+				pass
+		reactions["asReactant"] = reactants
+		reactions["asModifier"] = modifiers
+		reactions["asProducts"] = products
+		record["reactions"] = reactions
 
 	return json.dumps(record)
 
