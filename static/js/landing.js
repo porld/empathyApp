@@ -234,7 +234,8 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			enableFiltering: false,
 			enableHiding: false,
 			enableSorting: false,
-			enableVerticalScrollbar: 0
+			enableVerticalScrollbar: 0,
+			data: []
 			};
 
 		//Panel 1 column definitions
