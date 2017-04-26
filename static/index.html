@@ -631,14 +631,31 @@
 
 								<!-- reactions -->
 								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
-									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="notifications_view" ng-click="notifications_view=!notifications_view">
+									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="rxn_view" ng-click="rxn_view=!rxn_view">
 										<div class="row">
 											Reactions
 										</div>
 									</div>
-									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="notifications_view" ng-click="notifications_view=!notifications_view">
-										<div class="row">
-											{{record.reactions}}
+									<div class="large-12 medium-12 small-12 columns">							
+										<div class="row animate-show-hide" ng-show="rxn_view">
+											<div class="large-4 medium-4 small-4 columns">
+												<div class="row">Reactant</div>
+												<div class="row" ng-repeat="rxn in record.reactions.asReactant">
+													{{rxn.name}}
+												</div>
+											</div>
+											<div class="large-4 medium-4 small-4 columns">
+												<div class="row">Modifier</div>
+												<div class="row" ng-repeat="rxn in record.reactions.asModifier">
+													{{rxn.name}}
+												</div>
+											</div>
+											<div class="large-4 medium-4 small-4 columns">
+												<div class="row">Product</div>
+												<div class="row" ng-repeat="rxn in record.reactions.asProduct">
+													{{rxn.name}}
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
