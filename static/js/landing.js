@@ -593,7 +593,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				key = record_update['key'];
 				value = record_update['value'];
 				//Look for blank updates (this means refresh the whole record)
-				if(key === '') {
+				if(key is '') {
 					console.log('Blank key means refresh whole record', id);
 					//RESTful trigger an update to the whole of $scope.record
 					fetchNode(id);

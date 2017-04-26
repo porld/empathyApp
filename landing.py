@@ -889,34 +889,8 @@ def destroyEdge():
 		data = response.json()
 		record = data["results"][0]["data"][0]["row"][0]
 
-		#Fetch participants
-		cypher = "MATCH (r:reaction)-[l:hasReactant|hasProduct|hasModifier]->(m:molecule) WHERE r.id='" + targetA + "' RETURN l,TYPE(l) AS type,m.id AS moleculeId, m.name AS moleculeName, m.inCompartment AS compartment"
-		edgeResponse = send_cypher(cypher,{},port)
-		edgeData = edgeResponse.json()
-
-		reactants = []
-		modifiers = []
-		products = []
-		for row in edgeData['results'][0]['data']:
-			edge = row['row']
-			edgeProperties = edge[0]
-			type = edge[1]
-			moleculeId = edge[2]
-			moleculeName = edge[3]
-			moleculeCompartment = str( edge[4] )
-			moleculeCompartment = moleculeCompartment[0:2]
-			if type == 'hasReactant':
-				reactants.append({"id":moleculeId,"name":moleculeName,"properties":edgeProperties,"compartment":moleculeCompartment})
-			elif type == 'hasModifier':
-				modifiers.append({"id":moleculeId,"name":moleculeName,"properties":edgeProperties,"compartment":moleculeCompartment})
-			elif type == 'hasProduct':
-				products.append({"id":moleculeId,"name":moleculeName,"properties":edgeProperties,"compartment":moleculeCompartment})
-			else:
-				pass
-		record["listOfReactants"] = reactants
-		record["listOfModifiers"] = modifiers
-		record["listOfProducts"] = products
-
+		#Signify change to subscribers so they can fetch whole new record
+		print 'Broadcast change to', record_handle
 		send_message(record_handle, {'key':'','value':value, 'id': targetA},  port)		
 		
 		return json.dumps(True)
