@@ -391,12 +391,12 @@ nodeBlank = {"id":"", "type":"", "source":"", "sourceId":"", "name":"",	"synonym
 def fetchList(label):
 	#Don't look for compartment (no such thing for reactions)	
 	print 'Fetch list:', label
+	new_list = []
 	if label is 'reaction':
 		print 'Fetch reactions'
 		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.tags AS tags ORDER BY name"
 		response = send_cypher(cypher,{},port)
 		cypher_response = response.json()
-		new_list = []
 		for row in cypher_response["results"][0]["data"]:
 			id = row["row"][0]
 			name = row["row"][1]
@@ -407,7 +407,6 @@ def fetchList(label):
 		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.inCompartment AS compartment, n.name AS name, n.tags AS tags ORDER BY name"
 		response = send_cypher(cypher,{},port)
 		cypher_response = response.json()
-		new_list = []
 		for row in cypher_response["results"][0]["data"]:
 			id = row["row"][0]
 			compartment = str(row["row"][1])
@@ -415,6 +414,7 @@ def fetchList(label):
 			tags = row["row"][3]
 			name = name + '_[' + compartment[0:2] + ']'
 			new_list.append({"id":id,"name":name,"tags":tags})
+	print 'New_list:', len(new_list)
 	return new_list
 
 @app.route('/makeConnection', methods=['POST'])
@@ -773,18 +773,7 @@ def createNode():
 	#print response.json()
 	
 	#Disseminate new list of nodes
-	cypher2 = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.inCompartment AS compartment, n.tags AS tags"
-	response2 = send_cypher(cypher2,{},port)
-	cypher_response = response2.json()
-	new_list = []
-	for row in cypher_response["results"][0]["data"]:
-		id = row["row"][0]
-		name = row["row"][1]
-		compartment = str( row["row"][2] )
-		tags = row["row"][3]
-		name = name + '_[' + compartment[0:2] + ']'
-		new_list.append({"id":id,"name":name,"tags":tags})
-	#print new_list
+	new_list = fetchList(label)
 	send_message(message_handle, new_list,  port)
 	return properties["id"]
 
@@ -851,36 +840,8 @@ def listNode():
 	#print 'listNode', message_handle
 
 	#Get new list of nodes
-	#Don't look for compartment (no such thing for reactions)	
-	if label == 'molecule':
-		print label, 'list'
-		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.inCompartment AS compartment, n.name AS name, n.tags AS tags ORDER BY name"
-		response = send_cypher(cypher,{},port)
-		cypher_response = response.json()
-		new_list = []
-		for row in cypher_response["results"][0]["data"]:
-			id = row["row"][0]
-			compartment = str(row["row"][1])
-			name = row["row"][2]
-			tags = row["row"][3]
-			name = name + '_[' + compartment[0:2] + ']'
-			#print {"id":id,"name":name,"tags":tags}
-			new_list.append({"id":id,"name":name,"tags":tags})
-	#Find with compartment and make new name
-	else:
-		print label, 'list'
-		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.tags AS tags ORDER BY name"
-		response = send_cypher(cypher,{},port)
-		cypher_response = response.json()
-		new_list = []
-		for row in cypher_response["results"][0]["data"]:
-			id = row["row"][0]
-			name = row["row"][1]
-			tags = row["row"][2]
-			new_list.append({"id":id,"name":name,"tags":tags})
+	new_list = fetchList(label)
 
-	#print new_list	
-	#Broadcast if we have a message handle (we don't when the request comes from fetchCompartmentList)
 	if message_handle != '':
 		send_message(message_handle, new_list,  port)
 	return json.dumps(new_list)
