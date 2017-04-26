@@ -240,7 +240,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		//Panel 1 column definitions
 		$scope.gridOptions.columnDefs = [
 			{ name: 'id', visible: false },
-			{ name: 'name', displayName:'Name'},
+			{ name: 'name', displayName:$scope.gridOptions.data.length},
 			{ name: 'tags', visible: false} //displayName:'Tags', cellTemplate: '<span style="line-height: 35px; height:100%; overflow-x:scroll !important;" ng-repeat="tag in row.entity.tags"><small><a href="#" ng-click="grid.appScope.filterData(tag)" style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">{{tag}}</a></small></span>'}
 			];
 
