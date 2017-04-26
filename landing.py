@@ -984,7 +984,7 @@ def fetchSelection():
 		reactions = {}
 		reactions["asReactant"] = reactants
 		reactions["asModifier"] = modifiers
-		reactions["asProducts"] = products
+		reactions["asProduct"] = products
 		record["reactions"] = reactions
 
 	return json.dumps(record)
