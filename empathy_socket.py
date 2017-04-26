@@ -21,7 +21,7 @@ def socketHandler():
 	handle = json_data['handle'] #<port>_<id>
 	message = json_data['message']
 	port = json_data['port'] #Use this to define a port-specific namespace
-	print 'EMIT:', handle, message, port
+	#print 'EMIT:', handle, message, port
 	try:
 		socketio.emit(handle, message,  namespace='/mq')
 		return str(True)
