@@ -875,6 +875,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		else {
 			flick = 0;
 			}
+		$scope.typeChoice = $scope.molecular_species_types[flick];
 		return flick;
 		};
 	
