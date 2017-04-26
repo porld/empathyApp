@@ -838,7 +838,7 @@
 							</div>
 
 							<!-- REACTION -->
-							<!-- Reaction row -->
+							<!-- Reaction builder -->
 							<div ng-if="label=='reaction' && selection!=''" class="row" style="padding: 0px;">
 								<!-- Reactants -->
 								<div class="large-4 medium-4 small-4 columns" style="text-align:right">
@@ -846,7 +846,7 @@
 										<small>
 											<span style="margin: 2px 2px 2px 2px; background: #e4e4e4;" class="round label">
 												<span style="text-transform:none; color:#c8c8c8">{{part.properties.stoichiometry}}</span>&nbsp;
-												<span ng-click="fetchNode(part.id)" style="text-transform:none; color:#555555;word-wrap: break-word;">{{part.name}}_[{{part.properties.compartment}}]</span>
+												<span ng-click="fetchNode(part.id)" style="text-transform:none; color:#555555;word-wrap: break-word;" data-tooltip aria-haspopup="true" class="has-tip" title="{{part.name}}">{{part.name  | limitTo:25}}_[{{part.properties.compartment}}]</span>
 												<span ng-click="destroyEdge(selection,part.id)">
 													<i style="color: #666666" class="fi-x-circle"></i>
 												</span>
@@ -879,7 +879,7 @@
 											<small>
 												<span style="margin: 2px 2px 2px 2px; background: #e4e4e4;" class="round label">
 													<span style="text-transform:none; color:#c8c8c8">{{part.properties.stoichiometry}}</span>&nbsp;
-													<span ng-click="fetchNode(part.id)" style="text-transform:none; color:#555555;word-wrap: break-word;">{{part.name}}_[{{part.properties.compartment}}]</span>
+													<span ng-click="fetchNode(part.id)" style="text-transform:none; color:#555555;word-wrap: break-word;" data-tooltip aria-haspopup="true" class="has-tip" title="{{part.name}}">{{part.name  | limitTo:25}}_[{{part.properties.compartment}}]</span>
 													<span ng-click="destroyEdge(selection,part.id)">
 														<i style="color: #666666" class="fi-x-circle"></i>
 													</span>
@@ -897,7 +897,7 @@
 										<small>
 											<span style="margin: 2px 2px 2px 2px; background: #e4e4e4;" class="round label">
 												<span style="text-transform:none; color:#c8c8c8">{{part.properties.stoichiometry}}</span>&nbsp;
-												<span ng-click="fetchNode(part.id)" style="text-transform:none; color:#555555;word-wrap: break-word;">{{part.name}}_[{{part.properties.compartment}}]</span>
+												<span ng-click="fetchNode(part.id)" style="text-transform:none; color:#555555;word-wrap: break-word;" data-tooltip aria-haspopup="true" class="has-tip" title="{{part.name}}">{{part.name  | limitTo:25}}_[{{part.properties.compartment}}]</span>
 												<span ng-click="destroyEdge(selection,part.id)">
 													<i style="color: #666666" class="fi-x-circle"></i>
 												</span>
@@ -1478,4 +1478,3 @@
 		</script>
 	</body>
 </html>
-
