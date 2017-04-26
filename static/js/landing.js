@@ -866,6 +866,12 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//-------------------------------------------------
 	//Ancillary functions
 	
+	//Change selection from within ng-repeats (for hopping between reactions and molecular species, for example)
+	$scope.makeSelection = function(id,label) {
+		$scope.selection = id;
+		$scope.label = label;
+		};
+	
 	//Molecular species types
 	$scope.molecular_species_types = ['simple chemical','macromolecule','complex','other'];
 	$scope.type_flicker = function(flick) {
