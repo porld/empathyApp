@@ -884,13 +884,13 @@ def destroyEdge():
 		
 		##Get updated version of node A (reaction)		
 		#Fetch core of node
-		cypher = "MATCH (n) WHERE n.id='" + selection + "' RETURN n"
+		cypher = "MATCH (n) WHERE n.id='" + targetA + "' RETURN n"
 		response = send_cypher(cypher,{},port)
 		data = response.json()
 		record = data["results"][0]["data"][0]["row"][0]
 
 		#Fetch participants
-		cypher = "MATCH (r:reaction)-[l:hasReactant|hasProduct|hasModifier]->(m:molecule) WHERE r.id='" + selection + "' RETURN l,TYPE(l) AS type,m.id AS moleculeId, m.name AS moleculeName, m.inCompartment AS compartment"
+		cypher = "MATCH (r:reaction)-[l:hasReactant|hasProduct|hasModifier]->(m:molecule) WHERE r.id='" + targetA + "' RETURN l,TYPE(l) AS type,m.id AS moleculeId, m.name AS moleculeName, m.inCompartment AS compartment"
 		edgeResponse = send_cypher(cypher,{},port)
 		edgeData = edgeResponse.json()
 
