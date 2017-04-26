@@ -388,6 +388,32 @@ nodeBlank = {"id":"", "type":"", "source":"", "sourceId":"", "name":"",	"synonym
 
 
 #-----------------------------------------------------------------------------------------
+def fetchList(label):
+	#Don't look for compartment (no such thing for reactions)	
+	if label is 'reaction':
+		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.tags AS tags ORDER BY name"
+		response = send_cypher(cypher,{},port)
+		cypher_response = response.json()
+		new_list = []
+		for row in cypher_response["results"][0]["data"]:
+			id = row["row"][0]
+			name = row["row"][1]
+			tags = row["row"][2]
+			new_list.append({"id":id,"name":name,"tags":tags})
+	else:
+		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.inCompartment AS compartment, n.name AS name, n.tags AS tags ORDER BY name"
+		response = send_cypher(cypher,{},port)
+		cypher_response = response.json()
+		new_list = []
+		for row in cypher_response["results"][0]["data"]:
+			id = row["row"][0]
+			compartment = str(row["row"][1])
+			name = row["row"][2]
+			tags = row["row"][3]
+			name = name + '_[' + compartment[0:2] + ']'
+			new_list.append({"id":id,"name":name,"tags":tags})
+	return new_list
+
 @app.route('/makeConnection', methods=['POST'])
 @auth.login_required
 def makeConnection():
@@ -878,39 +904,14 @@ def destroyNode():
 		parameters = {}
 		response = send_cypher(node_cypher,parameters,port)
 
-		#Push new node list of type <label>
-		#Don't look for compartment (no such thing for reactions)	
-		if label is 'molecule':
-			print label, 'list'
-			cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.inCompartment AS compartment, n.name AS name, n.tags AS tags ORDER BY name"
-			response = send_cypher(cypher,{},port)
-			cypher_response = response.json()
-			new_list = []
-			for row in cypher_response["results"][0]["data"]:
-				id = row["row"][0]
-				compartment = str(row["row"][1])
-				name = row["row"][2]
-				tags = row["row"][3]
-				name = name + '_[' + compartment[0:2] + ']'
-				#print {"id":id,"name":name,"tags":tags}
-				new_list.append({"id":id,"name":name,"tags":tags})
-		#Find with compartment and make new name
-		else:
-			print label, 'list'
-			cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.tags AS tags ORDER BY name"
-			response = send_cypher(cypher,{},port)
-			cypher_response = response.json()
-			new_list = []
-			for row in cypher_response["results"][0]["data"]:
-				id = row["row"][0]
-				name = row["row"][1]
-				tags = row["row"][2]
-				new_list.append({"id":id,"name":name,"tags":tags})
+		#Push updated list to subscribers
+		new_list = fetchList(label)
 		send_message(message_handle, new_list,  port)		
 		return json.dumps(True)
 	except:
 		return json.dumps(False)
 
+'''
 @app.route('/destroyEdge', methods=['POST'])
 @auth.login_required
 def destroyEdge():
@@ -919,16 +920,49 @@ def destroyEdge():
 	targetB = json_data['targetB']
 	record_handle = json_data['record_handle'] #<port>_<record_id>
 	port = json_data['port']
-	
+
 	try:
 		#Destroy node's relations
 		rel_cypher = "MATCH (n {id:'" + targetA + "'})-[r]-(m {id:'" + targetB + "'}) DELETE r"
 		print 'DESTROY:', rel_cypher
 		parameters = {}
 		response = send_cypher(rel_cypher,parameters,port)
+		
+		#Get updated version of node A
+		
+		
+		FINISH THIS!!!		
+		
+		cypher = "MATCH (r:reaction)-[l:hasReactant|hasProduct|hasModifier]->(m:molecule) WHERE r.id='" + selection + "' RETURN l,TYPE(l) AS type,m.id AS moleculeId, m.name AS moleculeName, m.inCompartment AS compartment"
+		edgeResponse = send_cypher(cypher,{},port)
+		edgeData = edgeResponse.json()
+
+		reactants = []
+		modifiers = []
+		products = []
+		for row in edgeData['results'][0]['data']:
+			edge = row['row']
+			edgeProperties = edge[0]
+			type = edge[1]
+			moleculeId = edge[2]
+			moleculeName = edge[3]
+			moleculeCompartment = str( edge[4] )
+			moleculeCompartment = moleculeCompartment[0:2]
+			if type == 'hasReactant':
+				reactants.append({"id":moleculeId,"name":moleculeName,"properties":edgeProperties,"compartment":moleculeCompartment})
+			elif type == 'hasModifier':
+				modifiers.append({"id":moleculeId,"name":moleculeName,"properties":edgeProperties,"compartment":moleculeCompartment})
+			elif type == 'hasProduct':
+				products.append({"id":moleculeId,"name":moleculeName,"properties":edgeProperties,"compartment":moleculeCompartment})
+			else:
+				pass
+		record["listOfReactants"] = reactants
+		record["listOfModifiers"] = modifiers
+		record["listOfProducts"] = products	
 		return json.dumps(True)
 	except:
 		return json.dumps(False)
+'''
 
 @app.route('/updateText', methods=['POST'])
 @auth.login_required
