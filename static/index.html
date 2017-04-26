@@ -640,21 +640,32 @@
 										<div class="row animate-show-hide" ng-show="rxn_view">
 											<div class="large-4 medium-4 small-4 columns">
 												<div class="row" style="text-align:center"><small>Reactant</small></div>
-												<div class="row" ng-repeat="rxn in record.reactions.asReactant">
-													{{rxn.name}}
-												</div>
+												<small>
+													<div class="row">
+														<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label" ng-repeat="rxn in record.reactions.asReactant">
+															{{rxn.name}}
+														</span>
+													</div>
+												</small>
 											</div>
 											<div class="large-4 medium-4 small-4 columns">
 												<div class="row" style="text-align:center"><small>Modifier</small></div>
-												<div class="row" ng-repeat="rxn in record.reactions.asModifier">
-													{{rxn.name}}
-												</div>
-											</div>
+												<small>
+													<div class="row">
+														<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label" ng-repeat="rxn in record.reactions.asReactant">
+															{{rxn.name}}
+														</span>
+													</div>
+												</small>											</div>
 											<div class="large-4 medium-4 small-4 columns">
 												<div class="row" style="text-align:center"><small>Product</small></div>
-												<div class="row" ng-repeat="rxn in record.reactions.asProduct">
-													{{rxn.name}}
-												</div>
+												<small>
+													<div class="row">
+														<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label" ng-repeat="rxn in record.reactions.asReactant">
+															{{rxn.name}}
+														</span>
+													</div>
+												</small>
 											</div>
 										</div>
 									</div>
