@@ -959,7 +959,7 @@ def fetchSelection():
 		record["listOfReactants"] = reactants
 		record["listOfModifiers"] = modifiers
 		record["listOfProducts"] = products
-	elif label === 'molecule':
+	elif label == 'molecule':
 		#Fetch edges
 		cypher = "MATCH (m:molecule)<-[l:hasReactant|hasProduct|hasModifier]-(r:reaction) WHERE m.id='" + selection + "' RETURN TYPE(l), r.id, r.name"
 		edgeResponse = send_cypher(cypher,{},port)
