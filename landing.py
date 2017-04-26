@@ -970,10 +970,9 @@ def fetchSelection():
 		products = []
 		for row in edgeData['results'][0]['data']:
 			edge = row['row']
-			edgeProperties = edge[0]
-			type = edge[1]
-			rxnId = edge[2]
-			rxnName = edge[3]
+			type = edge[0]
+			rxnId = edge[1]
+			rxnName = edge[2]
 			if type == 'hasReactant':
 				reactants.append({"id":rxnId,"name":rxnName})
 			elif type == 'hasModifier':
