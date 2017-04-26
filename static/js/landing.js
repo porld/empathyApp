@@ -486,7 +486,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	$scope.destroyEdge = function(rxn_id,part_id) {
 		console.log('Remove',part_id,'from',rxn_id);
 		$scope.spinner = true;
-		record_handle = $scope.port + '_' + $scope.selection;
+		record_handle = $scope.port + '_' + rxn_id;
 		bundle = {"targetA":rxn_id, "targetB":part_id, "label":$scope.label, "record_handle": record_handle, "port":$scope.port};
 		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/destroyEdge';
 		$http.post(url, angular.toJson(bundle) )
