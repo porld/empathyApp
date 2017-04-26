@@ -1235,7 +1235,7 @@ landingApp.directive('smilesViewer', function ($parse, $http) {
 						url = 'https://' + scope.external + '/chemistry/smiles_post/' + scope.dim;
 						$http.post(url, angular.toJson({"smiles":smiles}) )
 							.success(function(data) {
-								console.log('Triggered: smiles2PDB', smiles, data);
+								console.log('Triggered: smiles2PDB');
 								})
 							.error(function (data, status) {
 								console.log('Error',status,data);
