@@ -981,6 +981,7 @@ def fetchSelection():
 				products.append({"id":rxnId,"name":rxnName})
 			else:
 				pass
+		reactions = {}
 		reactions["asReactant"] = reactants
 		reactions["asModifier"] = modifiers
 		reactions["asProducts"] = products
