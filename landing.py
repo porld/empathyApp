@@ -864,7 +864,8 @@ def destroyNode():
 	except:
 		return json.dumps(False)
 
-'''
+
+#Use this to take participants out of reactions
 @app.route('/destroyEdge', methods=['POST'])
 @auth.login_required
 def destroyEdge():
@@ -875,17 +876,20 @@ def destroyEdge():
 	port = json_data['port']
 
 	try:
-		#Destroy node's relations
+		#Destroy relations between A (reaction) and B
 		rel_cypher = "MATCH (n {id:'" + targetA + "'})-[r]-(m {id:'" + targetB + "'}) DELETE r"
 		print 'DESTROY:', rel_cypher
 		parameters = {}
 		response = send_cypher(rel_cypher,parameters,port)
 		
-		#Get updated version of node A
-		
-		
-		FINISH THIS!!!		
-		
+		##Get updated version of node A (reaction)		
+		#Fetch core of node
+		cypher = "MATCH (n) WHERE n.id='" + selection + "' RETURN n"
+		response = send_cypher(cypher,{},port)
+		data = response.json()
+		record = data["results"][0]["data"][0]["row"][0]
+
+		#Fetch participants
 		cypher = "MATCH (r:reaction)-[l:hasReactant|hasProduct|hasModifier]->(m:molecule) WHERE r.id='" + selection + "' RETURN l,TYPE(l) AS type,m.id AS moleculeId, m.name AS moleculeName, m.inCompartment AS compartment"
 		edgeResponse = send_cypher(cypher,{},port)
 		edgeData = edgeResponse.json()
@@ -911,11 +915,13 @@ def destroyEdge():
 				pass
 		record["listOfReactants"] = reactants
 		record["listOfModifiers"] = modifiers
-		record["listOfProducts"] = products	
+		record["listOfProducts"] = products
+
+		send_message(record_handle, {'key':'','value':value, 'id': targetA},  port)		
+		
 		return json.dumps(True)
 	except:
 		return json.dumps(False)
-'''
 
 @app.route('/updateText', methods=['POST'])
 @auth.login_required
@@ -936,6 +942,7 @@ def updateText():
 	send_message(record_handle, {'key':key,'value':value, 'id': id},  port)
 	return json.dumps(True)
 
+#Retrieve a node
 @app.route('/fetchSelection', methods=['POST'])
 @auth.login_required
 def fetchSelection():
@@ -979,27 +986,6 @@ def fetchSelection():
 		record["listOfReactants"] = reactants
 		record["listOfModifiers"] = modifiers
 		record["listOfProducts"] = products
-	'''
-	elif label == 'molecule':
-		#Fetch edges
-		cypher = "MATCH (n:molecule {id:'" + selection + "'})-[l]-(r:reaction) RETURN l, TYPE(l), r.id AS reactionId, r.name AS reactionName"
-		edgeResponse = send_cypher(cypher,{},port)
-		edgeData = edgeResponse.json()
-
-		reactions = []
-		for row in edgeData['results'][0]['data']:
-			edge = row['row']
-			edgeProperties = edge[0]
-			type = edge[1]
-			reactionId = edge[2]
-			reactionName = edge[3]
-			reactions.append({"properties":edgeProperties,"type":type,"reactionId":reactionId,"reactionName":reactionName})
-		record["listOfReactions"] = reactions
-	elif label == 'compartment':
-		pass
-	else:
-		return "What was that!?"+label
-	'''
 
 	return json.dumps(record)
 
