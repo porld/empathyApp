@@ -866,6 +866,19 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//-------------------------------------------------
 	//Ancillary functions
 	
+	//Molecular species types
+	$scope.molecular_species_types = ['simple chemical','macromolecule','complex','other'];
+	$scope.type_flicker = function(flick) {
+		if(flick < ($scope.molecular_species_types.length - 1) ) {
+			flick = flick + 1;
+			}
+		else {
+			flick = 0;
+			}
+		
+		return flick;
+		};
+	
 	//Look up compartment name on record load (loaded when fetchCompartmentList fulfils promise)
 	function compartmentNameFromList() {
 		//console.log('Looking for', $scope.record.inCompartment, 'in', $scope.compartmentList);
