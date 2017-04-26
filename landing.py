@@ -392,7 +392,7 @@ def fetchList(label,port):
 	#Don't look for compartment (no such thing for reactions)	
 	print 'Fetch list:', label
 	new_list = []
-	if label is 'reaction':
+	if 'reaction' in label:
 		print 'Fetch reactions'
 		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.tags AS tags ORDER BY name"
 		response = send_cypher(cypher,{},port)
