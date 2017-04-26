@@ -21,7 +21,7 @@ def socketHandler():
 	handle = json_data['handle'] #<port>_<id>
 	message = json_data['message']
 	port = json_data['port'] #Use this to define a port-specific namespace
-	#print 'EMIT:', handle, message, port
+	print 'EMIT:', handle, message, port
 	try:
 		socketio.emit(handle, message,  namespace='/mq')
 		return str(True)
@@ -34,5 +34,4 @@ def socketHandler():
 if __name__ == '__main__':
 	CERT_FILE = 'certs/fullchain.pem'
 	KEY_FILE = 'certs/privkey.pem'
-	#socketio.run(app,host='0.0.0.0',debug=False, ssl_context=context, port=8082)
 	socketio.run(app,host='0.0.0.0',debug=False, certfile=CERT_FILE, keyfile=KEY_FILE, port=8082)
