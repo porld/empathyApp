@@ -891,7 +891,7 @@ def destroyEdge():
 
 		#Signify change to subscribers so they can fetch whole new record
 		print 'Broadcast change to', record_handle
-		send_message(record_handle, {'key':'','value':value, 'id': targetA},  port)		
+		send_message(record_handle, {'key':'','id': targetA},  port)
 		
 		return json.dumps(True)
 	except:
