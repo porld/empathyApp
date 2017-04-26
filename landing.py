@@ -390,7 +390,9 @@ nodeBlank = {"id":"", "type":"", "source":"", "sourceId":"", "name":"",	"synonym
 #-----------------------------------------------------------------------------------------
 def fetchList(label):
 	#Don't look for compartment (no such thing for reactions)	
+	print 'Fetch list:', label
 	if label is 'reaction':
+		print 'Fetch reactions'
 		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.tags AS tags ORDER BY name"
 		response = send_cypher(cypher,{},port)
 		cypher_response = response.json()
@@ -401,6 +403,7 @@ def fetchList(label):
 			tags = row["row"][2]
 			new_list.append({"id":id,"name":name,"tags":tags})
 	else:
+		print 'Fetch ', label
 		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.inCompartment AS compartment, n.name AS name, n.tags AS tags ORDER BY name"
 		response = send_cypher(cypher,{},port)
 		cypher_response = response.json()
