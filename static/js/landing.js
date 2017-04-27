@@ -208,6 +208,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.port = '';					//DB port
 		$scope.fsid = '';					//filesystem id
 		$scope.label = 'molecule';			//label
+		$scope.listLabel = 'molecule';		//listLabel (tracks the list type - see https://github.com/porld/empathyApp/issues/28)
 		$scope.colours = ['gray','gray','white'];
 		$scope.selection = '';				//Short handle to current selection
 		$scope.record = {};					//Full object for current selection
