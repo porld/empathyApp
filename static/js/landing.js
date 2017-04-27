@@ -253,6 +253,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			$scope.gridApi = gridApi;
 			gridApi.selection.on.rowSelectionChanged($scope,function(row){
 				console.log('Selected',row.entity.id, row.entity.name);
+				$scope.label = $scope.listLabel; //Make sure our switches are applied when moving between records (https://github.com/porld/empathyApp/issues/28)
 				$scope.selection = row.entity.id;
 				//$scope.fetchSelection(row.entity.id); //No longer required because of $watch on selection
 				});
