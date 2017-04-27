@@ -494,19 +494,9 @@
 								</div>
 								<!-- Type -->
 								<div class="row">
-									<div class="small-4 medium-4 large-4 columns" style="color: #666666" ng-init="typeFlicker=0" ng-init="typeChoice=record.type" ng-click="typeFlicker=type_flicker(typeFlicker);updateText('type',typeChoice)">
+									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-init="typeFlicker=0" ng-init="typeChoice=record.type" ng-click="typeFlicker=type_flicker(typeFlicker);updateText('type',typeChoice)">
 										<i>{{record.type}}</i>
 									</div>
-									<!-- Fugly dropdown -->
-									<!--div class="small-4 medium-4 large-4 columns" style="color: #666666">
-										<select name="typeChoice" id="typeChoice" selected="{{record.type}}" ng-model="typeChoice" ng-change="updateText('type',typeChoice)">
-											<option value="simple chemical">simple chemical</option>
-											<option value="macromolecule">macromolecule</option>
-											<option value="complex">complex</option>
-											<option value="other">other</option>
-										</select>
-									</div-->
-									<div class="small-4 medium-4 large-4 columns" style="color: #666666">&nbsp;</div>
 								</div>
 							</div>
 							<!-- Molecule Viewer -->
@@ -640,7 +630,7 @@
 										<div class="row animate-show-hide" ng-show="rxn_view">
 											<!-- As reactant -->
 											<div class="large-4 medium-4 small-4 columns">
-												<div class="row" style="text-align:center">
+												<div class="row" style="text-align:left">
 													<small>As reactant ({{record.reactions.asReactant.length}})</small>
 												</div>
 												<div class="row" style="text-align:left">
@@ -652,7 +642,7 @@
 											</div>
 											<!-- As modifier -->
 											<div class="large-4 medium-4 small-4 columns">
-												<div class="row" style="text-align:center">
+												<div class="row" style="text-align:left">
 													<small>As modifier ({{record.reactions.asModifier.length}})</small>
 												</div>
 												<div class="row" style="text-align:left">
@@ -664,7 +654,7 @@
 											</div>
 											<!-- As product -->
 											<div class="large-4 medium-4 small-4 columns">
-												<div class="row" style="text-align:center">
+												<div class="row" style="text-align:left">
 													<small>As product ({{record.reactions.asProduct.length}})</small>
 												</div>
 												<div class="row" style="text-align:left">
