@@ -234,6 +234,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			enableFiltering: false,
 			enableHiding: false,
 			enableSorting: false,
+			showHeader: false,
 			enableVerticalScrollbar: 0
 			};
 
