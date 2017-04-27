@@ -507,6 +507,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	$scope.change_label = function(label) {
 		console.log('Change label');
 		colours = ['gray','gray','gray'];
+		$scope.listLabel = label;
 		if(label == 'molecule') {
 			$scope.colours = ['gray','gray','white'];
 			updateListSocket(label);		//Update broadcast handle
