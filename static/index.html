@@ -196,66 +196,6 @@
 				<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 			</div>
 
-			<!-- Messageboard Modal -->
-			<!--div id="messageboardModal" class="reveal-modal" style="position:fixed;overflow-x:auto;overflow-y:scroll;bottom:0;left:0;right:0;top:0; z-index:9999;height:95vh;" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-				<div class="row" >
-					<div class="small-10 medium-10 large-10 columns">
-						<h2>Messages</h2>
-					</div>
-					<div class="small-2 medium-2 large-2 columns">
-						<i><a href="#" data-reveal-id="messageModal">New</a></i>
-					</div>
-				</div>
-				<div class="row">
-					<!-- List of thread titles -->
-					<div ng-init="threadList" class="small-3 medium-3 large-3 columns">
-						<div class="row" ng-repeat="thr in threadList" ng-class-even="'even'" ng-class-odd="'odd'" ng-click="getThread(thr.id)">
-							<span href="#" >{{thr.title}}</span>
-						</div>
-					</div>
-					<!-- Thread body -->
-					<div class="small-9 medium-9 large-9 columns">
-						<div class="row">
-							<div class="small-12 medium-12 large-12 columns">
-								{{thread}}
-							</div>
-						</div>
-					</div>
-				</div>
-				<a class="close-reveal-modal" aria-label="Close">&#215;</a>
-			</div-->
-
-			<!-- Message Modal -->
-			<!--div id="messageModal" class="reveal-modal" style="position:fixed;overflow-x:auto;overflow-y:scroll;bottom:0;left:0;right:0;top:0; z-index:9999;height:95vh;" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-				<div class="row" >
-					<div class="small-10 medium-10 large-10 columns">
-						<h2>New message</h2>
-					</div>
-					<div class="small-2 medium-2 large-2 columns">
-						<i><a href="#" ng-click="getThreadList()" data-reveal-id="messageboardModal">Messageboard</a></i>
-					</div>
-				</div>
-				<div class="row">
-					<div class="small-12 medium-12 large-12 columns"><b>Title</b></div>
-				</div>
-				<div class="row">
-					<div class="small-12 medium-12 large-12 columns">
-						<input ng-init="newMessage" ng-model="newMessage.title" placeholder="Title"></input>
-					</div>
-				</div>
-				<div class="row">
-					<div class="small-12 medium-12 large-12 columns">
-						<textarea ng-model="newMessage.body"></textarea>
-					</div>
-				</div>
-				<div ng-if="newMessage.title.length > 0" class="row">
-					<div class="small-12 medium-12 large-12 columns">
-						<button href="#" ng-click="createThread()">Post</button>
-					</div>
-				</div>
-				<a class="close-reveal-modal" aria-label="Close">&#215;</a>
-			</div-->
-
 			<!-- TOP BAR -->
 			<div ng-if="logged_in" class="row">
 				<nav class="top-bar" data-topbar role="navigation" style="padding: 0; width: 100%;">
