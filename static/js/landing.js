@@ -508,19 +508,21 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	$scope.change_label = function(label) {
 		console.log('Change label');
 		colours = ['gray','gray','gray'];
-		$scope.listLabel = label;
 		if(label == 'molecule') {
 			$scope.colours = ['gray','gray','white'];
 			updateListSocket(label);		//Update broadcast handle
+			$scope.listLabel = label;
 			$scope.initialiseList();			//Fetch list
 			}
 		else if(label == 'reaction') {
 			$scope.colours = ['gray','white','gray'];
+			$scope.listLabel = label;
 			updateListSocket(label);		//Update broadcast handle
 			$scope.initialiseList(label);
 			}
 		else {
 			$scope.colours = ['white','gray','gray'];
+			$scope.listLabel = label;
 			updateListSocket(label);		//Update broadcast handle
 			$scope.initialiseList();
 			};
