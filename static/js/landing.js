@@ -527,7 +527,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			$scope.initialiseList();
 			};
 		$scope.selection = '';
-		console.log($scope.label,$scope.listLabel);
+		console.log('LABEL AND LISTLABEL:', $scope.label,$scope.listLabel);
 		return colours;
 		};
 	
