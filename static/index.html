@@ -640,13 +640,15 @@
 										<div class="row animate-show-hide" ng-show="rxn_view">
 											<!-- As reactant -->
 											<div class="large-4 medium-4 small-4 columns">
-												<div class="row" style="text-align:left"><small>As reactant ({{record.reactions.asReactant.length}})</small></div>
-												<small>
+												<div class="row" style="text-align:left">
+													<small>As reactant ({{record.reactions.asReactant.length}})</small>
+												</div>
+												<div class="row" style="text-align:left">
 													<span ng-click="makeSelection(rxn.id,'reaction')" style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label" ng-repeat="rxn in record.reactions.asReactant | orderBy">
-														<p ng-if="rxn.name.length>25" style="text-transform:none; color:#555555;word-wrap: break-word;" data-tooltip aria-haspopup="true" class="has-tip" title="{{rxn.name}}">{{rxn.name | limitTo:25}}...</p>
-														<p ng-if="rxn.name.length<26" style="text-transform:none; color:#555555;word-wrap: break-word;" data-tooltip aria-haspopup="true" class="has-tip" title="{{rxn.name}}">{{rxn.name}}</p>
+														<small ng-if="rxn.name.length>25" style="text-transform:none; color:#555555;word-wrap: break-word;" data-tooltip aria-haspopup="true" class="has-tip" title="{{rxn.name}}">{{rxn.name | limitTo:25}}...</small>
+														<small ng-if="rxn.name.length<26" style="text-transform:none; color:#555555;word-wrap: break-word;" data-tooltip aria-haspopup="true" class="has-tip" title="{{rxn.name}}">{{rxn.name}}</small>
 													</span>
-												</small>
+												</div>
 											</div>
 											<!-- As modifier -->
 											<div class="large-4 medium-4 small-4 columns">
