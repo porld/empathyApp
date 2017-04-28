@@ -490,15 +490,15 @@ def fetchFromSYNBIOCHEM():
 		#Keys
 		for key in enzyme.keys():
 			if key in is_keys:
-				properties["is"].append( json.dumps([key,enzyme[key]]) )
+				properties["is"].append( json.dumps([key,'?'+enzyme[key]]) )
 			elif key in isDescribedBy_keys:
-				properties["isDescribedBy"].append( json.dumps([key,enzyme[key]]) )
+				properties["isDescribedBy"].append( json.dumps([key,'?'+enzyme[key]]) )
 			elif key in isVersionOf_keys:
-				properties["isVersionOf"].append( json.dumps([key,enzyme[key]]) )
+				properties["isVersionOf"].append( json.dumps([key,'?'+enzyme[key]]) )
 			elif key in property_keys:
-				properties["property"].append( json.dumps([key,enzyme[key]]) )
+				properties["property"].append( json.dumps([key,'?'+enzyme[key]]) )
 			elif key in is_a_keys:
-				properties["is_a"].append( json.dumps([key,enzyme[key]]) )
+				properties["is_a"].append( json.dumps([key,'?'+enzyme[key]]) )
 			else:
 				pass
 		cypher = "CREATE (n:molecule {props}) RETURN n"
@@ -564,15 +564,15 @@ def fetchFromSYNBIOCHEM():
 	
 		for key in chemical.keys():
 			if key in is_keys:
-				properties["is"].append( json.dumps([key,chemical[key]]) )
+				properties["is"].append( json.dumps([key,'?'+chemical[key]]) )
 			elif key in isDescribedBy_keys:
-				properties["isDescribedBy"].append( json.dumps([key,chemical[key]]) )
+				properties["isDescribedBy"].append( json.dumps([key,'?'+chemical[key]]) )
 			elif key in isVersionOf_keys:
-				properties["isVersionOf"].append( json.dumps([key,chemical[key]]) )
+				properties["isVersionOf"].append( json.dumps([key,'?'+chemical[key]]) )
 			elif key in property_keys:
-				properties["property"].append( json.dumps([key,chemical[key]]) )
+				properties["property"].append( json.dumps([key,'?'+chemical[key]]) )
 			elif key in is_a_keys:
-				properties["is_a"].append( json.dumps([key,chemical[key]]) )
+				properties["is_a"].append( json.dumps([key,'?'+chemical[key]]) )
 			else:
 				pass
 		cypher = "CREATE (n:molecule {props}) RETURN n"
@@ -640,13 +640,13 @@ def fetchFromSYNBIOCHEM():
 			if key in is_keys:
 				properties["is"].append( json.dumps([key+':'+reaction[key]]) )
 			elif key in isDescribedBy_keys:
-				properties["isDescribedBy"].append( json.dumps([key,reaction[key]]) )
+				properties["isDescribedBy"].append( json.dumps([key,'?'+reaction[key]]) )
 			elif key in isVersionOf_keys:
-				properties["isVersionOf"].append( json.dumps([key,reaction[key]]) )
+				properties["isVersionOf"].append( json.dumps([key,'?'+reaction[key]]) )
 			elif key in property_keys:
-				properties["property"].append( json.dumps([key,reaction[key]]) )
+				properties["property"].append( json.dumps([key,'?'+reaction[key]]) )
 			elif key in is_a_keys:
-				properties["is_a"].append( json.dumps([key,reaction[key]]) )
+				properties["is_a"].append( json.dumps([key,'?'+reaction[key]]) )
 			else:
 				pass
 		cypher = "CREATE (n:reaction {props}) RETURN n"
