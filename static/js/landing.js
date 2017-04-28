@@ -756,47 +756,38 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 
 	//Change curation status of subfield in JSON list of type field
 	$scope.curateJsonText = function(field,subfield) {
-		console.log('Curation swap', field, subfield);
-		if(typeof value === 'undefined') {
-			console.log('No value defined');
-			}
-		else if(value.length == 0) {
-			console.log('Zero length element (source)', source);
-			}
-		else {
-			console.log('Swap', subfield, 'in', field, 'of', $scope.selection);
-			newList = [];
-			//JSONify each subfield in field
-			flag = true;
-			for (i = 0; i < $scope.record[field].length; i++) {
-				currentPair = $scope.record[field][i];
-				//Check if we're looking at the right subfield
-				if(currentPair[0] === subfield) {
-					newValue = currentPair[1];
-					if(newValue[0] == '?') {
-						newValueEnd = newValue.length - 1;
-						newValue = newValue.substr(-1*newValueEnd);
-						}
-					else{
-						newValue = '?' + newValue;
-						}
-					flag = false;
+		console.log('Curation swap', subfield, 'in', field, 'of', $scope.selection);
+		newList = [];
+		//JSONify each subfield in field
+		flag = true;
+		for (i = 0; i < $scope.record[field].length; i++) {
+			currentPair = $scope.record[field][i];
+			//Check if we're looking at the right subfield
+			if(currentPair[0] === subfield) {
+				newValue = currentPair[1];
+				if(newValue[0] == '?') {
+					newValueEnd = newValue.length - 1;
+					newValue = newValue.substr(-1*newValueEnd);
 					}
-				newList.push( angular.toJson([currentPair[0],newValue]) );
-				};
-			if(flag) { //If the property isn't there create a new one
-				newList.push( angular.toJson([subfield,value]) );
+				else{
+					newValue = '?' + newValue;
+					}
+				flag = false;
 				}
-			bundle = {"port": $scope.port, "record_handle": $scope.record_handle, "id":$scope.selection, "key":field, "value":newList};
-			url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPush';
-			$http.post(url, angular.toJson(bundle) )
-				.success(function(data) {
-					console.log('Triggered: update json text', data);
-					})
-				.error(function (data, status) {
-					console.log('Error',status,data);
-					});
+			newList.push( angular.toJson([currentPair[0],newValue]) );
+			};
+		if(flag) { //If the property isn't there create a new one
+			newList.push( angular.toJson([subfield,value]) );
 			}
+		bundle = {"port": $scope.port, "record_handle": $scope.record_handle, "id":$scope.selection, "key":field, "value":newList};
+		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPush';
+		$http.post(url, angular.toJson(bundle) )
+			.success(function(data) {
+				console.log('Triggered: update json text', data);
+				})
+			.error(function (data, status) {
+				console.log('Error',status,data);
+				});
 		};
 
 	//Update element in JSON list
