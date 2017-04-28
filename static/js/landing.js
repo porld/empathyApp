@@ -782,8 +782,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		if(flag) { //If the property isn't there create a new one
 			newList.push( angular.toJson([subfield,value]) );
 			}
-		//Flatten the list
-		newList = list( set( newList ) );
 		bundle = {"port": $scope.port, "record_handle": $scope.record_handle, "id":$scope.selection, "key":field, "value":newList};
 		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPush';
 		$http.post(url, angular.toJson(bundle) )
