@@ -754,16 +754,16 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			}
 		};
 
-	//Change curation status of subfield in JSON list of type field
-	$scope.curateJsonText = function(field,subfield) {
-		console.log('Curation swap', subfield, 'in', field, 'of', $scope.selection);
+	//Change curation status of subfield in JSON list of type field (restrict to value in case of subfields with same names)
+	$scope.curateJsonText = function(field,subfield,value) {
+		console.log('Curation swap', subfield, '(', value, ')', 'in', field, 'of', $scope.selection);
 		newList = [];
 		//JSONify each subfield in field
 		flag = true;
 		for (i = 0; i < $scope.record[field].length; i++) {
 			currentPair = $scope.record[field][i];
 			//Check if we're looking at the right subfield
-			if(currentPair[0] === subfield) {
+			if((currentPair[0] === subfield) && (currentPair[1] === value)) {
 				newValue = currentPair[1];
 				if(newValue[0] == '?') {
 					newValueEnd = newValue.length - 1;
