@@ -693,26 +693,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			}
 		};
 	
-	//Change the curation of status of a list entry
-	//NOT FINISHED!!
-	$scope.curateListEntry = function(field,entry) {
-		for(i = 0; i < $scope.record[field].length; i++) {
-			//Find the matching entry
-			if($scope.record[field][i] == entry) {
-				//Switch the curation status
-				if(entry[0] == '?') {
-					entry = entry[1:entry.length-1];
-					}
-				else {
-					entry = '?' + entry;
-					}
-				//Alter the entry
-				$scope.record[field][i] = entry;
-				};
-			};
-		
-		};
-	
 	//Remove element from list
 	$scope.listPop = function(key,value) {
 		console.log('Pop', value, 'from', key, 'in', $scope.selection);
