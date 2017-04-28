@@ -709,7 +709,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 					currentValue = '?' + currentValue;
 					}
 				flag = false;
-				newList.push( angular.toJson(currentValue]) );
+				newList.push( angular.toJson(currentValue) );
 				}
 			else {
 				newList.push( angular.toJson(currentValue) );
