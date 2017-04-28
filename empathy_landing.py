@@ -500,7 +500,7 @@ def fetchFromSYNBIOCHEM():
 			elif key in isVersionOf_keys:
 				properties["isVersionOf"].append( json.dumps([key,'?'+enzyme[key]]) )
 			elif key in property_keys:
-				properties["property"].append( json.dumps([key,'?'+enzyme[key]]) )
+				properties["property"].append( json.dumps([key,enzyme[key]]) )
 			elif key in is_a_keys:
 				properties["is_a"].append( json.dumps([key,'?'+enzyme[key]]) )
 			else:
@@ -579,7 +579,7 @@ def fetchFromSYNBIOCHEM():
 			elif key in isVersionOf_keys:
 				properties["isVersionOf"].append( json.dumps([key,'?'+chemical[key]]) )
 			elif key in property_keys:
-				properties["property"].append( json.dumps([key,'?'+chemical[key]]) )
+				properties["property"].append( json.dumps([key,chemical[key]]) )
 			elif key in is_a_keys:
 				properties["is_a"].append( json.dumps([key,'?'+chemical[key]]) )
 			else:
@@ -650,7 +650,7 @@ def fetchFromSYNBIOCHEM():
 			elif key in isVersionOf_keys:
 				properties["isVersionOf"].append( json.dumps([key,'?'+reaction[key]]) )
 			elif key in property_keys:
-				properties["property"].append( json.dumps([key,'?'+reaction[key]]) )
+				properties["property"].append( json.dumps([key,reaction[key]]) )
 			elif key in is_a_keys:
 				properties["is_a"].append( json.dumps([key,'?'+reaction[key]]) )
 			else:
