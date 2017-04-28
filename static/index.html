@@ -485,8 +485,8 @@
 											<span ng-repeat="syn in record.synonyms | orderBy">
 												<small>
 													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="syn.length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{syn}}">{{syn | limitTo:25}}...</span>
-														<span ng-if="syn.length<26" style="text-transform:none">{{syn}}</span>
+														<span ng-if="syn.length>25" ng-click="curateList('synonyms',syn)" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{syn}}">{{syn | limitTo:25}}...</span>
+														<span ng-if="syn.length<26" ng-click="curateList('synonyms',syn)" style="text-transform:none">{{syn}}</span>
 														<span ng-click="listPop('synonyms',syn)">
 															<i style="color: #666666" class="fi-x-circle"></i>
 														</span>

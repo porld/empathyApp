@@ -691,6 +691,43 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 					});
 			}
 		};
+
+	//Change curation status of subfield in JSON list of type field (restrict to value in case of subfields with same names)
+	$scope.curateList = function(field,value) {
+		console.log('Curation swap', value, 'in', field, 'of', $scope.selection);
+		newList = [];
+		flag = true;
+		for (i = 0; i < $scope.record[field].length; i++) {
+			currentValue = $scope.record[field][i];
+			//Check if we're looking at the right value
+			if(currentValue === value) {
+				if(currentValue[0] == '?') {
+					currentValueEnd = currentValue.length - 1;
+					currentValue = currentValue.substr(-1*currentValueEnd);
+					}
+				else{
+					currentValue = '?' + currentValue;
+					}
+				flag = false;
+				newList.push( angular.toJson(currentValue]) );
+				}
+			else {
+				newList.push( angular.toJson(currentValue) );
+				}
+			};
+		if(flag) { //If the property isn't there create a new one
+			newList.push( angular.toJson(currentValue) );
+			}
+		bundle = {"port": $scope.port, "record_handle": $scope.record_handle, "id":$scope.selection, "key":field, "value":newList};
+		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPush';
+		$http.post(url, angular.toJson(bundle) )
+			.success(function(data) {
+				console.log('Triggered: update json text', data);
+				})
+			.error(function (data, status) {
+				console.log('Error',status,data);
+				});
+		};
 	
 	//Remove element from list
 	$scope.listPop = function(key,value) {
