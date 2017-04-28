@@ -764,58 +764,6 @@
 										</div>
 									</div>
 								</div>
-
-								<!--notifications-->
-								<!--div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
-									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="notifications_view" ng-click="notifications_view=!notifications_view">
-										<div class="row">
-											Notifications
-										</div>
-									</div>
-									<div class="large-12 medium-12 small-12 columns">							
-										<div class="row animate-show-hide" ng-show="notifications_view">
-											<!-- Flicker -->
-											<div ng-if="record.notifications.length>0" class="large-1 medium-1 small-1 columns">
-												<!-- Left -->
-												 <a href="#" ng-click="notTick('down',record.notifications.length)"><i class="fi-arrow-left"></i></a>
-											</div>
-											<!-- Notification -->
-											<div ng-if="record.notifications.length>0" class="large-10 medium-10 small-10 columns">
-												<div class="row">
-													<div class="large-11 medium-11 small-11 columns">
-														{{notification}}
-													</div>
-													<div class="large-1 medium-1 small-1 columns">
-														<i ng-click="listPop('notifications',notification)" style="color: #666666" class="fi-x-circle"></i>
-													</div>
-												</div>
-											</div>
-											<div ng-if="record.notifications.length>0" class="large-1 medium-1 small-1 columns">
-												<!-- Left -->
-												<a href="#" ng-click="notTick('up',record.notifications.length)"><i class="fi-arrow-right"></i></a>
-											</div>
-										</div>
-										<div class="row animate-show-hide" ng-show="notifications_view">										
-											<div ng-if="record.notifications.length>0" class="large-10 medium-10 small-10 columns">
-												<small>{{notTicker}}/{{record.notifications.length}}</small>
-											</div>
-											<div ng-if="record.notifications.length==0" class="large-10 medium-10 small-10 columns">
-												&nbsp;
-											</div>
-											<!-- Add notifications -->
-											<div class="large-2 medium-2 small-2 columns" ng_model="add_notifications" ng-init="add_notifications=false" ng-click="add_notifications=!add_notifications">
-												<small><i class="fi-plus"></i></small>
-											</div>
-										</div>
-										</div>
-										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_notifications" ng-model="new_notification">
-											<div class="large-12 medium-12 small-12 columns">
-												<textarea type="text" ng-blur="add_notifications=false;listPush('notifications',new_notification);new_notification=[];notTick('start',record.notifications.length);" ng-model="new_notification"></textarea>
-											</div>
-										</div>
-									</div-->
-
 							</div>
 
 							<!-- REACTION -->
@@ -992,8 +940,8 @@
 										</div>
 									</div>
 								</div>
-
 							</div>
+							
 							<!-- Column 2 -->
 							<div ng-if="label=='reaction' && selection!=''" class="large-6 medium-6 small-6 columns" style="padding: 0px;">
 
@@ -1148,7 +1096,6 @@
 										</div>
 									</div>
 								</div>
-
 							</div>
 
 							<!-- COMPARTMENT -->
