@@ -10,4 +10,4 @@ echo 'Launch Socket'
 python empathy_socket.py &
 
 echo 'Launch core'
-python landing.py $1 &
+python empathy_landing.py $1 &
