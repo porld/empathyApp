@@ -564,7 +564,12 @@ def fetchFromSYNBIOCHEM():
 		
 		#Synonyms
 		if "names" in chemical:
-			properties["synonyms"] = list(set(chemical['?'+"names"]))
+			synonyms = chemical["names"]
+			synonyms = list( set( synonyms.split(";") ) )
+			new_synonyms = []
+			for syn in synonyms:
+				new_synonyms.append('?'+syn)
+			properties["synonyms"] = new_synonyms
 	
 		for key in chemical.keys():
 			if key in is_keys:
@@ -638,11 +643,16 @@ def fetchFromSYNBIOCHEM():
 			properties["name"] = reaction["id"]
 
 		if "names" in reaction:
-			properties["synonyms"] = list(set('?'+reaction["names"]))
+			synonyms = reaction["names"]
+			synonyms = list( set( synonyms.split(";") ) )
+			new_synonyms = []
+			for syn in synonyms:
+				new_synonyms.append('?'+syn)
+			properties["synonyms"] = new_synonyms
 
 		for key in reaction.keys():
 			if key in is_keys:
-				properties["is"].append( json.dumps([key+':'+reaction[key]]) )
+				properties["is"].append( json.dumps([key,'?'+reaction[key]]) )
 			elif key in isDescribedBy_keys:
 				properties["isDescribedBy"].append( json.dumps([key,'?'+reaction[key]]) )
 			elif key in isVersionOf_keys:
