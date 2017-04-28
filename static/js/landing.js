@@ -709,14 +709,14 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 					currentValue = '?' + currentValue;
 					}
 				flag = false;
-				newList.push( angular.toJson(currentValue) );
+				newList.push( currentValue );
 				}
 			else {
-				newList.push( angular.toJson(currentValue) );
+				newList.push( currentValue );
 				}
 			};
 		if(flag) { //If the property isn't there create a new one
-			newList.push( angular.toJson(currentValue) );
+			newList.push( currentValue );
 			}
 		bundle = {"port": $scope.port, "record_handle": $scope.record_handle, "id":$scope.selection, "key":field, "value":newList};
 		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPush';
