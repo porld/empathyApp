@@ -626,8 +626,8 @@
 											<span ng-repeat="desc in record.isDescribedBy | orderBy">
 												<small>
 													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="desc[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{desc[0]}}:{{desc[1]}}">{{desc[0]}}:{{desc[1] | limitTo:25}}...</span>
-														<span ng-if="desc[1].length<26" style="text-transform:none">{{desc[0]}}:{{desc[1]}}</span>
+														<span ng-if="desc[1].length>25" ng-click="curateJsonText('isDescribedBy',desc[0])" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{desc[0]}}:{{desc[1]}}">{{desc[0]}}:{{desc[1] | limitTo:25}}...</span>
+														<span ng-if="desc[1].length<26" ng-click="curateJsonText('isDescribedBy',desc[0])" style="text-transform:none">{{desc[0]}}:{{desc[1]}}</span>
 														<span ng-click="jsonListPop('isDescribedBy',desc)">
 															<i style="color: #666666" class="fi-x-circle"></i>
 														</span>
