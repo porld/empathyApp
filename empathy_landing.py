@@ -565,7 +565,7 @@ def fetchFromSYNBIOCHEM():
 		#Synonyms
 		if "names" in chemical:
 			synonyms = chemical["names"]
-			synonyms = list( set( synonyms.split(";") ) )
+			synonyms = list( set( synonyms ) )
 			new_synonyms = []
 			for syn in synonyms:
 				new_synonyms.append('?'+syn)
@@ -641,14 +641,6 @@ def fetchFromSYNBIOCHEM():
 			properties["name"] = reaction["name"]
 		else:
 			properties["name"] = reaction["id"]
-
-		if "names" in reaction:
-			synonyms = reaction["names"]
-			synonyms = list( set( synonyms.split(";") ) )
-			new_synonyms = []
-			for syn in synonyms:
-				new_synonyms.append('?'+syn)
-			properties["synonyms"] = new_synonyms
 
 		for key in reaction.keys():
 			if key in is_keys:
