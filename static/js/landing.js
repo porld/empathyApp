@@ -775,7 +775,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 					newValue = currentPair[1];
 					if(newValue[0] == '?') {
 						newValueEnd = newValue.length - 1;
-						newValue = newValue[1:newValueEnd];
+						newValue = newValue.substr(-1*newValueEnd);
 						}
 					else{
 						newValue = '?' + newValue;
