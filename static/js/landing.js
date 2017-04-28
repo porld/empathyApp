@@ -340,7 +340,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.port = reconstruction.port;
 		$scope.fsid = reconstruction.fsid;
 		$scope.recon_spinner = false;
-		attachChat();
 		run_app();
 		};
 
