@@ -647,6 +647,8 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			}
 		});
 	
+	//-------------------------------------------------	
+	//ACTIONS UPON TEXT FIELDS
 	//Update node property
 	$scope.updateText = function(key,value) {
 		console.log('Update text', $scope.selection, 'with', key, ':', value);
@@ -660,30 +662,10 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				console.log('Error',status,data);
 				});
 		};
-	
-	//Remove element from list
-	$scope.listPop = function(key,value) {
-		console.log('Pop', value, 'from', key, 'in', $scope.selection);
-		currentList = $scope.record[key];
-		//console.log('Current list:', currentList);
-		newList = [];
-		for (i = 0; i < currentList.length; i++) {
-			if(currentList[i] != value) {
-				newList.push(currentList[i]);
-				}
-			};
-		//console.log('New list:', newList);
-		bundle = {"port": $scope.port, "record_handle": $scope.record_handle, "id":$scope.selection, "key":key, "value":newList};
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPop';
-		$http.post(url, angular.toJson(bundle) )
-			.success(function(data) {
-				console.log('Triggered: list pop');
-				})
-			.error(function (data, status) {
-				console.log('Error',status,data);
-				});
-		};
+	//-------------------------------------------------	
 
+	//-------------------------------------------------	
+	//ACTIONS UPON LISTS
 	//Add element to list
 	$scope.listPush = function(key,value) {
 		if(typeof value === 'undefined') {
@@ -710,7 +692,53 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 					});
 			}
 		};
+	
+	//Change the curation of status of a list entry
+	//NOT FINISHED!!
+	$scope.curateListEntry = function(field,entry) {
+		for(i = 0; i < $scope.record[field].length; i++) {
+			//Find the matching entry
+			if($scope.record[field][i] == entry) {
+				//Switch the curation status
+				if(entry[0] == '?') {
+					entry = entry[1:entry.length-1];
+					}
+				else {
+					entry = '?' + entry;
+					}
+				//Alter the entry
+				$scope.record[field][i] = entry;
+				};
+			};
+		
+		};
+	
+	//Remove element from list
+	$scope.listPop = function(key,value) {
+		console.log('Pop', value, 'from', key, 'in', $scope.selection);
+		currentList = $scope.record[key];
+		//console.log('Current list:', currentList);
+		newList = [];
+		for (i = 0; i < currentList.length; i++) {
+			if(currentList[i] != value) {
+				newList.push(currentList[i]);
+				}
+			};
+		//console.log('New list:', newList);
+		bundle = {"port": $scope.port, "record_handle": $scope.record_handle, "id":$scope.selection, "key":key, "value":newList};
+		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/listPop';
+		$http.post(url, angular.toJson(bundle) )
+			.success(function(data) {
+				console.log('Triggered: list pop');
+				})
+			.error(function (data, status) {
+				console.log('Error',status,data);
+				});
+		};
+	//-------------------------------------------------	
 
+	//-------------------------------------------------	
+	//ACTIONS UPON JSON LISTS
 	//Add element to JSON list
 	$scope.jsonListPush = function(field,value) {
 		source = value["source"];
@@ -808,6 +836,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				console.log('Error',status,data);
 				});
 		};
+	//-------------------------------------------------		
 	
 	//Render record
 	$scope.renderRecord = function(record) {
@@ -1084,96 +1113,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		};
 	//-------------------------------------------------
 
-	//-------------------------------------------------
-	//Messaging system
-	$scope.getThreadList = function() {
-		console.log('Retrieve thread list');
-		$scope.threadList = [];
-		bundle = {"port":$scope.port};
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/threadList';
-		$http.post(url, angular.toJson(bundle) )
-			.success(function(data) {
-				console.log('Triggered: thread list');
-				})
-			.error(function (data, status) {
-				console.log('Error', status, data);
-				})
-			.then(function(data, status) {
-				console.log('Threads', data);
-				$scope.threadList = data.data;
-				});		
-		};
-
-	$scope.getThread = function(thread) {
-		console.log('Retrieve thread', thread);
-		$scope.thread = {};
-		bundle = {"port":$scope.port,"thread":thread};
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/getThread';
-		$http.post(url, angular.toJson(bundle) )
-			.success(function(data) {
-				console.log('Triggered: get thread');
-				})
-			.error(function (data, status) {
-				console.log('Error', status, data);
-				})
-			.then(function(data, status) {
-				console.log('Message:', data);
-				$scope.thread = data.data.results[0];
-				});
-		};
-
-	$scope.createThread = function() {
-		console.log('Add thread', $scope.newMessage);
-		bundle = {"port":$scope.port,"parentMessage":"","poster":$scope.username,"message":$scope.newMessage}; //No parent triggers new thread
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/createMessage';
-		$http.post(url, angular.toJson(bundle) )
-			.success(function(data) {
-				console.log('Triggered: new thread');
-				})
-			.error(function (data, status) {
-				console.log('Error', status, data);
-				})
-			.then(function(data, status) {
-				console.log('Message posted');
-				});		
-		$scope.newMessage = {};
-		};
-	//-------------------------------------------------
-
-	//-------------------------------------------------
-	//Chat
-	function attachChat() {
-		$scope.chats = [];
-		$scope.chatColour = 'darkgray';
-		var chat_handle = $scope.port + '_chat';
-		socket.on(chat_handle, function(incoming) {
-			console.log('CHAT receive:', incoming);
-			if(incoming.name != $scope.username) {
-				$scope.chatColour = 'white'; //Notify UI about new message from group
-				}
-			$scope.chats.push(incoming);
-			$scope.chats = $scope.chats.slice(-15);
-			console.log($scope.chats);
-			$scope.$apply();
-			}); 
-		};
-	
-	$scope.chatpush = function(chit) {
-		if(chit.length > 0) {
-			console.log('CHAT emit:', chit);
-			chitter = {"name":$scope.username,"chat":chit};
-			url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/chat'
-			$http.post(url, angular.toJson({"chat_handle":$scope.port + '_chat',"chat":chitter, "port":$scope.port}) )
-				.success(function(data) {
-					console.log('Triggered: chat emit', data);
-					})
-				.error(function (data, status) {
-					console.log('Error', status, data);
-					});
-			$scope.chatColour = 'darkgray';
-			}
-		};
-	//-------------------------------------------------
 
 	//-------------------------------------------------
 	//Actions

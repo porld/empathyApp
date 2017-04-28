@@ -910,25 +910,6 @@ def destroyEdge():
 	except:
 		return json.dumps(False)
 
-@app.route('/updateText', methods=['POST'])
-@auth.login_required
-def updateText():
-	json_data = request.get_json(force=True)
-	port = json_data['port']
-	record_handle = json_data['record_handle'] #<port>_<id>
-	id = json_data['id']
-	key = json_data['key']
-	value = json_data['value']
-	#print 'UPDATE\tid:', id, 'key:', key, 'value:', value
-	
-	#Update node
-	cypher = "MATCH (n) WHERE n.id='" + id + "' SET n." + key + "={value} RETURN n"
-	parameters = {"value":value}
-	response = send_cypher(cypher,parameters,port)
-	#print 'BROADCAST:', record_handle, key, value
-	send_message(record_handle, {'key':key,'value':value, 'id': id},  port)
-	return json.dumps(True)
-
 #Retrieve a node
 @app.route('/fetchSelection', methods=['POST'])
 @auth.login_required
@@ -1003,6 +984,25 @@ def fetchSelection():
 
 	return json.dumps(record)
 
+@app.route('/updateText', methods=['POST'])
+@auth.login_required
+def updateText():
+	json_data = request.get_json(force=True)
+	port = json_data['port']
+	record_handle = json_data['record_handle'] #<port>_<id>
+	id = json_data['id']
+	key = json_data['key']
+	value = json_data['value']
+	#print 'UPDATE\tid:', id, 'key:', key, 'value:', value
+	
+	#Update node
+	cypher = "MATCH (n) WHERE n.id='" + id + "' SET n." + key + "={value} RETURN n"
+	parameters = {"value":value}
+	response = send_cypher(cypher,parameters,port)
+	#print 'BROADCAST:', record_handle, key, value
+	send_message(record_handle, {'key':key,'value':value, 'id': id},  port)
+	return json.dumps(True)
+
 @app.route('/listPop', methods=['POST'])
 @auth.login_required
 def listPop():
@@ -1041,7 +1041,8 @@ def listPush():
 	#print 'BROADCAST:', record_handle, key, value
 	send_message(record_handle, {'key':key,'value':value, 'id': id},  port)
 	return json.dumps(True)
-	
+
+#For finding reactions in the reaction builder
 @app.route('/queryMolecules', methods=['POST'])
 @auth.login_required
 def queryMolecules():
@@ -1060,83 +1061,6 @@ def queryMolecules():
 		match = row["row"]
 		matches.append(match)
 	return json.dumps(matches)
-
-@app.route('/createMessage', methods=['POST'])
-@auth.login_required
-def createMessage():
-	json_data = request.get_json(force=True)
-	port = json_data['port']
-	parent = json_data['parentMessage']
-	poster = json_data['poster']
-	message = json_data['message']
-	#print 'Create thread node'
-	
-	properties = {}
-	properties["id"] = str(uuid.uuid4())
-	properties['postedBy'] = poster
-	properties['title'] = message['title']
-	properties['body'] = message['body']
-	properties['time'] = str(datetime.datetime.now())
-	
-	cypher = "CREATE (n:message {props}) RETURN n"
-	parameters = {"props": properties}
-	response = send_cypher(cypher,parameters,port)
-	##print response.json()
-
-	#If the message has a parent (is not a new message) add the link	
-	if parent != '':
-		cypher = "MATCH (p:message {id:'" + parent + "'}), (m:message {id:'" + id + "'}) CREATE (p)<-[:thread]-(e)"
-		parameters = {}
-		response = send_cypher(cypher,parameters,port)
-		#print response.json()
-	
-	return json.dumps(True)
-
-@app.route('/threadList', methods=['POST'])
-@auth.login_required
-def threadList():
-	json_data = request.get_json(force=True)
-	port = json_data['port']
-	#print 'Fetch all messages'
-	
-	cypher = "MATCH (n:message) WHERE NOT (n)-[:thread]->(:message) RETURN n"
-	parameters = {}
-	response = send_cypher(cypher,parameters,port)
-	threadResponse = response.json()
-	
-	msgList = []
-	for row in threadResponse['results'][0]['data']:
-		msg = row['row'][0]
-		msgList.append(msg)
-		
-	return json.dumps(msgList)
-
-@app.route('/getThread', methods=['POST'])
-@auth.login_required
-def getThread():
-	json_data = request.get_json(force=True)
-	port = json_data['port']
-	thread = json_data['thread']
-	#print 'Fetch thread', thread	
-	cypher = "MATCH (n:message)<-[*0..10000]-(m:message) WHERE n.id='" + thread + "'RETURN n, m"
-	parameters = {}
-	response = send_cypher(cypher,parameters,port)
-	threadResponse = response.json()
-			
-	return json.dumps(threadResponse)
-
-@app.route('/chat', methods=['POST'])
-@auth.login_required
-def chat():
-	json_data = request.get_json(force=True)
-	chat_handle = json_data['chat_handle']
-	chat = json_data['chat']
-	port = json_data['port']
-	chat['unique'] = str(uuid.uuid4())
-	#print 'BROADCAST:', chat_handle, chat
-	send_message(chat_handle, chat,  port)
-
-	return json.dumps(True)
 #-----------------------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------------------------
