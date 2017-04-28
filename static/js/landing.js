@@ -773,8 +773,11 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 					newValue = '?' + newValue;
 					}
 				flag = false;
+				newList.push( angular.toJson([currentPair[0],newValue]) );
 				}
-			newList.push( angular.toJson([currentPair[0],newValue]) );
+			else {
+				newList.push( angular.toJson(currentPair) );
+				}
 			};
 		if(flag) { //If the property isn't there create a new one
 			newList.push( angular.toJson([subfield,value]) );
