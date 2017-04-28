@@ -660,12 +660,12 @@
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="is_versionOf_view">
-											<!-- isDescribedBy list -->
+											<!-- isVersionOf list -->
 											<span ng-repeat="i in record.is_versionOf | orderBy">
 												<small>
 													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
-														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
+														<span ng-if="i[1].length>25" ng-click="curateJsonText('isVersionOf',i[0],i[1])" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
+														<span ng-if="i[1].length<26" ng-click="curateJsonText('isVersionOf',i[0],i[1])" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
 														<span ng-click="jsonListPop('is_versionOf',i)">
 															<i style="color: #666666" class="fi-x-circle"></i>
 														</span>
@@ -740,8 +740,8 @@
 											<span ng-repeat="i in record.references | orderBy">
 												<small>
 													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
-														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
+														<span ng-if="i[1].length>25" ng-click="curateJsonText('references',i[0],i[1])" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
+														<span ng-if="i[1].length<26" ng-click="curateJsonText('references',i[0],i[1])" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
 														<span ng-click="jsonListPop('references',i)">
 															<i style="color: #666666" class="fi-x-circle"></i>
 														</span>
@@ -766,7 +766,7 @@
 								</div>
 
 								<!--notifications-->
-								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
+								<!--div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
 									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="notifications_view" ng-click="notifications_view=!notifications_view">
 										<div class="row">
 											Notifications
@@ -814,7 +814,7 @@
 												<textarea type="text" ng-blur="add_notifications=false;listPush('notifications',new_notification);new_notification=[];notTick('start',record.notifications.length);" ng-model="new_notification"></textarea>
 											</div>
 										</div>
-									</div>
+									</div-->
 
 							</div>
 
@@ -994,7 +994,7 @@
 								</div>
 
 								<!--notifications-->
-								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
+								<!--div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
 									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="notifications_view" ng-click="notifications_view=!notifications_view">
 										<div class="row">
 											Notifications
@@ -1042,7 +1042,7 @@
 												<textarea type="text" ng-blur="add_notifications=false;listPush('notifications',new_notification);new_notification=[];notTick('start',record.notifications.length);" ng-model="new_notification"></textarea>
 											</div>
 										</div>
-									</div>
+									</div-->
 
 
 							</div>
@@ -1062,8 +1062,8 @@
 											<span ng-repeat="desc in record.isDescribedBy | orderBy">
 												<small>
 													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="desc[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{desc[0]}}:{{desc[1]}}">{{desc[0]}}:{{desc[1] | limitTo:25}}...</span>
-														<span ng-if="desc[1].length<26" style="text-transform:none">{{desc[0]}}:{{desc[1]}}</span>
+														<span ng-if="desc[1].length>25" ng-click="curateJsonText('isDescribedBy', desc[0],desc[1])" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{desc[0]}}:{{desc[1]}}">{{desc[0]}}:{{desc[1] | limitTo:25}}...</span>
+														<span ng-if="desc[1].length<26" ng-click="curateJsonText('isDescribedBy', desc[0],desc[1])" style="text-transform:none">{{desc[0]}}:{{desc[1]}}</span>
 														<span ng-click="jsonListPop('isDescribedBy',desc)">
 															<i style="color: #666666" class="fi-x-circle"></i>
 														</span>
@@ -1096,12 +1096,12 @@
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="is_versionOf_view">
-											<!-- isDescribedBy list -->
+											<!-- isVersionOf list -->
 											<span ng-repeat="i in record.is_versionOf | orderBy">
 												<small>
 													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
-														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
+														<span ng-if="i[1].length>25"  ng-click="curateJsonText('isVersionOf', i[0],i[1])" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
+														<span ng-if="i[1].length<26"  ng-click="curateJsonText('isVersionOf', i[0],i[1])" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
 														<span ng-click="jsonListPop('is_versionOf',i)">
 															<i style="color: #666666" class="fi-x-circle"></i>
 														</span>
@@ -1306,8 +1306,8 @@
 											<span ng-repeat="desc in record.isDescribedBy | orderBy">
 												<small>
 													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="desc[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{desc[0]}}:{{desc[1]}}">{{desc[0]}}:{{desc[1] | limitTo:25}}...</span>
-														<span ng-if="desc[1].length<26" style="text-transform:none">{{desc[0]}}:{{desc[1]}}</span>
+														<span ng-if="desc[1].length>25" ng-click="curateJsonText('isDescribedBy', desc[0],desc[1])" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{desc[0]}}:{{desc[1]}}">{{desc[0]}}:{{desc[1] | limitTo:25}}...</span>
+														<span ng-if="desc[1].length<26" ng-click="curateJsonText('isDescribedBy', desc[0],desc[1])" style="text-transform:none">{{desc[0]}}:{{desc[1]}}</span>
 														<span ng-click="jsonListPop('isDescribedBy',desc)">
 															<i style="color: #666666" class="fi-x-circle"></i>
 														</span>
@@ -1340,12 +1340,12 @@
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="is_versionOf_view">
-											<!-- isDescribedBy list -->
+											<!-- isVersionOf list -->
 											<span ng-repeat="i in record.is_versionOf | orderBy">
 												<small>
 													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
-														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
+														<span ng-if="i[1].length>25" ng-click="curateJsonText('isVersionOf', i[0],i[1])" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
+														<span ng-if="i[1].length<26" ng-click="curateJsonText('isVersionOf', i[0],i[1])" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
 														<span ng-click="jsonListPop('is_versionOf',i)">
 															<i style="color: #666666" class="fi-x-circle"></i>
 														</span>
