@@ -844,7 +844,7 @@
 							<!-- Column 1 -->
 							<div ng-if="label=='reaction' && selection!=''" class="large-6 medium-6 small-6 columns" style="padding: 0px;">
 								<!--Synonyms-->
-								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
+								<div class="row" ng-click="curateList('synonyms',syn)" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
 									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="syn_view" ng-click="syn_view=!syn_view">
 										<div class="row">
 											Synonyms
@@ -1118,7 +1118,7 @@
 								</div>
 
 								<!--Synonyms-->
-								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
+								<div class="row" ng-click="curateList('synonyms',syn)" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
 									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="syn_view" ng-click="syn_view=!syn_view">
 										<div class="row">
 											Synonyms
