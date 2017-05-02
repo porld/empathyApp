@@ -121,7 +121,7 @@
 						<!-- SYNBIOCHEM-DB -->
 						<div class="row">
 							<div class="large-6 medium-6 small-6 columns">
-								<input id="SBMLinput" ng-init="taxon=''" type="text" ng-model="taxon" placeholder="NCBI taxon">
+								<input ng-init="taxon=''" type="text" ng-model="taxon" placeholder="NCBI taxon">
 							</div>
 							<div class="large-3 medium-3 small-3 columns">
 								<a href="#" ng-click="synbiochem_import(taxon)" class="button postfix">Import</a>
@@ -131,7 +131,7 @@
 						<!-- SBML -->
 						<div class="row">
 							<div class="large-5 medium-5 small-5 columns">
-								<input ng-init="sbml='';sbml_spinner=false" type="file" ng-model="sbml" placeholder="SBML">
+								<input id="SBMLinput" ng-init="sbml='';sbml_spinner=false" type="file" ng-model="sbml" placeholder="SBML">
 							</div>
 							<div ng-if="sbml_spinner" class="large-1 medium-1 small-1 columns"><i>reading</i></div>
 							<div ng-if="!sbml_spinner" class="large-1 medium-1 small-1 columns">&nbsp;</div>
