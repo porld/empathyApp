@@ -364,7 +364,9 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//Import from SBML file
 	$scope.importSBML = function() {
 		$scope.sbml_spinner = true;
-		var file = document.getElementById("SBMLinput").files[0];
+		//var file = document.getElementById("SBMLinput").files[0];
+		var file = document.getElementById("SBMLinput");
+		console.log('File:', file);
 		if(file) {
 			console.log('Importing from SBML');
 			var sbmlReader = new FileReader();
