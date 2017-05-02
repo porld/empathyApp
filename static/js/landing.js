@@ -363,8 +363,10 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 
 	//Import from SBML file
 	$scope.importSBML = function() {
+		$scope.sbml_spinner = true;
 		console.log('Importing from SBML');
 		console.log($scope.sbml);
+		$scope.sbml_spinner = false;
 		};
 
 	//Add collaborator to reconstruction
