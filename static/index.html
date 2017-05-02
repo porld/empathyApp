@@ -131,10 +131,10 @@
 						<!-- SBML -->
 						<div class="row">
 							<div class="large-6 medium-6 small-6 columns">
-								<input ng-init="sbml=''" type="text" ng-model="sbml" placeholder="SBML">
+								<input ng-init="sbml=''" type="file" ng-model="sbml" placeholder="SBML">
 							</div>
 							<div class="large-3 medium-3 small-3 columns">
-								<a href="#" ng-click="" class="button postfix">Upload</a>
+								<a href="#" ng-click="importSBML()" class="button postfix">Upload</a>
 							</div>
 							<div class="large-3 medium-3 small-3 columns"">&nbsp;</div>
 						</div>
@@ -268,23 +268,6 @@
 							<li ng-if="spinner" style="height: 100%; vertical-align: text-center"><a href="#" style="height: 100%; vertical-align: text-center"	>&#8987;</a></li>
 						</ul>
 						<ul class="right">
-							<!-- Chat bindings -->
-							<!--li ng-if="!recon==''" class="has-dropdown">
-								<a href="#">
-									<i style="color: {{chatColour}}" class="fi-torsos-all"></i>
-								</a>
-								<ul class="dropdown">
-									<li>
-										<input ng-model="chit" style="width:20vw" placeholder="join chat" type="text" ng-blur="chatpush(chit);chit=''"/>
-									</li>
-									<li style="background-color: white">
-										<br>
-										<span style="padding: 3px" ng-repeat="c in chats" ng-class-even="'eventext'" ng-class-odd="'oddtext'" >
-											<b><span data-tooltip aria-haspopup="true" class="has-tip" title="{{c.name}}">{{c.name | limitTo:8}}...&nbsp;</span></b>{{c.chat}}<br>
-										</span>
-									</li>
-								</ul>					
-							</li-->
 							<li><a href="#" style="font-style: italic">{{recon}}</a></li>
 							<li class="has-dropdown">
 								<a href="#" style="font-family:Montserrat; font-weight: bold;">jamboree</a>
