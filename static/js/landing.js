@@ -362,7 +362,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		};
 
 	//Import from SBML file
-	function SBMLparser(sbml) = {
+	function SBMLparser(sbml) {
 		console.log('Send SBML for parsing:',sbml);
 		};
 	
