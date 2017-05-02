@@ -183,8 +183,9 @@ def parseSBML(sbml):
 	
 	return model
 
-
+'''
 f = open('recon2.2.xml', 'r')
 sbml = f.read()
 recon = parseSBML(sbml)
 print recon
+'''
