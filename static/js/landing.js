@@ -364,8 +364,21 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//Import from SBML file
 	$scope.importSBML = function() {
 		$scope.sbml_spinner = true;
-		console.log('Importing from SBML');
-		console.log($scope.sbml);
+		var file = document.getElementById("SBMLinput").files[0];
+		if(file) {
+			console.log('Importing from SBML');
+			var sbmlReader = new FileReader();
+			sbmlReader.readAsText(file, "UTF-8");
+			//Load
+			sbml.onload = function (evt) {
+	            $scope.sbmlString = sbmlReader.result;
+	            console.log('SBML string:', sbmlString);
+				}
+			//Error
+			sbmlReader.onerror = function (evt) {
+				console.log('SBML read error');
+        		}
+			}
 		$scope.sbml_spinner = false;
 		};
 
@@ -1203,7 +1216,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 
 //----------------------------------------------------------------------------------------
 //DIRECTIVES
-
 
 //SMILES
 landingApp.directive('smilesViewer', function ($parse, $http) {
