@@ -364,8 +364,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//Import from SBML file
 	$scope.importSBML = function() {
 		$scope.sbml_spinner = true;
-		//var file = document.getElementById("SBMLinput").files[0];
-		var file = document.getElementById("SBMLinput");
+		var file = document.getElementById("SBMLinput").files[0];
 		console.log('File:', file);
 		if(file) {
 			console.log('Importing from SBML');
@@ -373,8 +372,11 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			sbmlReader.readAsText(file, "UTF-8");
 			//Load
 			sbml.onload = function (evt) {
-	            $scope.sbmlString = sbmlReader.result;
-	            console.log('SBML string:', sbmlString);
+                document.getElementById("SBMLinput").innerHTML = evt.target.result;
+                $scope.sbmlString = sbmlReader.result;
+                $scope.fileName = document.getElementById("SBMLinput").files[0].name;
+				$scope.fileSize = document.getElementById("SBMLinput").files[0].size;;
+	            console.log('SBML string:', $scope.fileName, $scope.fileSize, $scope.sbmlString);
 				}
 			//Error
 			sbmlReader.onerror = function (evt) {
