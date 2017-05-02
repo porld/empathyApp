@@ -371,7 +371,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			var sbmlReader = new FileReader();
 			sbmlReader.readAsText(file, "UTF-8");
 			//Load
-			sbml.onload = function (evt) {
+			sbmlReader.onload = function (evt) {
                 document.getElementById("SBMLinput").innerHTML = evt.target.result;
                 $scope.sbmlString = sbmlReader.result;
                 $scope.fileName = document.getElementById("SBMLinput").files[0].name;
