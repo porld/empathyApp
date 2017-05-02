@@ -5,6 +5,7 @@ from passlib.hash import sha256_crypt
 from flask_mail import Mail, Message
 import sys, subprocess, uuid, os, json, requests, socket, time, pickle, passwordmeter, copy, datetime
 import empathy_actions as actions
+import empathy_libsbml as libsbml
 
 HOST = 'www.metabolicjamboree.co.uk'
 PORT = 8080
@@ -754,6 +755,20 @@ def fetchFromSYNBIOCHEM():
 
 	print 'SYNBIOCHEM-DB import complete'
 	return json.dumps(True)
+
+@app.route('/importSBML', methods=['POST'])
+@auth.login_required
+def importSBML():
+	json_data = request.get_json(force=True)
+	port = json_data['port']
+	sbml = json_data['sbml']
+
+	model = libsbml.parseSBML(sbml)
+	print model
+
+	print 'SBML import complete'
+	return json.dumps(True)
+
 
 @app.route('/createNode', methods=['POST'])
 @auth.login_required

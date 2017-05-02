@@ -35,4 +35,4 @@ def socketHandler():
 if __name__ == '__main__':
 	CERT_FILE = 'certs/fullchain.pem'
 	KEY_FILE = 'certs/privkey.pem'
-	socketio.run(app,host='0.0.0.0',debug=True, certfile=CERT_FILE, keyfile=KEY_FILE, port=8082)
+	socketio.run(app,host='0.0.0.0',debug=False, certfile=CERT_FILE, keyfile=KEY_FILE, port=8082)
