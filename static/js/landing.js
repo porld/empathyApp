@@ -362,6 +362,11 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		};
 
 	//Import from SBML file
+	function SBMLparser(sbml) = {
+		console.log('Send SBML for parsing:',sbml);
+		};
+	
+	//Filereader to fetch SBML string
 	$scope.importSBML = function() {
 		$scope.sbml_spinner = true;
 		var file = document.getElementById("SBMLinput").files[0];
@@ -375,15 +380,16 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
                 document.getElementById("SBMLinput").innerHTML = evt.target.result;
                 $scope.sbmlString = sbmlReader.result;
                 $scope.fileName = document.getElementById("SBMLinput").files[0].name;
-				$scope.fileSize = document.getElementById("SBMLinput").files[0].size;;
-	            console.log('SBML string:', $scope.fileName, $scope.fileSize, $scope.sbmlString);
+	            console.log('SBML string:', $scope.fileName);
+	            SBMLparser($scope.sbmlString);
+				$scope.sbml_spinner = false;
 				}
 			//Error
 			sbmlReader.onerror = function (evt) {
 				console.log('SBML read error');
+				$scope.sbml_spinner = false;
         		}
 			}
-		$scope.sbml_spinner = false;
 		};
 
 	//Add collaborator to reconstruction
