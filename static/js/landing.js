@@ -204,7 +204,8 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	initialise = function() {
 		console.log('Initialise');
 		$scope.spinner = false;				//spinner activity
-		$scope.sbml_spinner = false;				//spinner activity
+		$scope.sbml_spinner = false;		//SBML spinner activity
+		$scope.sbml_upload_message = '';	//SBML upload message
 		$scope.recon = '';					//reconstruction name
 		$scope.port = '';					//DB port
 		$scope.fsid = '';					//filesystem id
@@ -364,12 +365,14 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 
 	//Import from SBML file
 	function SBMLparser(sbml) {
+		$scope.sbml_upload_message = 'Pushing to database...';
 		console.log('Send SBML for parsing:',sbml);
 		};
 	
 	//Filereader to fetch SBML string
 	$scope.importSBML = function() {
 		$scope.sbml_spinner = true;
+		$scope.sbml_upload_message = 'reading...';
 		console.log('SBML spinner:', $scope.sbml_spinner);
 		var file = document.getElementById("SBMLinput").files[0];
 		console.log('File:', file);
