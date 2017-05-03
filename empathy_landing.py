@@ -763,6 +763,7 @@ def importSBML():
 	port = json_data['port']
 	sbml = json_data['sbml']
 
+	print 'Import SBML...'
 	model = libsbml.parseSBML(sbml)
 	print model
 

@@ -365,19 +365,18 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 
 	//Import from SBML file
 	function SBMLparser(sbml) {
-		$scope.sbml_upload_message = 'Pushing to database...';
-		console.log('Send SBML for parsing');
+		$scope.sbml_upload_message = 'uploading...';
+		console.log('Parsing SBML...');
 		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/importSBML'
 		$http.post(url, angular.toJson({"port":$scope.port,"sbml":sbml}) )
 			.success(function(data) {
 				console.log('Pushing SBML to server');
-				$scope.sbml_upload_message = 'SBML to Jamboree';
 				})
 			.error(function (data, status) {
 				console.log('Error', status, data);
 				})
 			.then(function () {
-				console.log('SBML upload with server');
+				console.log('Converting on server');
 				$scope.sbml_spinner = false;
 				$scope.sbml_upload_message = '';
 				});
