@@ -204,6 +204,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	initialise = function() {
 		console.log('Initialise');
 		$scope.spinner = false;				//spinner activity
+		$scope.sbml_spinner = false;				//spinner activity
 		$scope.recon = '';					//reconstruction name
 		$scope.port = '';					//DB port
 		$scope.fsid = '';					//filesystem id
@@ -369,6 +370,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//Filereader to fetch SBML string
 	$scope.importSBML = function() {
 		$scope.sbml_spinner = true;
+		console.log(('SBML spinner:', $scope.sbml_spinner);
 		var file = document.getElementById("SBMLinput").files[0];
 		console.log('File:', file);
 		if(file) {
