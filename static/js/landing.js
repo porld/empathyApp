@@ -366,7 +366,21 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//Import from SBML file
 	function SBMLparser(sbml) {
 		$scope.sbml_upload_message = 'Pushing to database...';
-		console.log('Send SBML for parsing:',sbml);
+		console.log('Send SBML for parsing');
+		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/importSBML'
+		$http.post(url, angular.toJson({"port":$scope.port,"sbml":sbml}) )
+			.success(function(data) {
+				console.log('Pushing SBML to server');
+				$scope.sbml_upload_message = 'SBML to Jamboree';
+				})
+			.error(function (data, status) {
+				console.log('Error', status, data);
+				})
+			.then(function () {
+				console.log('SBML upload with server');
+				$scope.sbml_spinner = false;
+				$scope.sbml_upload_message = '';
+				});
 		};
 	
 	//Filereader to fetch SBML string
@@ -385,7 +399,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
                 document.getElementById("SBMLinput").innerHTML = evt.target.result;
                 $scope.sbmlString = sbmlReader.result;
                 $scope.fileName = document.getElementById("SBMLinput").files[0].name;
-	            console.log('SBML string:', $scope.fileName);
+	            console.log('SBML filename:', $scope.fileName);
 	            SBMLparser($scope.sbmlString);
 				$scope.sbml_spinner = false;
 				}
