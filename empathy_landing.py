@@ -764,8 +764,8 @@ def importSBML():
 	sbml = json_data['sbml']
 
 	print 'Import SBML...'
-	model = libsbml.parseSBML(sbml)
-	print model
+	#model = libsbml.parseSBML(sbml)
+	print sbml
 
 	print 'SBML import complete'
 	return json.dumps(True)

@@ -400,7 +400,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
                 $scope.fileName = document.getElementById("SBMLinput").files[0].name;
 	            console.log('SBML filename:', $scope.fileName);
 	            SBMLparser($scope.sbmlString);
-				$scope.sbml_spinner = false;
 				}
 			//Error
 			sbmlReader.onerror = function (evt) {
