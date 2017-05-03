@@ -398,7 +398,8 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
                 document.getElementById("SBMLinput").innerHTML = evt.target.result;
                 $scope.sbmlString = sbmlReader.result;
                 $scope.fileName = document.getElementById("SBMLinput").files[0].name;
-	            console.log('SBML filename:', $scope.fileName);
+                $scope.fileSize = document.getElementById("SBMLinput").files[0].size;
+	            console.log('SBML filename:', $scope.fileName, $scope.fileSize);
 	            SBMLparser($scope.sbmlString);
 				}
 			//Error
