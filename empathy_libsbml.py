@@ -13,23 +13,25 @@ def unpackBags(bags):
 	resources = []
 	try:
 		if len(bags) == 1:
-			resource = bags['rdf:Bag']['rdf:li']['@rdf:resource']
+			type = 1
+			resource = bags['rdf:Bag']['rdf:li'][0]['@rdf:resource']
 			resource = resource.replace('http://identifiers.org/','')
 			resource = resource.replace('/',':',1)
 			resources.append(str(resource))			
 		else:
+			type = 2
 			for bag in bags:
-				resource = bag['rdf:Bag']['rdf:li']['@rdf:resource']
+				resource = bag['rdf:Bag']['rdf:li'][0]['@rdf:resource']
 				resource = resource.replace('http://identifiers.org/','')
 				resource = resource.replace('/',':',1)
 				resources.append(str(resource))
-	except:
-		print 'Something went wrong'
+	except Exception, e:
+		print 'Something went wrong:', str(e), type, resources
 	return resources
 
 def getAnnotations(sbmlObject):
+	return {}
 	try:
-		#annotationString = sbmlObject
 		annotationString = sbmlObject.getAnnotationString()
 		annotationString = annotationString.replace("\n","")
 		annotationString = annotationString.replace("  ","")
@@ -43,7 +45,8 @@ def getAnnotations(sbmlObject):
 				resources = unpackBags(annotationDict['annotation']['rdf:RDF']['rdf:Description'][bqbiol])
 				annotations[whack[1]] = resources
 		return annotations
-	except:
+	except Exception, e:
+		print 'Exception:', str(e)
 		return {}
 
 def getNotes(sbmlObject):
@@ -163,7 +166,7 @@ def parseSBML(sbml):
 			modifiers = []
 			for mol in listOfModifiers:
 				name,comp = fetch_species(model,mol.getSpecies())
-				modifiers.append({'id':mol.getSpecies(), 'stoichiometry':mol.getStoichiometry(), 'display':name, 'localisation':comp})
+				modifiers.append({'id':mol.getSpecies(), 'display':name, 'localisation':comp})
 			reaction["modifiers"] = modifiers
 
 			listOfProducts = rxn.getListOfProducts()
@@ -175,17 +178,14 @@ def parseSBML(sbml):
 
 		reactions.append(reaction)
 		print '...complete'
-	except:
+	except Exception, e:
 		reactions = []
-		print 'Could not read reactions'
+		print 'Could not read reactions:', str(e)
 	
 	model = {"compartments":compartments, "molecules":molecules, "reactions":reactions }
 	
 	return model
 
-'''
-f = open('recon2.2.xml', 'r')
+f = open('yeast_7.6_recon.xml', 'r')
 sbml = f.read()
 recon = parseSBML(sbml)
-print recon
-'''
