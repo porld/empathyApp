@@ -766,7 +766,27 @@ def importSBML():
 	print 'Import SBML...'
 	try:
 		model = libsbml.parseSBML(sbml)
-		print model
+		print 'libSBML successful'
+		try:
+			print 'Uploading to graph database'
+			#Compartments
+			print 'Compartments'
+			compartments = model['compartments']
+			for comp in compartments:
+				properties = copy.deepcopy(nodeBlank)
+				for prop in properties:
+					if prop in comp:
+						properties[prop] = comp[prop]	
+				properties["id"] = str(uuid.uuid4())
+				properties["source"] = "SBML"
+				properties["sourceId"] = chemical["id"]
+			 	properties["tags"] = ["simple chemical"]
+				print comp, properties
+				cypher = 'CREATE (n:compartment {props}) RETURN n.id'
+				parameters = {"props": properties}
+				response = send_cypher(cypher,parameters,port)
+		except:
+			print 'Could not upload to graph database'
 	except:
 		print 'Could not convert to libSBML object'
 		return json.dumps(False)		
