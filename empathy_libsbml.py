@@ -30,7 +30,8 @@ def unpackBags(bags):
 	return resources
 
 def getAnnotations(sbmlObject):
-	return {}
+	return {'No annotations':''}
+	'''
 	try:
 		annotationString = sbmlObject.getAnnotationString()
 		annotationString = annotationString.replace("\n","")
@@ -48,6 +49,7 @@ def getAnnotations(sbmlObject):
 	except Exception, e:
 		print 'Exception:', str(e)
 		return {}
+	'''
 
 def getNotes(sbmlObject):
 	try:
@@ -186,6 +188,8 @@ def parseSBML(sbml):
 	
 	return model
 
+'''
 f = open('yeast_7.6_recon.xml', 'r')
 sbml = f.read()
 recon = parseSBML(sbml)
+'''
