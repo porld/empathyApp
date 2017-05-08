@@ -609,20 +609,30 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 					$scope.reference = '';
 
 					//Unpack JSONified lists
-					//$scope.record.isDescribedBy = unpackJson($scope.record.isDescribedBy);
+					$scope.record.is = unpackJson($scope.record.is);
+					$scope.record.hasPart = unpackJson($scope.record.hasPart);
+					$scope.record.isPartOf = unpackJson($scope.record.isPartOf);
+					$scope.record.isVersionOf = unpackJson($scope.record.isVersionOf);
+					$scope.record.hasVersion = unpackJson($scope.record.hasVersion);
+					$scope.record.isHomologTo = unpackJson($scope.record.isHomologTo);
+					$scope.record.isDescribedBy = unpackJson($scope.record.isDescribedBy);
+					$scope.record.isEncodedBy = unpackJson($scope.record.isEncodedBy);
+					$scope.record.encodes = unpackJson($scope.record.encodes);
+					$scope.record.occursIn = unpackJson($scope.record.occursIn);
+					$scope.record.hasProperty = unpackJson($scope.record.hasProperty);
+					$scope.record.isPropertyOf = unpackJson($scope.record.isPropertyOf);
+					$scope.record.hasTaxon = unpackJson($scope.record.hasTaxon);
 					//$scope.record.is_a = unpackJson($scope.record.is_a);
-					//$scope.record.isVersionOf = unpackJson($scope.record.isVersionOf);
-					//$scope.record.is = unpackJson($scope.record.is);
 					//$scope.record.references = unpackJson($scope.record.references);
 
 					//$scope.record.notifications = unpackJson($scope.record.notifications);					
 					//Trigger ancillary functions
-					if($scope.label != 'reaction') { //Compartments and molecules have parent compartments
+					if($scope.label == 'molecule') { //Compartments and molecules have parent compartments
 						fetchCompartmentList();
 						}
 					//smilesFromRecord(); //Disabled as smilesViewer takes care of this now
-					$scope.reference = $scope.record.references[0];
-					$scope.notification = $scope.record.notifications[0];
+					//$scope.reference = $scope.record.references[0];
+					//$scope.notification = $scope.record.notifications[0];
 					$scope.spinner = false;
 					});
 			}
