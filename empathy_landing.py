@@ -393,17 +393,7 @@ def fetchList(label,port):
 	#Don't look for compartment (no such thing for reactions)	
 	print 'Fetch list:', label
 	new_list = []
-	if 'reaction' in label:
-		print 'Fetch reactions'
-		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.tags AS tags ORDER BY name"
-		response = send_cypher(cypher,{},port)
-		cypher_response = response.json()
-		for row in cypher_response["results"][0]["data"]:
-			id = row["row"][0]
-			name = row["row"][1]
-			tags = row["row"][2]
-			new_list.append({"id":id,"name":name,"tags":tags})
-	else:
+	if 'molecule' in label:
 		print 'Fetch ', label
 		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.inCompartment AS compartment, n.name AS name, n.tags AS tags ORDER BY name"
 		response = send_cypher(cypher,{},port)
@@ -414,6 +404,16 @@ def fetchList(label,port):
 			name = row["row"][2]
 			tags = row["row"][3]
 			name = name + '_[' + compartment[0:2] + ']'
+			new_list.append({"id":id,"name":name,"tags":tags})
+	else:
+		print 'Fetch', label
+		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.name AS name, n.tags AS tags ORDER BY name"
+		response = send_cypher(cypher,{},port)
+		cypher_response = response.json()
+		for row in cypher_response["results"][0]["data"]:
+			id = row["row"][0]
+			name = row["row"][1]
+			tags = row["row"][2]
 			new_list.append({"id":id,"name":name,"tags":tags})
 	print 'New_list:', len(new_list)
 	return new_list
