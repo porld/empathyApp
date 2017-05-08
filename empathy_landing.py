@@ -791,7 +791,7 @@ def importSBML():
 				name = row["row"][1]
 				tags = row["row"][2]
 				new_list.append({"id":id,"name":name,"tags":tags})
-			send_message(port+"_" + label, new_list,  port)				
+			send_message(port+"_compartment", new_list,  port)				
 		except Exception, e:
 			print 'Could not push compartments', str(e)
 
