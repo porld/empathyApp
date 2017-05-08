@@ -249,7 +249,7 @@ def collectCyphers(model):
 		properties["inCompartment"] = comp['inCompartment']
 		#Map SBO to EMPATHY
 		properties = annotationMapper(properties,comp)	
-		cyphers.append(['CREATE (n:compartment {props}) RETURN n.id', properties])
+		cyphers.append(['CREATE (n:compartment {props}) RETURN n.id', properties, 'compartment'])
 
 	#Molecules
 	print 'Collect molecules'
@@ -267,7 +267,7 @@ def collectCyphers(model):
 		properties["inCompartment"] = mol['inCompartment']
 		#Map SBO to EMPATHY
 		properties = annotationMapper(properties,mol)	
-		cyphers.append(['CREATE (n:molecule {props}) RETURN n.id', properties])
+		cyphers.append(['CREATE (n:molecule {props}) RETURN n.id', properties, 'molecule'])
 
 	#Reactions
 	print 'Collect reactions'
@@ -284,7 +284,7 @@ def collectCyphers(model):
 		properties["tags"] = ["reaction"]
 		#Map SBO to EMPATHY
 		properties = annotationMapper(properties,rxn)	
-		cyphers.append(['CREATE (n:reaction {props}) RETURN n.id', properties])
+		cyphers.append(['CREATE (n:reaction {props}) RETURN n.id', properties, 'reaction'])
 
 	#Reactions
 	print 'Collect relations'
@@ -298,14 +298,14 @@ def collectCyphers(model):
 				properties = {}
 				stoichiometry = reactant['stoichiometry']
 				cypher = 'MATCH (r:reaction {id:"' + rxnId + '"}), (m:molecule {sourceId:"' + molId + '"}) CREATE (r)-[s:hasReactant]->(m) SET s.stoichiometry="' + str(stoichiometry) + '" RETURN r.id'
-				cyphers.append([cypher, properties])
+				cyphers.append([cypher, properties, ''])
 
 		if 'modifiers' in rxn:
 			for modifier in rxn['modifiers']:
 				molId = modifier['id']
 				properties = {}
 				cypher = 'MATCH (r:reaction {sourceId:"' + rxnId + '"}), (m:molecule {sourceId:"' + molId + '"}) CREATE (r)-[]->(m) RETURN r.id'
-				cyphers.append([cypher, properties])
+				cyphers.append([cypher, properties, ''])
 
 		if 'products' in rxn:
 			for product in rxn['products']:
@@ -313,7 +313,7 @@ def collectCyphers(model):
 				properties = {}
 				stoichiometry = product['stoichiometry']
 				cypher = 'MATCH (r:reaction {sourceId:"' + rxnId + '"}), (m:molecule {sourceId:"' + molId + '"}) CREATE (r)-[s:hasProduct]->(m) SET s.stoichiometry="' + str(stoichiometry) + '"  RETURN r.id'
-				cyphers.append([cypher, properties])
+				cyphers.append([cypher, properties, ''])
 
 	return cyphers
 
