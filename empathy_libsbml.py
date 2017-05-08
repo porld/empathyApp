@@ -92,12 +92,15 @@ def getNotes(sbmlObject):
 		notesString = notesString.replace("  ","")
 		notesDict = xmltodict.parse( notesString )
 		notesDict = json.loads( json.dumps( notesDict ) )
+		'''
 		notes = []
 		for html in notesDict['notes']['html:body']['html:p']:
 			notes.append( str(html) )
 		return notes
+		'''
+		return json.dumps(notesDict)
 	except:
-		return []
+		return ""
 
 def parseSBML(sbml):	
 	print 'Read SBML...'
