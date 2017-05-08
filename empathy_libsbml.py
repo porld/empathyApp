@@ -22,7 +22,7 @@ def annotationMapper(properties,source):
 	properties["hasVersion"] = source["BQB_HAS_VERSION"]
 	properties["isHomologTo"] = source["BQB_IS_HOMOLOG_TO"]
 	properties["isDescribedBy"] = source["BQB_IS_DESCRIBED_BY"]
-	properties["isEncodedby"] = source['BQB_IS_ENCODED_BY']
+	properties["isEncodedBy"] = source['BQB_IS_ENCODED_BY']
 	properties["encodes"] = source['BQB_ENCODES']
 	properties["occursIn"] = source['BQB_OCCURS_IN']
 	properties["hasProperty"] = source['BQB_HAS_PROPERTY']

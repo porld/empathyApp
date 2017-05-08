@@ -624,6 +624,8 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 					$scope.record.hasTaxon = unpackJson($scope.record.hasTaxon);
 					//$scope.record.is_a = unpackJson($scope.record.is_a);
 					//$scope.record.references = unpackJson($scope.record.references);
+					
+					console.log('Unpacked record',$scope.record);
 
 					//$scope.record.notifications = unpackJson($scope.record.notifications);					
 					//Trigger ancillary functions
