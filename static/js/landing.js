@@ -592,25 +592,29 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/fetchSelection';
 			$http.post(url, angular.toJson(bundle) )
 				.success(function(data) {
-					console.log('Triggered: fetch node');
+					console.log('Triggered: fetch node (success)');
 					})
 				.error(function (data, status) {
 					console.log('Error',status,data);
 					$scope.record = {};
 					})
 				.then(function (data) {
+					console.log('Record returned (then)',data);
 					$scope.record = data.data;
+					console.log('RECORD',$scope.record);
 					//Reset tickers and associates
 					$scope.notTicker = 1;
 					$scope.refTicker = 1;
 					$scope.notification = '';
 					$scope.reference = '';
+
 					//Unpack JSONified lists
-					$scope.record.isDescribedBy = unpackJson($scope.record.isDescribedBy);
-					$scope.record.is_a = unpackJson($scope.record.is_a);
-					$scope.record.isVersionOf = unpackJson($scope.record.isVersionOf);
-					$scope.record.is = unpackJson($scope.record.is);
-					$scope.record.references = unpackJson($scope.record.references);
+					//$scope.record.isDescribedBy = unpackJson($scope.record.isDescribedBy);
+					//$scope.record.is_a = unpackJson($scope.record.is_a);
+					//$scope.record.isVersionOf = unpackJson($scope.record.isVersionOf);
+					//$scope.record.is = unpackJson($scope.record.is);
+					//$scope.record.references = unpackJson($scope.record.references);
+
 					//$scope.record.notifications = unpackJson($scope.record.notifications);					
 					//Trigger ancillary functions
 					if($scope.label != 'reaction') { //Compartments and molecules have parent compartments

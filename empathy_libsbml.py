@@ -119,7 +119,7 @@ def parseSBML(sbml):
 			compartment["name"] = comp.getName()
 			compartment["notes"] = getNotes(comp)
 			compartment["SBO"] = comp.getSBOTermID()
-			compartment["type"] = "organelle"
+			compartment["type"] = "compartment"
 			compartment["source"] = "SBML"
 			compartment["sourceId"] = comp.getId()
 			compartment["synonyms"] = []
@@ -261,7 +261,7 @@ def collectCyphers(model):
 		#print mol
 		properties = {}
 		properties["id"] = str(uuid.uuid4())
-		properties["type"] = "molecue"
+		properties["type"] = "molecule"
 		properties["name"] = mol['name']
 		properties["sourceId"] = mol['id']	
 		properties["source"] = "SBML"
