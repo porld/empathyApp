@@ -70,9 +70,12 @@ def getAnnotations(sbmlObject):
 					attributes = cvTerm.getResources()
 					for i in range(0,attributes.getLength()):
 						previous = annotations[qual]
-						previous.append(attributes.getValue(i))
+						uri = attributes.getValue(i)
+						uri = uri.replace("http://identifiers.org/","")
+						key,val = uri.split('/')
+						previous.append([key,val])
 						annotations[qual] = previous
-					return annotations
+					return json.dumps(annotations)
 			else:
 				return annotations
 		except Exception, e:
