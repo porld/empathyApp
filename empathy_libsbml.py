@@ -73,9 +73,9 @@ def getAnnotations(sbmlObject):
 						uri = attributes.getValue(i)
 						uri = uri.replace("http://identifiers.org/","")
 						key,val = uri.split('/')
-						previous.append([key,val])
+						previous.append( json.dumps([key,val]) )
 						annotations[qual] = previous
-					return json.dumps(annotations)
+					return annotations
 			else:
 				return annotations
 		except Exception, e:
