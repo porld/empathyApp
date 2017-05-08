@@ -439,6 +439,7 @@ def makeConnection():
 	send_message(record_handle, {"key":"","value":"","id":reaction}, port)
 	return json.dumps(True)
 
+'''
 @app.route('/fetchSYNBIOCHEM', methods=['POST'])
 @auth.login_required
 def fetchFromSYNBIOCHEM():
@@ -755,6 +756,7 @@ def fetchFromSYNBIOCHEM():
 
 	print 'SYNBIOCHEM-DB import complete'
 	return json.dumps(True)
+'''
 
 @app.route('/importSBML', methods=['POST'])
 @auth.login_required
@@ -768,52 +770,52 @@ def importSBML():
 		cyphers = libsbml.sbml2cyphers(sbml)
 		print 'libSBML successful'
 		try:
+			#Push cyphers
 			for cypher in cyphers:
 				parameters = {"props": cypher[1]}
 				response = send_cypher(cypher[0],parameters,port)
-				label = cypher[2]
-				#Reaction
-				if label is 'reaction':
-					cypher2 = "MATCH (n:reaction) RETURN n.id AS id, n.name AS name, n.name_level AS name_level, n.tags AS tags, n.tags_level AS tags_level"
-					response2 = send_cypher(cypher2,{},port)
-					cypher_response = response2.json()
-					new_list = []
-					for row in cypher_response["results"][0]["data"]:
-						id = row["row"][0]
-						name = row["row"][1]
-						name_level = row["row"][2]
-						tags = row["row"][3]
-						tags_level = row["row"][4]
-						new_list.append({"id":id,"name":name,"tags":tags})							
-					send_message(port+"_reaction", new_list,  port)
-				#Molecule
-				elif label is 'molecule':
-					cypher2 = "MATCH (n:molecule) RETURN n.id AS id, n.name AS name, n.inCompartment AS compartment, n.tags AS tags"
-					response2 = send_cypher(cypher2,{},port)
-					cypher_response = response2.json()
-					new_list = []
-					for row in cypher_response["results"][0]["data"]:
-						id = row["row"][0]
-						name = row["row"][1]
-						compartment = str( row["row"][2] )
-						tags = row["row"][3]
-						name = name + '_[' + compartment[0:2] + ']'
-						new_list.append({"id":id,"name":name,"tags":tags})
-					send_message(port+"_molecule", new_list,  port)							
-				#Compartment
-				elif label is 'compartment':
-					cypher2 = "MATCH (n:compartment) RETURN n.id AS id, n.name AS name, n.inCompartment AS compartment, n.tags AS tags"
-					response2 = send_cypher(cypher2,{},port)
-					cypher_response = response2.json()
-					new_list = []
-					for row in cypher_response["results"][0]["data"]:
-						id = row["row"][0]
-						name = row["row"][1]
-						compartment = str( row["row"][2] )
-						tags = row["row"][3]
-						name = name + '_[' + compartment[0:2] + ']'
-						new_list.append({"id":id,"name":name,"tags":tags})
-					send_message(port+"_" + label, new_list,  port)				
+			##Push to socket
+			#Compartment
+			cypher2 = "MATCH (n:compartment) RETURN n.id AS id, n.name AS name, n.inCompartment AS compartment, n.tags AS tags"
+			response2 = send_cypher(cypher2,{},port)
+			cypher_response = response2.json()
+			new_list = []
+			for row in cypher_response["results"][0]["data"]:
+				id = row["row"][0]
+				name = row["row"][1]
+				compartment = str( row["row"][2] )
+				tags = row["row"][3]
+				name = name + '_[' + compartment[0:2] + ']'
+				new_list.append({"id":id,"name":name,"tags":tags})
+			send_message(port+"_" + label, new_list,  port)				
+
+			#Molecule
+			cypher2 = "MATCH (n:molecule) RETURN n.id AS id, n.name AS name, n.inCompartment AS compartment, n.tags AS tags"
+			response2 = send_cypher(cypher2,{},port)
+			cypher_response = response2.json()
+			new_list = []
+			for row in cypher_response["results"][0]["data"]:
+				id = row["row"][0]
+				name = row["row"][1]
+				compartment = str( row["row"][2] )
+				tags = row["row"][3]
+				name = name + '_[' + compartment[0:2] + ']'
+				new_list.append({"id":id,"name":name,"tags":tags})
+			send_message(port+"_molecule", new_list,  port)							
+
+			#Reaction
+			cypher2 = "MATCH (n:reaction) RETURN n.id AS id, n.name AS name, n.name_level AS name_level, n.tags AS tags, n.tags_level AS tags_level"
+			response2 = send_cypher(cypher2,{},port)
+			cypher_response = response2.json()
+			new_list = []
+			for row in cypher_response["results"][0]["data"]:
+				id = row["row"][0]
+				name = row["row"][1]
+				name_level = row["row"][2]
+				tags = row["row"][3]
+				tags_level = row["row"][4]
+				new_list.append({"id":id,"name":name,"tags":tags})							
+			send_message(port+"_reaction", new_list,  port)
 		except:
 			print 'Could not upload to graph database'
 	except:
