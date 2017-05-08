@@ -768,28 +768,35 @@ def importSBML():
 	print 'Import SBML...'
 	try:
 		cyphers = libsbml.sbml2cyphers(sbml)
-		print 'libSBML successful'
+		print 'libSBML parsing successful'
+		#Push cyphers
+		print 'Pushing cyphers to', port, '...'
 		try:
-			#Push cyphers
 			for cypher in cyphers:
 				parameters = {"props": cypher[1]}
 				response = send_cypher(cypher[0],parameters,port)
-			##Push to socket
-			#Compartment
-			cypher2 = "MATCH (n:compartment) RETURN n.id AS id, n.name AS name, n.inCompartment AS compartment, n.tags AS tags"
+		except Exception, e:
+			print 'Could not push cyphers'		
+
+		##Push to socket
+		print 'Disseminating via web socket...'
+		#Compartments
+		try:
+			cypher2 = "MATCH (n:compartment) RETURN n.id AS id, n.name AS name, n.tags AS tags"
 			response2 = send_cypher(cypher2,{},port)
 			cypher_response = response2.json()
 			new_list = []
 			for row in cypher_response["results"][0]["data"]:
 				id = row["row"][0]
 				name = row["row"][1]
-				compartment = str( row["row"][2] )
-				tags = row["row"][3]
-				name = name + '_[' + compartment[0:2] + ']'
+				tags = row["row"][2]
 				new_list.append({"id":id,"name":name,"tags":tags})
 			send_message(port+"_" + label, new_list,  port)				
+		except Exception, e:
+			print 'Could not push compartments', str(e)
 
-			#Molecule
+		#Molecule
+		try:
 			cypher2 = "MATCH (n:molecule) RETURN n.id AS id, n.name AS name, n.inCompartment AS compartment, n.tags AS tags"
 			response2 = send_cypher(cypher2,{},port)
 			cypher_response = response2.json()
@@ -802,22 +809,24 @@ def importSBML():
 				name = name + '_[' + compartment[0:2] + ']'
 				new_list.append({"id":id,"name":name,"tags":tags})
 			send_message(port+"_molecule", new_list,  port)							
+		except Exception, e:
+			print 'Could not push molecules', str(e)
 
-			#Reaction
-			cypher2 = "MATCH (n:reaction) RETURN n.id AS id, n.name AS name, n.name_level AS name_level, n.tags AS tags, n.tags_level AS tags_level"
+		#Reaction
+		try:
+			cypher2 = "MATCH (n:reaction) RETURN n.id AS id, n.name AS name, n.tags AS tags"
 			response2 = send_cypher(cypher2,{},port)
 			cypher_response = response2.json()
 			new_list = []
 			for row in cypher_response["results"][0]["data"]:
 				id = row["row"][0]
 				name = row["row"][1]
-				name_level = row["row"][2]
-				tags = row["row"][3]
-				tags_level = row["row"][4]
+				tags = row["row"][2]
 				new_list.append({"id":id,"name":name,"tags":tags})							
 			send_message(port+"_reaction", new_list,  port)
-		except:
-			print 'Could not upload to graph database'
+		except Exception, e:
+			print 'Could not push compartments', str(e)
+		return json.dumps(True)
 	except:
 		print 'Could not convert to libSBML object'
 		return json.dumps(False)
