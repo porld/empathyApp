@@ -88,7 +88,7 @@ def getAnnotations(sbmlObject):
 def getNotes(sbmlObject):
 	try:
 		notesString = sbmlObject.getNotesString()
-		return notesString
+		return json.dumps(notesString)
 		'''
 		notesString = notesString.replace("\n","")
 		notesString = notesString.replace("  ","")
@@ -101,7 +101,7 @@ def getNotes(sbmlObject):
 		return json.dumps(notesDict)
 		'''
 	except:
-		return ""
+		return json.dumps("")
 
 def parseSBML(sbml):	
 	print 'Read SBML...'
@@ -211,7 +211,7 @@ def parseSBML(sbml):
 			reactants = []
 			for mol in listOfReactants:
 				name,comp = fetch_species(model,mol.getSpecies())
-				print 'REACTANT:', name
+				#print 'REACTANT:', name
 				reactants.append({'id':mol.getSpecies(), 'stoichiometry':mol.getStoichiometry(), 'display':name, 'localisation':comp})
 			reaction["reactants"] = reactants
 
@@ -305,7 +305,7 @@ def collectCyphers(model):
 				molId = reactant['id']
 				properties = {}
 				stoichiometry = reactant['stoichiometry']
-				cypher = 'MATCH (r:reaction {id:"' + rxnId + '"}), (m:molecule {sourceId:"' + molId + '"}) CREATE (r)-[s:hasReactant]->(m) SET s.stoichiometry="' + str(stoichiometry) + '" RETURN r.id'
+				cypher = 'MATCH (r:reaction {sourceId:"' + rxnId + '"}), (m:molecule {sourceId:"' + molId + '"}) CREATE (r)-[s:hasReactant]->(m) SET s.stoichiometry="' + str(stoichiometry) + '" RETURN r.id'
 				cyphers.append([cypher, properties, 'reactant'])
 
 		if 'modifiers' in rxn:
@@ -331,8 +331,9 @@ def sbml2cyphers(sbml):
 	cyphers = collectCyphers(model)
 	return cyphers
 
-'''
+
 f = open('yeast_7.6_recon.xml', 'r')
 sbml = f.read()
-print sbml2cyphers(sbml)
-'''
+cyphers = sbml2cyphers(sbml)
+for cypher in cyphers:
+	print cypher

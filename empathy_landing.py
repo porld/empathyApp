@@ -795,7 +795,7 @@ def importSBML():
 			send_message(sbml_handle,'Upload error',  port)
 			print 'Could not push cyphers'		
 
-		##Push to socket
+		##Push notifications to socket
 		print 'Disseminating lists via web socket...'
 		#Compartments
 		try:
