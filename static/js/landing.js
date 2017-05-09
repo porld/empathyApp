@@ -641,6 +641,9 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 					$scope.record.hasTaxon = unpackJson($scope.record.hasTaxon);
 					//$scope.record.is_a = unpackJson($scope.record.is_a);
 					//$scope.record.references = unpackJson($scope.record.references);
+
+					//Unpack notes
+					$scope.record.notes = angular.fromJson($scope.record.notes);
 					
 					console.log('Unpacked record',$scope.record);
 

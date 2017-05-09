@@ -647,31 +647,7 @@
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="notes_view">
-											<!-- notes list -->
-											<span ng-repeat="i in record.notes | orderBy">
-												<small>
-													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
-														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
-														<span ng-click="jsonListPop('notes',i)">
-															<i style="color: #666666" class="fi-x-circle"></i>
-														</span>
-													</span>
-												</small>
-											</span>
-											<!-- Add note -->
-											<span ng_model="add_note" ng-init="add_note=false" ng-click="add_note=!add_note">
-												<small><i class="fi-plus"></i></small>
-											</span>
-										</div>
-										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_notes" ng-model="new_notes">
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add source" ng-model="new_notes['source']">
-											</div>
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add identifier" ng-blur="add_notes=false;jsonListPush('notes',new_notes);new_notes={};" ng-model="new_notes['id']">
-											</div>
+											{{record.notes}}
 										</div>
 									</div>
 								</div>
@@ -943,17 +919,7 @@
 									<div class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="notes_view">
 											<!-- notes list -->
-											<span ng-repeat="i in record.notes | orderBy">
-												<small>
-													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
-														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
-														<span ng-click="jsonListPop('notes',i)">
-															<i style="color: #666666" class="fi-x-circle"></i>
-														</span>
-													</span>
-												</small>
-											</span>
+											{{record.notes}}
 											<!-- Add note -->
 											<span ng_model="add_note" ng-init="add_note=false" ng-click="add_note=!add_note">
 												<small><i class="fi-plus"></i></small>
@@ -1135,18 +1101,7 @@
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="notes_view">
-											<!-- notes list -->
-											<span ng-repeat="i in record.notes | orderBy">
-												<small>
-													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="i[1].length>25" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
-														<span ng-if="i[1].length<26" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
-														<span ng-click="jsonListPop('notes',i)">
-															<i style="color: #666666" class="fi-x-circle"></i>
-														</span>
-													</span>
-												</small>
-											</span>
+											{{record.notes}}
 											<!-- Add note -->
 											<span ng_model="add_note" ng-init="add_note=false" ng-click="add_note=!add_note">
 												<small><i class="fi-plus"></i></small>
