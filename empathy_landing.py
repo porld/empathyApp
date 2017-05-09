@@ -778,12 +778,16 @@ def importSBML():
 		print 'Pushing cyphers to', port, '...'
 		try:
 			i = 1
+			j = 1
 			total = len(cyphers)
 			for cypher in cyphers:
 				parameters = {"props": cypher[1]}
 				response = send_cypher(cypher[0],parameters,port)
-				sbml_message = 'Adding to your Jamboree database: ' + str(i) + '/' + str(total)  
-				send_message(sbml_handle, sbml_message,  port)
+				if j == 100:
+					what_are_we_adding = cypher[2]
+					sbml_message = 'Adding to database: ' + str(i) + '/' + str(total) + ' (' + what_are_we_adding + 's)'
+					send_message(sbml_handle, sbml_message,  port)
+					j = 1
 				i = i + 1
 		except Exception, e:
 			send_message(sbml_handle,'Upload error',  port)

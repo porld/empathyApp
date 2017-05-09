@@ -304,14 +304,14 @@ def collectCyphers(model):
 				properties = {}
 				stoichiometry = reactant['stoichiometry']
 				cypher = 'MATCH (r:reaction {id:"' + rxnId + '"}), (m:molecule {sourceId:"' + molId + '"}) CREATE (r)-[s:hasReactant]->(m) SET s.stoichiometry="' + str(stoichiometry) + '" RETURN r.id'
-				cyphers.append([cypher, properties, ''])
+				cyphers.append([cypher, properties, 'reactant'])
 
 		if 'modifiers' in rxn:
 			for modifier in rxn['modifiers']:
 				molId = modifier['id']
 				properties = {}
 				cypher = 'MATCH (r:reaction {sourceId:"' + rxnId + '"}), (m:molecule {sourceId:"' + molId + '"}) CREATE (r)-[s:hasModifier]->(m) RETURN r.id'
-				cyphers.append([cypher, properties, ''])
+				cyphers.append([cypher, properties, 'modifier'])
 
 		if 'products' in rxn:
 			for product in rxn['products']:
@@ -319,7 +319,7 @@ def collectCyphers(model):
 				properties = {}
 				stoichiometry = product['stoichiometry']
 				cypher = 'MATCH (r:reaction {sourceId:"' + rxnId + '"}), (m:molecule {sourceId:"' + molId + '"}) CREATE (r)-[s:hasProduct]->(m) SET s.stoichiometry="' + str(stoichiometry) + '"  RETURN r.id'
-				cyphers.append([cypher, properties, ''])
+				cyphers.append([cypher, properties, 'product'])
 
 	return cyphers
 
