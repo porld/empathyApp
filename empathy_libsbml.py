@@ -326,6 +326,7 @@ def collectCyphers(model):
 #Master
 def sbml2cyphers(sbml):
 	model = parseSBML(sbml)
+	print model
 	cyphers = collectCyphers(model)
 	return cyphers
 
