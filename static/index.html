@@ -1014,21 +1014,6 @@
 							<!-- COMPARTMENT -->
 							<!-- Column 1 -->
 							<div ng-if="label=='compartment' && selection!=''" class="large-6 medium-6 small-6 columns" style="padding: 0px;">
-								<!--Compartment-->
-								<!--div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
-									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="compartment_view" ng-click="compartment_view=!compartment_view">
-										<div class="row">
-											Compartment&nbsp;<small><i>{{compName}}</i></small><br>
-										</div>
-									</div>
-									<div class="large-12 medium-12 small-12 columns">
-										<div class="row animate-show-hide" ng-show="compartment_view">
-											<select name="cellSelect" id="cellSelect" ng-model="compChoice" ng-change="updateText('inCompartment',compChoice);compartmentNameFromList();">
-												<option ng-repeat="comp in compartmentList" value="{{comp.id}}">{{comp.name}}</option>
-											</select>
-										</div>
-									</div>
-								</div-->
 
 								<!--Synonyms-->
 								<div class="row" ng-click="curateList('synonyms',syn)" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
@@ -1099,6 +1084,7 @@
 								</div>
 
 							</div>
+
 							<!-- Column 2 -->
 							<div ng-if="label=='compartment' && selection!=''" class="large-6 medium-6 small-6 columns" style="padding: 0px;">
 

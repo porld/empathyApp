@@ -128,11 +128,6 @@ def parseSBML(sbml):
 			compartment["sourceId"] = comp.getId()
 			compartment["synonyms"] = []
 			compartment["inCompartment"] = comp.getOutside()
-			compartment["property"] = []
-			compartment["tags"] = []
-			compartment["sandbox"] = []
-			compartment["references"] = []
-			compartment["notifications"] = []
 			annotations = getAnnotations(comp)
 			for qual in annotations.keys():		
 				compartment[qual] = annotations[qual]
@@ -169,10 +164,6 @@ def parseSBML(sbml):
 			molecule["sourceId"] = mol.getId()
 			molecule["synonyms"] = []
 			molecule["inCompartment"] = mol.getCompartment()
-			molecule["property"] = []
-			molecule["sandbox"] = []
-			molecule["references"] = []
-			molecule["notifications"] = []
 			annotations = getAnnotations(mol)
 			for qual in annotations.keys():		
 				molecule[qual] = annotations[qual]
@@ -197,8 +188,6 @@ def parseSBML(sbml):
 			reaction["source"] = "SBML"
 			reaction["sourceId"] = rxn.getId()
 			reaction["synonyms"] = []
-			reaction["property"] = []
-			reaction["references"] = []
 			if rxn.getReversible():
 				reaction["reversible"] = "true"
 			else:
@@ -255,6 +244,7 @@ def collectCyphers(model):
 		properties["synonyms"] = []
 		properties["tags"] = ["compartment"]
 		properties["inCompartment"] = comp['inCompartment']
+		properties["notes"] = comp['notes']
 		#Map SBO to EMPATHY
 		properties = annotationMapper(properties,comp)	
 		cyphers.append(['CREATE (n:compartment {props}) RETURN n.id', properties, 'compartment'])
@@ -266,13 +256,14 @@ def collectCyphers(model):
 		#print mol
 		properties = {}
 		properties["id"] = str(uuid.uuid4())
-		properties["type"] = "simple chemical"
+		properties["type"] = mol["type"]
 		properties["name"] = mol['name']
 		properties["sourceId"] = mol['id']	
 		properties["source"] = "SBML"
 		properties["synonyms"] = []
 		properties["tags"] = ["simple chemical]
 		properties["inCompartment"] = mol['inCompartment']
+		properties["notes"] = mol['notes']
 		#Map SBO to EMPATHY
 		properties = annotationMapper(properties,mol)	
 		cyphers.append(['CREATE (n:molecule {props}) RETURN n.id', properties, 'molecule'])
@@ -290,6 +281,7 @@ def collectCyphers(model):
 		properties["source"] = "SBML"
 		properties["synonyms"] = []
 		properties["tags"] = ["reaction"]
+		properties["notes"] = rxn['notes']
 		#Map SBO to EMPATHY
 		properties = annotationMapper(properties,rxn)	
 		cyphers.append(['CREATE (n:reaction {props}) RETURN n.id', properties, 'reaction'])
