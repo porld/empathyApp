@@ -597,6 +597,7 @@
 								</div>
 
 							</div>
+
 							<!-- Column 2 -->
 							<div ng-if="label=='molecule' && selection!=''" class="large-6 medium-6 small-6 columns" style="padding: 0px;">
 
@@ -647,7 +648,21 @@
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="notes_view">
+											<!-- notes list -->
 											{{record.notes}}
+											<!-- Add note -->
+											<span ng_model="add_note" ng-init="add_note=false" ng-click="add_note=!add_note">
+												<small><i class="fi-plus"></i></small>
+											</span>
+										</div>
+										<!-- Source -->
+										<div class="row animate-show-hide" ng-show="add_notes" ng-model="new_notes">
+											<div class="large-6 medium-6 small-6 columns">
+												<input type="text" placeholder="Add source" ng-model="new_notes['source']">
+											</div>
+											<div class="large-6 medium-6 small-6 columns">
+												<input type="text" placeholder="Add identifier" ng-blur="add_notes=false;jsonListPush('notes',new_notes);new_notes={};" ng-model="new_notes['id']">
+											</div>
 										</div>
 									</div>
 								</div>
@@ -1101,6 +1116,7 @@
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="notes_view">
+											<!-- notes list -->
 											{{record.notes}}
 											<!-- Add note -->
 											<span ng_model="add_note" ng-init="add_note=false" ng-click="add_note=!add_note">
