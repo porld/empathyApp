@@ -112,7 +112,7 @@ def parseSBML(sbml):
 	except:
 		return 'Could not read SBML'
 
-	#Localisations
+	#Compartments
 	print 'Get compartments'
 	try:
 		compartments = []
@@ -167,7 +167,7 @@ def parseSBML(sbml):
 			molecule["source"] = "SBML"
 			molecule["sourceId"] = mol.getId()
 			molecule["synonyms"] = []
-			molecule["inCompartment"] = "organelle_" + mol.getCompartment()
+			molecule["inCompartment"] = mol.getCompartment()
 			molecule["property"] = []
 			molecule["sandbox"] = []
 			molecule["references"] = []
