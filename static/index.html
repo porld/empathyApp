@@ -133,7 +133,7 @@
 							<div class="large-3 medium-3 small-3 columns">
 								<input id="SBMLinput" ng-init="sbml=''" type="file" ng-model="sbml" placeholder="SBML">
 							</div>
-							<div ng-if="sbml_spinner" class="large-3 medium-3 small-3 columns"><i>{{sbml_upload_message}}</i></div>
+							<div ng-if="sbml_spinner" class="large-3 medium-3 small-3 columns"><i>{{sbml_message}}</i></div>
 							<div ng-if="!sbml_spinner" class="large-3 medium-3 small-3 columns">
 								<a href="#" ng-click="importSBML()" class="button postfix">Upload</a>
 							</div>

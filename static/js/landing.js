@@ -385,7 +385,17 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//Filereader to fetch SBML string
 	$scope.importSBML = function() {
 		$scope.sbml_spinner = true;
-		$scope.sbml_upload_message = 'reading...';
+
+		//Create socket for SBML upload messages
+		console.log('SOCKET Create SBML callback',socket);
+		$scope.sbml_message = 'reading...';
+		$scope.sbml_handle = $scope.port + '_sbml';
+		socket.on($scope.sbml_handle, function(sbml_message) {
+			console.log('SBML message:', sbml_message);
+			$scope.sbml_message = sbml_message;
+			$scope.$apply();
+			});
+
 		console.log('SBML spinner:', $scope.sbml_spinner);
 		var file = document.getElementById("SBMLinput").files[0];
 		console.log('File:', file);

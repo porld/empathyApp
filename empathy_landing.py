@@ -765,21 +765,32 @@ def importSBML():
 	port = json_data['port']
 	sbml = json_data['sbml']
 
+	#Build handle for passing progress messages
+	sbml_handle = port + '_sbml'
+
 	print 'Import SBML...'
 	try:
+		send_message(sbml_handle, 'Parsing SBML',  port)
 		cyphers = libsbml.sbml2cyphers(sbml)
+		send_message(sbml_handle, 'SBML parsed',  port)
 		print 'libSBML parsing successful'
 		#Push cyphers
 		print 'Pushing cyphers to', port, '...'
 		try:
+			i = 1
+			total = len(cyphers)
 			for cypher in cyphers:
 				parameters = {"props": cypher[1]}
 				response = send_cypher(cypher[0],parameters,port)
+				sbml_message = 'Adding to your Jamboree database: ' + str(i) + '/' + str(total)  
+				send_message(sbml_handle, sbml_message,  port)
+				i = i + 1
 		except Exception, e:
+			send_message(sbml_handle,'Upload error',  port)
 			print 'Could not push cyphers'		
 
 		##Push to socket
-		print 'Disseminating via web socket...'
+		print 'Disseminating lists via web socket...'
 		#Compartments
 		try:
 			cypher2 = "MATCH (n:compartment) RETURN n.id AS id, n.name AS name, n.tags AS tags"
@@ -826,8 +837,11 @@ def importSBML():
 			send_message(port+"_reaction", new_list,  port)
 		except Exception, e:
 			print 'Could not push compartments', str(e)
+
+		send_message(sbml_handle, 'Complete',  port)
 		return json.dumps(True)
 	except:
+		send_message(sbml_handle, 'Error in SBML upload',  port)
 		print 'Could not convert to libSBML object'
 		return json.dumps(False)
 
