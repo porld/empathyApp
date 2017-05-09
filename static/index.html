@@ -649,24 +649,11 @@
 									<div class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="notes_view">
 											<!-- notes list -->
-											{{record.notes}}
-											<!-- Add note -->
-											<span ng_model="add_note" ng-init="add_note=false" ng-click="add_note=!add_note">
-												<small><i class="fi-plus"></i></small>
-											</span>
-										</div>
-										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_notes" ng-model="new_notes">
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add source" ng-model="new_notes['source']">
-											</div>
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add identifier" ng-blur="add_notes=false;jsonListPush('notes',new_notes);new_notes={};" ng-model="new_notes['id']">
-											</div>
+											<textarea type="text" ng-model="record.notes" ng-blur="updateText('name',record.notes); "/>
 										</div>
 									</div>
 								</div>
-
+								
 								<!--References (isDescribedBy)-->
 								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
 									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="isDescribedBy_view" ng-click="isDescribedBy_view=!isDescribedBy_view">
@@ -934,20 +921,7 @@
 									<div class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="notes_view">
 											<!-- notes list -->
-											{{record.notes}}
-											<!-- Add note -->
-											<span ng_model="add_note" ng-init="add_note=false" ng-click="add_note=!add_note">
-												<small><i class="fi-plus"></i></small>
-											</span>
-										</div>
-										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_notes" ng-model="new_notes">
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add source" ng-model="new_notes['source']">
-											</div>
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add identifier" ng-blur="add_notes=false;jsonListPush('notes',new_notes);new_notes={};" ng-model="new_notes['id']">
-											</div>
+											<textarea type="text" ng-model="record.notes" ng-blur="updateText('name',record.notes); "/>
 										</div>
 									</div>
 								</div>
@@ -1117,20 +1091,7 @@
 									<div class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="notes_view">
 											<!-- notes list -->
-											{{record.notes}}
-											<!-- Add note -->
-											<span ng_model="add_note" ng-init="add_note=false" ng-click="add_note=!add_note">
-												<small><i class="fi-plus"></i></small>
-											</span>
-										</div>
-										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_notes" ng-model="new_notes">
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add source" ng-model="new_notes['source']">
-											</div>
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add identifier" ng-blur="add_notes=false;jsonListPush('notes',new_notes);new_notes={};" ng-model="new_notes['id']">
-											</div>
+											<textarea type="text" ng-model="record.notes" ng-blur="updateText('name',record.notes); "/>
 										</div>
 									</div>
 								</div>
