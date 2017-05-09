@@ -638,44 +638,6 @@
 									</div>
 								</div>
 
-								<!--is_versionOf-->
-								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
-									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="is_versionOf_view" ng-click="is_versionOf_view=!is_versionOf_view">
-										<div class="row">
-											Version of
-										</div>
-									</div>
-									<div class="large-12 medium-12 small-12 columns">							
-										<div class="row animate-show-hide" ng-show="is_versionOf_view">
-											<!-- isVersionOf list -->
-											<span ng-repeat="i in record.is_versionOf | orderBy">
-												<small>
-													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="i[1].length>25" ng-click="curateJsonText('isVersionOf',i[0],i[1])" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
-														<span ng-if="i[1].length<26" ng-click="curateJsonText('isVersionOf',i[0],i[1])" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
-														<span ng-click="jsonListPop('is_versionOf',i)">
-															<i style="color: #666666" class="fi-x-circle"></i>
-														</span>
-													</span>
-												</small>
-											</span>
-											<!-- Add is_versionOf -->
-											<span ng_model="add_is_versionOf" ng-init="add_is_versionOf=false" ng-click="add_is_versionOf=!add_is_versionOf">
-												<small><i class="fi-plus"></i></small>
-											</span>
-										</div>
-										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_is_versionOf" ng-model="new_is_versionOf">
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add source" ng-model="new_is_versionOf['source']">
-											</div>
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add identifier" ng-blur="add_is_versionOf=false;jsonListPush('is_versionOf',new_is_versionOf);new_is_versionOf={};" ng-model="new_is_versionOf['id']">
-											</div>
-										</div>
-									</div>
-								</div>
-
 								<!--Notes-->
 								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
 									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="notes_view" ng-click="notes_view=!notes_view">
@@ -714,39 +676,39 @@
 									</div>
 								</div>
 
-								<!--References-->
+								<!--References (isDescribedBy)-->
 								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
-									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="references_view" ng-click="references_view=!references_view">
+									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="isDescribedBy_view" ng-click="isDescribedBy_view=!isDescribedBy_view">
 										<div class="row">
 											References
 										</div>
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
-										<div class="row animate-show-hide" ng-show="references_view">
+										<div class="row animate-show-hide" ng-show="isDescribedBy_view">
 											<!-- References list -->
-											<span ng-repeat="i in record.references | orderBy">
+											<span ng-repeat="i in record.isDescribedBy | orderBy">
 												<small>
 													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="i[1].length>25" ng-click="curateJsonText('references',i[0],i[1])" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
-														<span ng-if="i[1].length<26" ng-click="curateJsonText('references',i[0],i[1])" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
-														<span ng-click="jsonListPop('references',i)">
+														<span ng-if="i[1].length>25" ng-click="curateJsonText('isDescribedBy',i[0],i[1])" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
+														<span ng-if="i[1].length<26" ng-click="curateJsonText('isDescribedBy',i[0],i[1])" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
+														<span ng-click="jsonListPop('isDescribedBy',i)">
 															<i style="color: #666666" class="fi-x-circle"></i>
 														</span>
 													</span>
 												</small>
 											</span>
-											<!-- Add is -->
-											<span ng_model="add_references" ng-init="add_references=false" ng-click="add_references=!add_references">
+											<!-- Add isDescribedBy -->
+											<span ng_model="add_isDescribedBy" ng-init="add_isDescribedBy=false" ng-click="add_isDescribedBy=!add_isDescribedBy">
 												<small><i class="fi-plus"></i></small>
 											</span>
 										</div>
 										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_references" ng-model="new_references">
+										<div class="row animate-show-hide" ng-show="add_isDescribedBy" ng-model="new_isDescribedBy">
 											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add source" ng-model="new_references['source']">
+												<input type="text" placeholder="Add source" ng-model="new_isDescribedBy['source']">
 											</div>
 											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add identifier" ng-blur="add_is=false;jsonListPush('references',new_references);new_references={};" ng-model="new_references['id']">
+												<input type="text" placeholder="Add identifier" ng-blur="add_is=false;jsonListPush('isDescribedBy',new_isDescribedBy);new_isDescribedBy={};" ng-model="new_isDescribedBy['id']">
 											</div>
 										</div>
 									</div>
