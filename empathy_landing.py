@@ -1074,6 +1074,7 @@ def fetchSelection():
 		reactions["asProduct"] = products
 		record["reactions"] = reactions
 
+	print record
 	return json.dumps(record)
 
 @app.route('/updateText', methods=['POST'])

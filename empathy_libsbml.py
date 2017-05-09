@@ -327,12 +327,11 @@ def collectCyphers(model):
 #Master
 def sbml2cyphers(sbml):
 	model = parseSBML(sbml)
-	print model
 	cyphers = collectCyphers(model)
 	return cyphers
 
 '''
 f = open('yeast_7.6_recon.xml', 'r')
 sbml = f.read()
-print uploadSBML(sbml,'7474')
+print sbml2cyphers(sbml)
 '''
