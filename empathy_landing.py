@@ -1029,12 +1029,13 @@ def fetchSelection():
 		products = []
 		for row in edgeData['results'][0]['data']:
 			edge = row['row']
+			print 'Reaction:', edge
 			edgeProperties = edge[0]
 			type = edge[1]
 			moleculeId = edge[2]
 			moleculeName = edge[3]
 			moleculeCompartment = str( edge[4] )
-			moleculeCompartment = moleculeCompartment[0:2]
+			moleculeCompartment = moleculeCompartment[0:3]
 			if type == 'hasReactant':
 				reactants.append({"id":moleculeId,"name":moleculeName,"properties":edgeProperties,"compartment":moleculeCompartment})
 			elif type == 'hasModifier':
@@ -1074,7 +1075,7 @@ def fetchSelection():
 		reactions["asProduct"] = products
 		record["reactions"] = reactions
 
-	print record
+	#print record
 	return json.dumps(record)
 
 @app.route('/updateText', methods=['POST'])
