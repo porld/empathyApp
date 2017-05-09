@@ -1020,7 +1020,7 @@ def fetchSelection():
 
 	if label == 'reaction':
 		#Fetch edges
-		cypher = "MATCH (r:reaction)-[l:hasReactant|hasProduct|hasModifier]->(m:molecule) WHERE r.id='" + selection + "' RETURN l,TYPE(l) AS type,m.id AS moleculeId, m.name AS moleculeName, m.inCompartment AS compartment"
+		cypher = "MATCH (r:reaction)-[l]->(m:molecule) WHERE r.id='" + selection + "' RETURN l,TYPE(l) AS type,m.id AS moleculeId, m.name AS moleculeName, m.inCompartment AS compartment"
 		edgeResponse = send_cypher(cypher,{},port)
 		edgeData = edgeResponse.json()
 
