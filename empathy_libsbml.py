@@ -261,7 +261,7 @@ def collectCyphers(model):
 		properties["sourceId"] = mol['id']	
 		properties["source"] = "SBML"
 		properties["synonyms"] = []
-		properties["tags"] = ["simple chemical]
+		properties["tags"] = [mol["type"]]
 		properties["inCompartment"] = mol['inCompartment']
 		properties["notes"] = mol['notes']
 		#Map SBO to EMPATHY
