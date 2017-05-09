@@ -1291,12 +1291,12 @@ landingApp.directive('smilesViewer', function ($parse, $http) {
 		link: function (scope, element, attrs) {
 			scope.$watch('record', function(record) {
 				//Look for SMILES in record
-				if(record.isDescribedBy) {
-					console.log('record.isDescribedBy:', scope.record.isDescribedBy);
+				if(record.is) {
+					console.log('record.is:', scope.record.is);
 					smiles = '';
-					for (i = 0; i < scope.record.isDescribedBy.length; i++) {
-						if( scope.record.isDescribedBy[i][0] == 'smiles' ) {
-							smiles = scope.record.isDescribedBy[i][1];
+					for (i = 0; i < scope.record.is.length; i++) {
+						if( scope.record.is[i][0] == 'smiles' ) {
+							smiles = scope.record.is[i][1];
 							console.log('smilesViewer found:', smiles);
 							}
 						};

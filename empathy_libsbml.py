@@ -266,12 +266,12 @@ def collectCyphers(model):
 		#print mol
 		properties = {}
 		properties["id"] = str(uuid.uuid4())
-		properties["type"] = "molecule"
+		properties["type"] = "simple chemical"
 		properties["name"] = mol['name']
 		properties["sourceId"] = mol['id']	
 		properties["source"] = "SBML"
 		properties["synonyms"] = []
-		properties["tags"] = ["molecule"]
+		properties["tags"] = ["simple chemical]
 		properties["inCompartment"] = mol['inCompartment']
 		#Map SBO to EMPATHY
 		properties = annotationMapper(properties,mol)	

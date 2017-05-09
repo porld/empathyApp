@@ -600,39 +600,39 @@
 							<!-- Column 2 -->
 							<div ng-if="label=='molecule' && selection!=''" class="large-6 medium-6 small-6 columns" style="padding: 0px;">
 
-								<!--isDescribedBy-->
+								<!--is-->
 								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
-									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="describedBy_view" ng-click="describedBy_view=!describedBy_view">
+									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="is_view" ng-click="is_view=!is_view">
 										<div class="row">
-											Described by
+											Structure
 										</div>
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
-										<div class="row animate-show-hide" ng-show="describedBy_view">
-											<!-- isDescribedBy list -->
-											<span ng-repeat="desc in record.isDescribedBy | orderBy">
+										<div class="row animate-show-hide" ng-show="is_view">
+											<!-- is list -->
+											<span ng-repeat="desc in record.is | orderBy">
 												<small>
 													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="desc[1].length>25" ng-click="curateJsonText('isDescribedBy',desc[0],desc[1])" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{desc[0]}}:{{desc[1]}}">{{desc[0]}}:{{desc[1] | limitTo:25}}...</span>
-														<span ng-if="desc[1].length<26" ng-click="curateJsonText('isDescribedBy',desc[0],desc[1])" style="text-transform:none">{{desc[0]}}:{{desc[1]}}</span>
-														<span ng-click="jsonListPop('isDescribedBy',desc)">
+														<span ng-if="i[1].length>25" ng-click="curateJsonText('is', i[0], i[1])" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{i[0]}}:{{i[1]}}">{{i[0]}}:{{i[1] | limitTo:25}}...</span>
+														<span ng-if="i[1].length<26" ng-click="curateJsonText('is', i[0], i[1])" style="text-transform:none">{{i[0]}}:{{i[1]}}</span>
+														<span ng-click="jsonListPop('is',i)">
 															<i style="color: #666666" class="fi-x-circle"></i>
 														</span>
 													</span>
 												</small>
 											</span>
-											<!-- Add isDescribedBy -->
-											<span ng_model="add_describedBy" ng-init="add_describedBy=false" ng-click="add_describedBy=!add_describedBy">
+											<!-- Add is -->
+											<span ng_model="add_is" ng-init="add_is=false" ng-click="add_is=!add_is">
 												<small><i class="fi-plus"></i></small>
 											</span>
 										</div>
 										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_describedBy" ng-model="new_describedBy">
+										<div class="row animate-show-hide" ng-show="add_is" ng-model="new_is">
 											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add source" ng-model="new_describedBy['source']">
+												<input type="text" placeholder="Add source" ng-model="new_is'source']">
 											</div>
 											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add identifier" ng-blur="add_describedBy=false;jsonListPush('isDescribedBy',new_describedBy);new_describedBy={};" ng-model="new_describedBy['id']">
+												<input type="text" placeholder="Add identifier" ng-blur="add_is=false;jsonListPush('is',new_is);new_is={};" ng-model="new_is['id']">
 											</div>
 										</div>
 									</div>
