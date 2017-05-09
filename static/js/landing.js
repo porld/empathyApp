@@ -412,10 +412,12 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	            console.log('SBML filename:', $scope.fileName, $scope.fileSize);
 	            SBMLparser($scope.sbmlString);
 				}
+			//Progress bar
 			sbmlReader.onprogress = function(data) {
 				if (data.lengthComputable) {                                            
 					var progress = parseInt( ((data.loaded / data.total) * 100), 10 );
 					$scope.sbml_message = str(progress) + '%';
+					}
 				}
 			//Error
 			sbmlReader.onerror = function (evt) {
