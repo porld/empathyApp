@@ -88,17 +88,18 @@ def getAnnotations(sbmlObject):
 def getNotes(sbmlObject):
 	try:
 		notesString = sbmlObject.getNotesString()
+		return notesString
+		'''
 		notesString = notesString.replace("\n","")
 		notesString = notesString.replace("  ","")
 		notesDict = xmltodict.parse( notesString )
 		notesDict = json.loads( json.dumps( notesDict ) )
-		'''
 		notes = []
 		for html in notesDict['notes']['html:body']['html:p']:
 			notes.append( str(html) )
 		return notes
-		'''
 		return json.dumps(notesDict)
+		'''
 	except:
 		return ""
 
