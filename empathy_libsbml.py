@@ -211,6 +211,7 @@ def parseSBML(sbml):
 			reactants = []
 			for mol in listOfReactants:
 				name,comp = fetch_species(model,mol.getSpecies())
+				print 'REACTANT:', name
 				reactants.append({'id':mol.getSpecies(), 'stoichiometry':mol.getStoichiometry(), 'display':name, 'localisation':comp})
 			reaction["reactants"] = reactants
 
