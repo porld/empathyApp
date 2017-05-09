@@ -795,7 +795,7 @@ def importSBML():
 		except Exception, e:
 			print 'Could not push compartments', str(e)
 
-		#Molecule
+		#Molecules
 		try:
 			cypher2 = "MATCH (n:molecule) RETURN n.id AS id, n.name AS name, n.inCompartment AS compartment, n.tags AS tags"
 			response2 = send_cypher(cypher2,{},port)
@@ -812,7 +812,7 @@ def importSBML():
 		except Exception, e:
 			print 'Could not push molecules', str(e)
 
-		#Reaction
+		#Reactions
 		try:
 			cypher2 = "MATCH (n:reaction) RETURN n.id AS id, n.name AS name, n.tags AS tags"
 			response2 = send_cypher(cypher2,{},port)

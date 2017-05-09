@@ -310,7 +310,7 @@ def collectCyphers(model):
 			for modifier in rxn['modifiers']:
 				molId = modifier['id']
 				properties = {}
-				cypher = 'MATCH (r:reaction {sourceId:"' + rxnId + '"}), (m:molecule {sourceId:"' + molId + '"}) CREATE (r)-[]->(m) RETURN r.id'
+				cypher = 'MATCH (r:reaction {sourceId:"' + rxnId + '"}), (m:molecule {sourceId:"' + molId + '"}) CREATE (r)-[s:hasModifier]->(m) RETURN r.id'
 				cyphers.append([cypher, properties, ''])
 
 		if 'products' in rxn:
