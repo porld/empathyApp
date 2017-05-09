@@ -788,6 +788,8 @@ def importSBML():
 					sbml_message = 'Adding to database: ' + str(i) + '/' + str(total) + ' (' + what_are_we_adding + 's)'
 					send_message(sbml_handle, sbml_message,  port)
 					j = 1
+				else:
+					j = j + 1
 				i = i + 1
 		except Exception, e:
 			send_message(sbml_handle,'Upload error',  port)
