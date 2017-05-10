@@ -37,7 +37,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			chr1 = chr2 = chr3 = "";
 			enc1 = enc2 = enc3 = enc4 = "";
 			} while (i < input.length);
-		return output;
+		return 'Basic ' + output;
 		};
 
 	//Connect to broadcast server
@@ -161,8 +161,9 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		console.log('Bundle:', $scope.username, $scope.password);
 		
 		//Generate Basic auth header
-		credentials = Base64($scope.username,$scope.password) ;
-		console.log('Credentials:', credentials);
+		$scope.credentials = Base64($scope.username,$scope.password) ;
+		console.log('Base64 credentials:', $scope.credentials);
+		$http.defaults.headers.common.Authorization = $scope.credentials;
 		
 		url = 'https://' + $scope.static_url + '/signIn';
 		response = $http.post(url, angular.toJson(bundle) )
@@ -224,6 +225,8 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.sign = true;
 		$scope.username = '';
 		$scope.password = '';
+		$scope.credentials = '';
+		$http.defaults.headers.common.Authorization = '';
 		$scope.message = '';
 		$scope.logged_in = false;
 		$scope.passwords = {};
@@ -309,7 +312,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.recon_spinner = true;
 		initialise();
 		console.log('Launch Docker', $scope.recon_spinner);
-		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/docker'
+		url = 'https://' + $scope.static_url + '/docker'
 		$http.post(url, angular.toJson({"username":$scope.username,"recon_name":recon_name}) )
 			.success(function(data) {
 				console.log('Triggered: launch Docker', data);
