@@ -403,7 +403,7 @@ def fetchList(label,port):
 			compartment = str(row["row"][1])
 			name = row["row"][2]
 			tags = row["row"][3]
-			name = name + '_[' + compartment[0:3] + ']'
+			name = name + '_[' + compartment + ']'
 			new_list.append({"id":id,"name":name,"tags":tags})
 	else:
 		print 'Fetch', label
@@ -823,7 +823,7 @@ def importSBML():
 				name = row["row"][1]
 				compartment = str( row["row"][2] )
 				tags = row["row"][3]
-				name = name + '_[' + compartment[0:3] + ']'
+				name = name + '_[' + compartment + ']'
 				new_list.append({"id":id,"name":name,"tags":tags})
 			send_message(port+"_molecule", new_list,  port)							
 		except Exception, e:
@@ -1034,7 +1034,6 @@ def fetchSelection():
 			moleculeId = edge[2]
 			moleculeName = edge[3]
 			moleculeCompartment = str( edge[4] )
-			moleculeCompartment = moleculeCompartment[0:3]
 			if type == 'hasReactant':
 				reactants.append({"id":moleculeId,"name":moleculeName,"properties":edgeProperties,"compartment":moleculeCompartment})
 			elif type == 'hasModifier':
