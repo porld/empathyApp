@@ -8,6 +8,39 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	$scope.socket_static_url = 'www.metabolicjamboree.co.uk:8082';
 	$scope.external_static_url = 'www.metabolicjamboree.co.uk:8081';
 
+	//Base64 encoding
+	function Base64(username,password) {
+		input = username + ":" + password;
+		var output = "";
+		var chr1, chr2, chr3 = "";
+		var enc1, enc2, enc3, enc4 = "";
+		var i = 0;
+		do {
+			chr1 = input.charCodeAt(i++);
+			chr2 = input.charCodeAt(i++);
+			chr3 = input.charCodeAt(i++);
+		
+			enc1 = chr1 >> 2;
+			enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+			enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+			enc4 = chr3 & 63;
+
+			if (isNaN(chr2)) {
+				enc3 = enc4 = 64;
+				}
+			else if (isNaN(chr3)) {
+				enc4 = 64;
+				}
+		
+			output = output + keyStr.charAt(enc1) + keyStr.charAt(enc2) + keyStr.charAt(enc3) + keyStr.charAt(enc4);
+			chr1 = chr2 = chr3 = "";
+			enc1 = enc2 = enc3 = enc4 = "";
+			}
+		while (i < input.length);
+			return output;
+			}
+		};
+
 	//Connect to broadcast server
 	console.log('SOCKET Connecting to broadcast server');
 	var socket = io.connect('https://' + $scope.socket_static_url + '/mq', {reconnection: false})
@@ -98,6 +131,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			return 0;
 			}
 		};
+
 	//Register user
 	$scope.signUp = function() {
 		bundle = {"username":$scope.username, "password":$scope.passwords.a};
@@ -121,10 +155,16 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				return false;
 				});
 		};
+
 	//Sign in user
 	$scope.signIn = function() {
 		bundle = {"username":$scope.username, "password":$scope.password};
 		console.log('Bundle:', $scope.username, $scope.password);
+		
+		//Generate Basic auth header
+		credentials = Base64($scope.username,$scope.password) ;
+		console.log('Credentials:', credentials);
+		
 		url = 'https://' + $scope.static_url + '/signIn';
 		response = $http.post(url, angular.toJson(bundle) )
 			.success(function(data) {
@@ -178,6 +218,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 						};
 				});
 		};
+
 	//Sign out
 	$scope.signOut = function() {
 		console.log('Sign out');
