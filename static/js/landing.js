@@ -10,6 +10,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 
 	//Base64 encoding
 	function Base64(username,password) {
+		var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 		input = username + ":" + password;
 		var output = "";
 		var chr1, chr2, chr3 = "";
