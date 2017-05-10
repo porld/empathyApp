@@ -97,23 +97,22 @@
 						<!-- SBML import -->
 						<div class="row">
 							<!-- File selector -->
-							<div class="large-6 medium-6 small-6 columns">
+							<div class="large-8 medium-8 small-8 columns">
 								<input id="SBMLinput" ng-init="sbml=''" type="file" ng-model="sbml" placeholder="SBML">
 							</div>
 							<!-- Upload button -->
-							<div ng-if="!sbml_spinner" class="large-6 medium-6 small-6 columns">
+							<div ng-if="!sbml_spinner" class="large-4 medium-4 small-4 columns">
 								<a href="#" ng-click="importSBML()" class="button postfix">Upload</a>
 							</div>
 							<!-- SBML message -->
-							<div ng-if="sbml_spinner" class="large-6 medium-6 small-6 columns"><i>{{sbml_message}}</i></div>
+							<div ng-if="sbml_spinner" class="large-4 medium-4 small-4 columns"><i>{{sbml_message}}</i></div>
 						</div>
 						<!-- SBML export -->
 						<div class="row">
-							<div class="large-4 medium-4 small-4 columns">&nbsp;</div>
+							<div class="large-8 medium-8 small-8 columns">&nbsp;</div>
 							<div class="large-4 medium-4 small-4 columns">
 								<a href="#" ng-click="exportSBML()" class="button postfix">Export</a>
 							</div>
-							<div class="large-4 medium-4 small-4 columns">&nbsp;</div>
 						</div>
 						<!-- Collaborators -->
 						<div class="row"><b>Collaborators</b></div>
