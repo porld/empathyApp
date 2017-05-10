@@ -53,6 +53,7 @@
 					<!-- List reconstructions and create new (panel 1)-->
 					<div class="small-5 medium-5 large-5 columns">
 						<div class="row"><b>Reconstructions</b></div>
+						<!-- List of existing reconstructions -->
 						<div ng-if="reconstruction_list.length > 0" class="row">
 							<span ng-repeat="r in reconstruction_list">
 								<small>
@@ -62,11 +63,13 @@
 								</small>
 							</span>
 						</div>
+						<!-- Report no reconstructions -->
 						<div ng-if="reconstruction_list.length == 0" class="row">
 							<i>You do not have any reconstructions</i>
 						</div>
 						<div class="row">&nbsp;</div>
-						<div class="row"><i>Create reconstruction</i></div>
+						<!-- Create reconstruction -->
+						<div class="row"><b>Create reconstruction</b></div>
 						<div class="row" ng-init="new_recon_name;recon_spinner=false">
 							<input ng-model="new_recon_name" placeholder="Reconstruction name"></input>
 						</div>
@@ -76,59 +79,20 @@
 						<div class="row">
 							<button ng-if="new_recon_name.length>0 && !recon_spinner" href="#" ng-click="launch_docker(new_recon_name,new_recon_notes);recon_spinner=true">Create</button><br>
 						</div>
+						<!-- Spinner -->
 						<div class="row">
 							<center ng-if="recon_spinner">
-								<small style="color:gray">Starting the jamboree - ging gang goolie! Please wait...</small><br>
+								<small style="color:gray">Starting the jamboree. Please wait...</small><br>
 								<img src="images/spinner.gif"/><br>
 							</center>
 						</div>						
 					</div>
-					<div ng-if="recon!=''" class="small-5 medium-5 large-5 columns">
-						<!-- Collaborators -->
-						<div class="row"><b>Collaborators</b></div>
-						<div class="row"><i>List of collaborators here</i></div>
-						<div class="row">
-							<input  ng-model="collaborator" ng-change="collaborator_update(collaborator)" placeholder="Collaborator email"></input>
-							<button ng-click="invite(collaborator)">Add collaborator</button><br>
-							<small style="color:gray">{{invitation}}</small><br>
-						</div>
-					</div>
-					<div ng-if="recon==''" class="small-5 medium-5 large-5 columns">
-						&nbsp;
-					</div>
-
-				</div>
-				<a class="close-reveal-modal" aria-label="Close">&#215;</a>
-			</div>
-
-			<!-- Import Modal -->
-			<div id="importReconModal" class="reveal-modal" style="position:fixed;overflow-x:auto;overflow-y:scroll;bottom:0;left:0;right:0;top:0; z-index:9999;height:95vh;" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
-				<div class="row">
-					<h3 ng-if="!recon==''">{{recon}}</h3>
-					<h3 ng-if="recon==''"><i>No reconstruction selected</i></h3>
-				</div>
-				<div class="row" >
-					<!-- Manage reconstruction (panel 2 - no reconstruction selected)-->
-					<div class="small-12 medium-12 large-12 columns" ng-if="recon==''">
-						<i style="color: lightgray">Select reconstruction</i>
-					</div>
-					<!-- Manage current reconstruction (panel 2 - reconstruction selected)-->
-					<div class="small-12 medium-12 large-12 columns" ng-if="recon!=''">
-						<div class="row"><b>{{recon.name}}</b></div>
-						<!-- Import -->
-						<div class="row"><b>Import data</b></div>
-						<div class="row">&nbsp;</div>
-						<!-- SYNBIOCHEM-DB -->
-						<!--div class="row">
-							<div class="large-6 medium-6 small-6 columns">
-								<input ng-init="taxon=''" type="text" ng-model="taxon" placeholder="NCBI taxon">
-							</div>
-							<div class="large-3 medium-3 small-3 columns">
-								<a href="#" ng-click="synbiochem_import(taxon)" class="button postfix">Import</a>
-							</div>
-							<div class="large-3 medium-3 small-3 columns"">&nbsp;</div>
-						</div-->
-						<!-- SBML -->
+					<!-- Spacing -->
+					<div class="small-2 medium-2 large-2 columns">&nbsp;</div>
+					<!-- Actions upon a selected reconstruction -->
+					<div ng-if="!recon==''" class="small-5 medium-5 large-5 columns">
+						<div class="row"><b>Import/Export</b></div>
+						<!-- SBML import -->
 						<div class="row">
 							<div class="large-3 medium-3 small-3 columns">
 								<input id="SBMLinput" ng-init="sbml=''" type="file" ng-model="sbml" placeholder="SBML">
@@ -139,27 +103,23 @@
 							</div>
 							<div class="large-6 medium-6 small-6 columns"">&nbsp;</div>
 						</div>
-						<!-- Generic cellular organisation -->
+						<!-- SBML export -->
 						<div class="row">
-							<div class="large-6 medium-6 small-6 columns">
-								<label for="singleSelect">
-									Cellular organisation
-								</label>
-								<select name="cellSelect" id="cellSelect" ng-model="basic_cell" ng-change="load_cell(basic_cell)">
-									<option value="">---Please select---</option>
-									<option value="bacterium">Bacterium</option>
-									<option value="eukaryote">Eukaryote</option>
-								</select>
+							<div class="large-12 medium-12 small-12 columns">
+								<a href="#" ng-click="exportSBML()" class="button postfix">Export</a>
 							</div>
-							<div class="large-6 medium-6 small-6 columns">&nbsp;</div>
 						</div>
-						<!-- Spinner -->
+						<!-- Collaborators -->
+						<div class="row"><b>Collaborators</b></div>
 						<div class="row">
-							<center ng-if="recon_spinner">
-								<small style="color:gray">Dancing the molecules. Please wait...</small><br>
-								<img src="images/spinner.gif"/><br>
-							</center>
-						</div>	
+							<input  ng-model="collaborator" ng-change="collaborator_update(collaborator)" placeholder="Collaborator email"></input>
+							<button ng-click="invite(collaborator)">Add collaborator</button><br>
+							<small style="color:gray">{{invitation}}</small><br>
+						</div>
+					</div>
+					<!-- Pad out when no selection -->
+					<div ng-if="!recon==''" class="small-5 medium-5 large-5 columns">
+						<i>No reconstruction selected</i>
 					</div>
 				</div>
 				<a class="close-reveal-modal" aria-label="Close">&#215;</a>
@@ -274,9 +234,9 @@
 								<a href="#" style="font-family:Montserrat; font-weight: bold;">jamboree</a>
 								<ul ng-mouseover="invitation='';" class="dropdown">
 									<li><a href="#" data-reveal-id="newReconModal">Reconstructions</a></li>
-									<!--li ng-if="recon!=''"><a href="#" ng-click="getThreadList()" data-reveal-id="messageboardModal">Messages</a></li-->
+									<!--li ng-if="recon!=''"><a href="#" ng-click="getThreadList()" data-reveal-id="messageboardModal">Messages</a></li>
 									<li ng-if="recon!=''"><a href="#" data-reveal-id="importReconModal">Import data</a></li>
-									<li ng-if="recon!=''"><a href="#" data-reveal-id="importReconModal">Export data</a></li>
+									<li ng-if="recon!=''"><a href="#" data-reveal-id="importReconModal">Export data</a></li-->
 									<li><a href="#">Help</a></li>
 									<li><a href="#" ng-click="signOut()">Sign out</a></li>
 								</ul>					
