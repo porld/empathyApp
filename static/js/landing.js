@@ -736,6 +736,9 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//Update node property
 	$scope.updateText = function(key,value) {
 		console.log('Update text', $scope.selection, 'with', key, ':', value);
+		if(key == 'Notes') {		//Wrap notes in JSON (unwrapper expects this)
+			value = angular.toJson(value);
+			}
 		bundle = {"port": $scope.port, "record_handle": $scope.record_handle, "id":$scope.selection, "key":key, "value":value};
 		url = 'https://' + $scope.username + ':' + $scope.password + '@' + $scope.static_url + '/updateText';
 		$http.post(url, angular.toJson(bundle) )
