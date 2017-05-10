@@ -233,9 +233,11 @@ def collectCyphers(model):
 	#Compartments
 	print 'Collect compartments'
 	compartments = model['compartments']
+	compartmentIdToName = {}
 	for comp in compartments:
 		#print comp
 		properties = {}
+		compartmentIdToName[comp['id']] = comp['name']
 		properties["id"] = str(uuid.uuid4())
 		properties["type"] = "compartment"
 		properties["name"] = comp['name']
@@ -262,7 +264,9 @@ def collectCyphers(model):
 		properties["source"] = "SBML"
 		properties["synonyms"] = []
 		properties["tags"] = [mol["type"]]
-		properties["inCompartment"] = mol['inCompartment']
+		compartmentId = mol['inCompartment']
+		compartmentName = compartmentIdToName[compartmentId]
+		properties["inCompartment"] = compartmentName
 		properties["notes"] = mol['notes']
 		#Map SBO to EMPATHY
 		properties = annotationMapper(properties,mol)	

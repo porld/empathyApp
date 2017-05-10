@@ -403,7 +403,7 @@ def fetchList(label,port):
 			compartment = str(row["row"][1])
 			name = row["row"][2]
 			tags = row["row"][3]
-			name = name + '_[' + compartment[0:2] + ']'
+			name = name + '_[' + compartment[0:3] + ']'
 			new_list.append({"id":id,"name":name,"tags":tags})
 	else:
 		print 'Fetch', label
@@ -823,7 +823,7 @@ def importSBML():
 				name = row["row"][1]
 				compartment = str( row["row"][2] )
 				tags = row["row"][3]
-				name = name + '_[' + compartment[0:2] + ']'
+				name = name + '_[' + compartment[0:3] + ']'
 				new_list.append({"id":id,"name":name,"tags":tags})
 			send_message(port+"_molecule", new_list,  port)							
 		except Exception, e:
@@ -853,7 +853,6 @@ def importSBML():
 
 	print 'SBML import complete'
 	return json.dumps(True)
-
 
 @app.route('/createNode', methods=['POST'])
 @auth.login_required
