@@ -1,9 +1,6 @@
 from libsbml import *
 import xmltodict, json, copy, uuid, requests
 
-NEO_USERNAME = 'neo4j'
-NEO_PASSWORD = 'donkey'
-
 #Remapping required
 nodeBlank = {"id":"", "type":"", "source":"", "sourceId":"", "name":"",	"synonyms":[], "inCompartment":"", "is":[], "is_a":[], "isDescribedBy":[], "isVersionOf":[], "property":[], "tags":[], "sandbox":[], "references":[], "notifications":[]	}
 
@@ -119,7 +116,7 @@ def parseSBML(sbml):
 		compartments = []
 		for comp in model.getListOfCompartments():
 			compartment = {}
-			compartment["id"] = "organelle_" + comp.getId()
+			compartment["id"] = comp.getId()
 			compartment["name"] = comp.getName()
 			compartment["notes"] = getNotes(comp)
 			compartment["SBO"] = comp.getSBOTermID()
@@ -156,14 +153,14 @@ def parseSBML(sbml):
 				molecule["tags"] = ['complex']				
 				molecule["type"] = 'complex'
 			else:
-				molecule["type"] = 'None'
+				molecule["type"] = 'Other'
 				molecule["tags"] = []
 			molecule["charge"] = mol.getCharge()
 			molecule["notes"] = getNotes(mol)
 			molecule["source"] = "SBML"
 			molecule["sourceId"] = mol.getId()
 			molecule["synonyms"] = []
-			molecule["inCompartment"] = mol.getCompartment()
+			molecule["inCompartment"] = mol.getCompartment() #This is a compartment id
 			annotations = getAnnotations(mol)
 			for qual in annotations.keys():		
 				molecule[qual] = annotations[qual]
@@ -251,6 +248,8 @@ def collectCyphers(model):
 		properties = annotationMapper(properties,comp)	
 		cyphers.append(['CREATE (n:compartment {props}) RETURN n.id', properties, 'compartment'])
 
+	print compartmentIdToName
+
 	#Molecules
 	print 'Collect molecules'
 	mols = model['molecules']
@@ -264,8 +263,8 @@ def collectCyphers(model):
 		properties["source"] = "SBML"
 		properties["synonyms"] = []
 		properties["tags"] = [mol["type"]]
-		compartmentId = mol['inCompartment']
-		compartmentName = compartmentIdToName[compartmentId]
+		compartmentId = mol['inCompartment'] #Pick up compartment id
+		compartmentName = compartmentIdToName[compartmentId] #Resolve compartment id
 		properties["inCompartment"] = compartmentName
 		properties["notes"] = mol['notes']
 		#Map SBO to EMPATHY
