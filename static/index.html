@@ -650,7 +650,7 @@
 									<div class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="notes_view">
 											<!-- notes list -->
-											<textarea type="text" ng-model="localNotes" ng-init="record.notes=localNotes" ng-blur="updateText('notes',localNotes); "></textarea>
+											<textarea type="text" ng-model="localNotes" ng-init="localNotes=record.notes" ng-blur="updateText('notes',localNotes); locaNotes=''"></textarea>
 										</div>
 									</div>
 								</div>
