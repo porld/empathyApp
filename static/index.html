@@ -667,7 +667,7 @@
 											</span>
 										</div>
 										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_is" ng-model="new_encodedBy">
+										<div class="row animate-show-hide" ng-show="add_encodedBy" ng-model="new_encodedBy">
 											<div class="large-6 medium-6 small-6 columns">
 												<input type="text" placeholder="Add source" ng-model="new_encodedBy['source']">
 											</div>
@@ -700,12 +700,12 @@
 												</small>
 											</span>
 											<!-- Add is -->
-											<span ng_model="add_is" ng-init="add_hasPart=false" ng-click="add_hasPart=!add_hasPart">
+											<span ng_model="add_hasPart" ng-init="add_hasPart=false" ng-click="add_hasPart=!add_hasPart">
 												<small><i class="fi-plus"></i></small>
 											</span>
 										</div>
 										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_is" ng-model="new_hasPart">
+										<div class="row animate-show-hide" ng-show="add_hasPart" ng-model="new_hasPart">
 											<div class="large-6 medium-6 small-6 columns">
 												<input type="text" placeholder="Add source" ng-model="new_hasPart['source']">
 											</div>
