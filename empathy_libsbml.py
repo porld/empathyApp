@@ -143,7 +143,6 @@ def parseSBML(sbml):
 		for mol in model.getListOfSpecies():
 			molecule = {}
 			molecule["id"] = mol.getId()
-			molecule["name"] = mol.getName()
 			name = mol.getName()
 			#Trim off bracket notation for compartments
 			if name.endswith(']'):
@@ -151,6 +150,7 @@ def parseSBML(sbml):
 				final = bash[len(bash)-1]
 				final = '['+final
 				name = name.replace(final,'')
+			molecule["name"] = name				
 			molecule["SBO"] = mol.getSBOTermID()
 			if mol.getSBOTermID() == 'SBO:0000247':
 				molecule["type"] = 'simple chemical'
@@ -338,5 +338,7 @@ f = open('yeast_7.6_recon.xml', 'r')
 sbml = f.read()
 cyphers = sbml2cyphers(sbml)
 for cypher in cyphers:
-	print cypher
+	properties = cypher[1]
+	if 'type' in properties:
+		print properties['name']
 '''
