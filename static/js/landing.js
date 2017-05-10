@@ -35,10 +35,8 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			output = output + keyStr.charAt(enc1) + keyStr.charAt(enc2) + keyStr.charAt(enc3) + keyStr.charAt(enc4);
 			chr1 = chr2 = chr3 = "";
 			enc1 = enc2 = enc3 = enc4 = "";
-			}
-		while (i < input.length);
-			return output;
-			}
+			} while (i < input.length);
+		return output;
 		};
 
 	//Connect to broadcast server
