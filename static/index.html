@@ -650,7 +650,7 @@
 									<div class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="notes_view">
 											<!-- notes list -->
-											<textarea type="text" ng-model="localNotes" ng-init="localNotes=record.notes" ng-blur="updateText('notes',localNotes); locaNotes=''"></textarea>
+											<textarea type="text" ng-model="record.notes" ng-blur="updateText('notes',record.notes); "></textarea>
 										</div>
 									</div>
 								</div>
@@ -922,7 +922,7 @@
 									<div class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="notes_view">
 											<!-- notes list -->
-											<textarea type="text" ng-model="record.notes" ng-blur="updateText('name',record.notes); "></textarea>
+											<textarea type="text" ng-model="record.notes" ng-blur="updateText('notes',record.notes); "></textarea>
 										</div>
 									</div>
 								</div>
@@ -1092,7 +1092,7 @@
 									<div class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="notes_view">
 											<!-- notes list -->
-											<textarea type="text" ng-model="record.notes" ng-blur="updateText('name',record.notes); "></textarea>
+											<textarea type="text" ng-model="record.notes" ng-blur="updateText('notes',record.notes); "></textarea>
 										</div>
 									</div>
 								</div>
