@@ -45,12 +45,14 @@
 		<div ng-controller="landingCtrl" ng-cloak>
 			<!-- Recon Modal -->
 			<div id="newReconModal" class="reveal-modal" style="position:fixed;overflow-x:auto;overflow-y:scroll;bottom:0;left:0;right:0;top:0; z-index:9999;height:95vh;" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+				<!-- Title -->
 				<div class="row">
 					<h3 ng-if="!recon==''">{{recon}}</h3>
 					<h3 ng-if="recon==''"><i>No reconstruction selected</i></h3>
 				</div>
+				<!-- Content -->
 				<div class="row" >
-					<!-- List reconstructions and create new (panel 1)-->
+					<!-- Panel 1: list reconstructions and create new-->
 					<div class="small-5 medium-5 large-5 columns">
 						<div class="row"><b>Reconstructions</b></div>
 						<!-- List of existing reconstructions -->
@@ -87,27 +89,31 @@
 							</center>
 						</div>						
 					</div>
-					<!-- Spacing -->
+					<!-- Panel spacing -->
 					<div class="small-2 medium-2 large-2 columns">&nbsp;</div>
-					<!-- Actions upon a selected reconstruction -->
+					<!-- Panel 2: actions when a reconstruction is selected -->
 					<div ng-if="!recon==''" class="small-5 medium-5 large-5 columns">
 						<div class="row"><b>Import/Export</b></div>
 						<!-- SBML import -->
 						<div class="row">
-							<div class="large-3 medium-3 small-3 columns">
+							<!-- File selector -->
+							<div class="large-6 medium-6 small-6 columns">
 								<input id="SBMLinput" ng-init="sbml=''" type="file" ng-model="sbml" placeholder="SBML">
 							</div>
-							<div ng-if="sbml_spinner" class="large-3 medium-3 small-3 columns"><i>{{sbml_message}}</i></div>
-							<div ng-if="!sbml_spinner" class="large-3 medium-3 small-3 columns">
+							<!-- Upload button -->
+							<div ng-if="!sbml_spinner" class="large-6 medium-6 small-6 columns">
 								<a href="#" ng-click="importSBML()" class="button postfix">Upload</a>
 							</div>
-							<div class="large-6 medium-6 small-6 columns"">&nbsp;</div>
+							<!-- SBML message -->
+							<div ng-if="sbml_spinner" class="large-6 medium-6 small-6 columns"><i>{{sbml_message}}</i></div>
 						</div>
 						<!-- SBML export -->
 						<div class="row">
-							<div class="large-12 medium-12 small-12 columns">
+							<div class="large-4 medium-4 small-4 columns">&nbsp;</div>
+							<div class="large-4 medium-4 small-4 columns">
 								<a href="#" ng-click="exportSBML()" class="button postfix">Export</a>
 							</div>
+							<div class="large-4 medium-4 small-4 columns">&nbsp;</div>
 						</div>
 						<!-- Collaborators -->
 						<div class="row"><b>Collaborators</b></div>
@@ -117,8 +123,8 @@
 							<small style="color:gray">{{invitation}}</small><br>
 						</div>
 					</div>
-					<!-- Pad out when no selection -->
-					<div ng-if="!recon==''" class="small-5 medium-5 large-5 columns">
+					<!-- Panel 2: pad out when no selection -->
+					<div ng-if="recon==''" class="small-5 medium-5 large-5 columns">
 						<i>No reconstruction selected</i>
 					</div>
 				</div>
