@@ -114,10 +114,12 @@ def parseSBML(sbml):
 	print 'Get compartments'
 	try:
 		compartments = []
+		compartment_names = [] #Store compartment names for molecule name trimming
 		for comp in model.getListOfCompartments():
 			compartment = {}
 			compartment["id"] = comp.getId()
 			compartment["name"] = comp.getName()
+			compartment_names.append(comp.getName)
 			compartment["notes"] = getNotes(comp)
 			compartment["SBO"] = comp.getSBOTermID()
 			compartment["type"] = "compartment"
@@ -142,6 +144,13 @@ def parseSBML(sbml):
 			molecule = {}
 			molecule["id"] = mol.getId()
 			molecule["name"] = mol.getName()
+			name = mol.getName()
+			#Trim off bracket notation for compartments
+			if name.endswith(']'):
+				bash = name.split(' [')
+				final = bash[len(bash)-1]
+				final = '['+final
+				name = name.replace(final,'')
 			molecule["SBO"] = mol.getSBOTermID()
 			if mol.getSBOTermID() == 'SBO:0000247':
 				molecule["type"] = 'simple chemical'
@@ -247,8 +256,6 @@ def collectCyphers(model):
 		#Map SBO to EMPATHY
 		properties = annotationMapper(properties,comp)	
 		cyphers.append(['CREATE (n:compartment {props}) RETURN n.id', properties, 'compartment'])
-
-	print compartmentIdToName
 
 	#Molecules
 	print 'Collect molecules'
