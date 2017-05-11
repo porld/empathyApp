@@ -54,6 +54,11 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.$apply();
 		});
 
+	//Socket error
+	socket.on('error', function() {
+		console.log('Socket error', socket);
+		});
+
 	$scope.disconnect = function() {
 		console.log('Disconnecting');
 		socket.disconnect();
