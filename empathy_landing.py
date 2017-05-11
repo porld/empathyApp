@@ -1166,6 +1166,7 @@ def actionPush(port,record_handle,record,key,value,username,password,message):
 	bundle = {"port":port,"record_handle":record_handle,"id":record['id'],"key":key,"value":value}
 	requests.post(url, data=json.dumps(bundle), headers=headers)
 
+	'''
 	#Push out message notification
 	#print 'Send notification message'
 	url = 'https://' + username + ':' + password + '@' + HOST + ':' + str(PORT) + '/listPush'
@@ -1173,6 +1174,7 @@ def actionPush(port,record_handle,record,key,value,username,password,message):
 	notifications.append(message)
 	bundle = {"port":port,"record_handle":record_handle,"id":record['id'],"key":"notifications","value":notifications}
 	requests.post(url, data=json.dumps(bundle), headers=headers)	
+	'''
 
 @app.route('/actionMolecule', methods=['POST'])
 @auth.login_required
