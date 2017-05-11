@@ -148,7 +148,7 @@ def parseSBML(sbml):
 			if name.endswith(']'):
 				bash = name.split(' [')
 				final = bash[len(bash)-1]
-				final = '['+final
+				final = ' ['+final
 				name = name.replace(final,'')
 			molecule["name"] = name				
 			molecule["SBO"] = mol.getSBOTermID()

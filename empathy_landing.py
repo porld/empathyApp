@@ -1196,14 +1196,14 @@ def actionMolecule():
 		
 		#Then post result (fetch current then add updates)
 		oldList = []
-		for row in record['isDescribedBy']:
+		for row in record['is']:
 			oldList.append(json.dumps(row))
 		for row in result:
 			oldList.append(json.dumps(row))
 		newList = list(set(oldList))
 		
 		#Push out new list and push notification
-		actionPush(port,record_handle,record,"isDescribedBy",newList,username,password,"New molecule identifiers added (isDescribedBy)")			
+		actionPush(port,record_handle,record,"is",newList,username,password,"New molecule identifiers added (is)")			
 		return json.dumps(True)
 
 	elif action == "smallMoleculeSynonyms":
