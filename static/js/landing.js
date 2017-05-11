@@ -59,6 +59,16 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		console.log('Socket error', socket);
 		});
 
+	//Socket reconnect
+	socket.on('reconnect', function() {
+		console.log('Reconnecting socket', socket);
+		});
+
+	//Socket reconnection failure
+	socket.on('reconnect_failed', function() {
+		console.log('Failed to reconnect socket', socket);
+		});
+
 	$scope.disconnect = function() {
 		console.log('Disconnecting');
 		socket.disconnect();
