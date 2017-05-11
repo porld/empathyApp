@@ -43,30 +43,35 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//Connect to broadcast server
 	console.log('SOCKET Connecting to broadcast server');
 	var socket = io.connect('https://' + $scope.socket_static_url + '/mq', {reconnection: false})
-	console.log('SOCKET Connected to broadcast server', socket);
+
 	//Connect to message socket	
 	$scope.socketId = 'No connection';
+	$scope.socket_status = '';
 	socket.on('connect', function() {
 		console.log('SOCKET Connected to socket:', socket.id);
 		console.log('SOCKET', socket);
 		$scope.socketId = socket.id;
 		$scope.socket = true;
+		$scope.socket_status = 'connected';
 		$scope.$apply();
 		});
 
 	//Socket error
 	socket.on('error', function() {
 		console.log('Socket error', socket);
+		$scope.socket_status = 'error';
 		});
 
 	//Socket reconnect
 	socket.on('reconnect', function() {
 		console.log('Reconnecting socket', socket);
+		$scope.socket_status = 'reconnecting';
 		});
 
 	//Socket reconnection failure
 	socket.on('reconnect_failed', function() {
 		console.log('Failed to reconnect socket', socket);
+		$scope.socket_status = 'Failed to reconnect';
 		});
 
 	$scope.disconnect = function() {
