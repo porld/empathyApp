@@ -1209,16 +1209,16 @@ def actionMolecule():
 					response = send_cypher(cypher,parameters,port)
 
 					#Push notification
-					general_message(port,credentials,"New molecule identifiers added to " + name,record["id"],"")
+					general_message(port,credentials,"New molecule identifiers added to " + name,record["id"],"is","")
 					return json.dumps(True)
 				except:
-					general_message(port,credentials,"No new molecule identifiers found for " + name,record["id"],"")
+					general_message(port,credentials,"No new molecule identifiers found for " + name,record["id"],"is","")
 					return json.dumps(False)
 			else:
-				general_message(port,credentials,"No new molecule identifiers found for " + name,record["id"],"")
+				general_message(port,credentials,"No new molecule identifiers found for " + name,record["id"],"is","")
 				return json.dumps(False)
 		except:
-			general_message(port,credentials,"Error finding structures for " + name,record["id"],"")
+			general_message(port,credentials,"Error finding structures for " + name,record["id"],"is","")
 			return json.dumps(False)
 	elif action == "smallMoleculeSynonyms":
 		#First run action
