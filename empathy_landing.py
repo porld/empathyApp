@@ -1158,56 +1158,68 @@ def queryMolecules():
 #-----------------------------------------------------------------------------------------
 #Action stations
 
-def actionPush(port,record_handle,record,key,value,username,password,message):
-	#Push out new list to record
-	#print 'Update record'
-	headers = {'content-type': 'application/json'}
-	url = 'https://' + username + ':' + password + '@' + HOST + ':' + str(PORT) + '/listPush'
-	bundle = {"port":port,"record_handle":record_handle,"id":record['id'],"key":key,"value":value}
-	requests.post(url, data=json.dumps(bundle), headers=headers)
+#Push a message to a specific user at <port>_<credentials>
+def general_message(port,credentials,message,record_id,key,value):
+	try:
+		general_handle = port + '_' + credentials
+		general_message = {"id":record_id,"key":key,"value":value,"message":message}
+		send_message(general_handle, {'key':key,'value':value, 'id': id},  port)
+		return True
+	except:
+		return False
 
-	'''
-	#Push out message notification
-	#print 'Send notification message'
-	url = 'https://' + username + ':' + password + '@' + HOST + ':' + str(PORT) + '/listPush'
-	notifications = record['notifications']
-	notifications.append(message)
-	bundle = {"port":port,"record_handle":record_handle,"id":record['id'],"key":"notifications","value":notifications}
-	requests.post(url, data=json.dumps(bundle), headers=headers)	
-	'''
 
 @app.route('/actionMolecule', methods=['POST'])
 @auth.login_required
 def actionMolecule():
 	json_data = request.get_json(force=True)
-	username = json_data['username']
-	password = json_data['password']
-	record_handle = json_data['record_handle'] #<port>_<record_id>
-	record = json_data['record']
-	action = json_data['action']
-	port = json_data['port']
+	credentials = json_data['credentials']		#user credentials (Base 64)
+	record_handle = json_data['record_handle'] 	#<port>_<record_id>
+	record = json_data['record'] 				#record
+	action = json_data['action'] 				#action to take
+	port = json_data['port'] 					#port
 
 	if action == "smallMoleculeIdentifier":
 		#First run action
 		try:
-			name = record['name']
-			result = actions.smallMoleculeIdentifier(name)
-			#print 'ACTION:', result
-		except:
-			return json.dumps(False)
-		
-		#Then post result (fetch current then add updates)
-		oldList = []
-		for row in record['is']:
-			oldList.append(json.dumps(row))
-		for row in result:
-			oldList.append(json.dumps(row))
-		newList = list(set(oldList))
-		
-		#Push out new list and push notification
-		actionPush(port,record_handle,record,"is",newList,username,password,"New molecule identifiers added (is)")			
-		return json.dumps(True)
+			#Find name
+			name = record['name']							#Take primary name
+			result = actions.smallMoleculeIdentifier(name) 	#Find small molecule identifiers
 
+			#Then post result (fetch current then add updates)
+			oldList = []
+			for row in record['isDescribedBy']:
+				oldList.append(json.dumps(row))
+			#Add updates
+			i = 0	#Check we have something
+			for row in result:
+				if len(row) > 0:
+					oldList.append(json.dumps(row))
+					i = i + 1
+
+			#Flatten list
+			newList = list(set(oldList))
+
+			#Push to database and notify
+			if i > 0:
+				try:
+					#Push to database
+					cypher = 'MATCH (n) WHERE n.id="' + record["id"] + '" SET n.is={value} RETURN n'
+					parameters = {"value":newList}
+					response = send_cypher(cypher,parameters,port)
+
+					#Push notification
+					general_message(port,credentials,"New molecule identifiers added to " + name,record["id"],"")
+					return json.dumps(True)
+				except:
+					general_message(port,credentials,"No new molecule identifiers found for " + name,record["id"],"")
+					return json.dumps(False)
+			else:
+				general_message(port,credentials,"No new molecule identifiers found for " + name,record["id"],"")
+				return json.dumps(False)
+		except:
+			general_message(port,credentials,"Error finding structures for " + name,record["id"],"")
+			return json.dumps(False)
 	elif action == "smallMoleculeSynonyms":
 		#First run action
 		try:
