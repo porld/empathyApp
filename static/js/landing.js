@@ -1326,7 +1326,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	$scope.moleculeAction = function(action) {
 		console.log('Run molecule action:', action);
 		url = 'https://' + $scope.static_url + '/actionMolecule'
-		$http.post(url, angular.toJson({"port":$scope.port,"record":$scope.record,"action":action.run, "username":$scope.username,"password":$scope.password, "record_handle":$scope.port+'_'+$scope.selection}) )
+		$http.post(url, angular.toJson({"port":$scope.port,"record":$scope.record,"action":action.run, "credentials":$scope.credentials, "record_handle":$scope.port+'_'+$scope.selection}) )
 			.success(function(data) {
 				console.log('Triggered:', action.run);
 				})
