@@ -1188,7 +1188,7 @@ def actionMolecule():
 
 			#Then post result (fetch current then add updates)
 			oldList = []
-			for row in record['isDescribedBy']:
+			for row in record['is']:
 				oldList.append(json.dumps(row))
 			#Add updates
 			i = 0	#Check we have something
@@ -1209,7 +1209,7 @@ def actionMolecule():
 					response = send_cypher(cypher,parameters,port)
 
 					#Push notification
-					general_message(port,credentials,"New molecule identifiers added to " + name,record["id"],"is","")
+					general_message(port,credentials,"New molecule identifiers added to " + name,record["id"],"isDescribe","")
 					return json.dumps(True)
 				except:
 					general_message(port,credentials,"No new molecule identifiers found for " + name,record["id"],"is","")

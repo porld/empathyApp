@@ -404,6 +404,12 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.recon = reconstruction.name;
 		$scope.port = reconstruction.port;
 		$scope.fsid = reconstruction.fsid;
+
+		//Attach general message socket
+		socket.on($scope.port + '_' + $scope.credentials, function(message) {
+			console.log('General message', message);
+			});
+
 		$scope.recon_spinner = false;
 		run_app();
 		};
