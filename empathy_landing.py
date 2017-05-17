@@ -1228,6 +1228,11 @@ def actionMolecule():
 		actionPush(port,record_handle,record,"synonyms",newList,username,password,"New synonyms added")			
 		return json.dumps(True)
 
+	#For actions we don't recognise
+	else:
+		print 'Did not recognise that action'
+		return json.dumps(False)		
+
 	return json.dumps(True)
 #-----------------------------------------------------------------------------------------
 
