@@ -152,6 +152,7 @@ def pubchem2smiles(pubchem):
 #-----------------------------------------------------------------------------------------
 #Jamboree overseers
 def chemical2structure(keyword,isList):
+	print 'chemical2structure', keyword, isList, type(isList)
 	message = 'Search for structure: none found'
 	for entry in isList:
 		entry = json.loads(entry)
