@@ -1180,6 +1180,8 @@ def actionMolecule():
 	port = json_data['port'] 					#port
 
 	if action == "chemical2structure":
+		print 'Action: chemical2structure'
+		print 'Trying to find structure for', record['name'], record['is']
 		#First run action
 		try:
 			#Find name
@@ -1189,6 +1191,7 @@ def actionMolecule():
 
 			#If we got something then post result (fetch current then add updates)
 			if smiles:
+				print 'actions.chemical2structure', smiles, message
 				oldList = record['is']
 				oldList.append(smiles)
 				newList = list(set(oldList))
