@@ -159,7 +159,20 @@ def chemical2structure(keyword,isList):
 		entry[1] = str(entry[1])
 		known = entry[0]
 		#Chase up ChEBI
-		if 'chebi' in known:
+		if 'smiles' in known:
+			print "ACTION Already got SMILES", entry[1]
+			message = 'Already had structure'
+			return False, message
+		elif 'InChI' in known:
+			print "ACTION Convert InChI", entry[1]
+			inchi = entry[1]
+			if '?' in inchi:
+				inchi = inchi.replace('?','')
+			smiles = inchi2smiles(inchi)
+			if smiles:
+				message = 'Generated structure from existing InChI'
+				return json.dumps(["smiles",smiles]), message
+		elif 'chebi' in known:
 			print "ACTION Search ChEBI", entry[1]
 			smiles = chebi2smiles(entry[1])
 			if smiles:
@@ -196,6 +209,5 @@ def chemical2structure(keyword,isList):
 		return False, 'None found'
 #-----------------------------------------------------------------------------------------
 
-'''
-print chemical2structure('glucose',[["pubchem","5793"]])
-'''
+#Test
+#print chemical2structure("glucose", [ [u'chebi', u'CHEBI:37447']])
