@@ -159,32 +159,32 @@ def chemical2structure(keyword,isList):
 		entry[1] = str(entry[1])
 		known = entry[0]
 		#Chase up ChEBI
-		if known is 'chebi':
+		if 'chebi' in known:
 			print "ACTION Search ChEBI", entry[1]
 			smiles = chebi2smiles(entry[1])
 			if smiles:
 				message = 'Retrieved structure from ChEBI'
 				return json.dumps(["smiles",smiles]), message
-		elif known is 'kegg.compound':
+		elif 'kegg.compound' in known:
 			print "ACTION Search KEGG", entry[1]
 			smiles = kegg2smiles(entry[1])
 			if smiles:
 				message = 'Retrieved structure from KEGG'
 				return json.dumps(["smiles",smiles]), message
-		elif known is 'metacyc':
+		elif 'metacyc' in known:
 			print "ACTION Search MetaCyc", entry[1]
 			smiles = metacyc2smiles(entry[1])
 			if smiles:
 				message = 'Retrieved structure from MetaCyc'
 				return json.dumps(["smiles",smiles]), message
-		elif known is 'pubchem':
+		elif 'pubchem' in known:
 			print "ACTION Search Pubchem", entry[1]
 			smiles = pubchem2smiles(entry[1])
 			if smiles:
 				message = 'Retrieved structure from PubChem'
 				return json.dumps(["smiles",smiles]), message
 		else:
-			print "ACTION Cannot use", entry, type(entry)
+			print "ACTION Cannot use", entry
 	#Last resort is CACTUS
 	smiles = cactvs_keyword2smiles(keyword)
 	if smiles:
