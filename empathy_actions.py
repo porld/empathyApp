@@ -182,8 +182,8 @@ def chemical2structure(keyword,isList):
 		else:
 			pass
 	#Last resort is CACTUS
-	if len(matches) == 0:
-		smiles = cactvs_keyword2smiles(keyword)
+	smiles = cactvs_keyword2smiles(keyword)
+	if smiles:
 		message = 'Retrieved structure by "' + keyword + '" from CACTUS'
 		return json.dumps(["smiles",'?'+smiles]), message
 	else:
