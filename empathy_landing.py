@@ -1195,7 +1195,12 @@ def actionMolecule():
 			if smiles:
 				print 'actions.chemical2structure', smiles, message
 				oldList = record['is']
-				oldList.append(smiles)
+				newList = []
+				for entry in oldList:
+					entry[0] = str(entry[0])
+					entry[1] = str(entry[1])
+					newList.append(entry)
+				newList.append(['smiles',smiles])
 				newList = list(set(oldList))
 				#Push to database
 				cypher = 'MATCH (n) WHERE n.id="' + record["id"] + '" SET n.is={value} RETURN n'
