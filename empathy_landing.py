@@ -1191,11 +1191,8 @@ def actionMolecule():
 			#If we got something then post result (fetch current then add updates)
 			if smiles:
 				print 'actions.chemical2structure', smiles, message
-				print record['is']
-				newList = []
-				for entry in record['is']:
-					newList.append( json.dumps(entry) )		#The list from the client comes unwrapped but must be wrapped in the backend
-				newList.append( json.dumps(smiles) )
+				newList = record['is']
+				newList.append( smiles )
 				newList = list(set(newList))
 				print 'New list:', newList
 				#Push to database
