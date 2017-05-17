@@ -1192,17 +1192,22 @@ def actionMolecule():
 			if smiles:
 				print 'actions.chemical2structure', smiles, message
 				oldList = record['is']
+				print 'Old list:', oldList
 				oldList.append(smiles)		#The [type,smiles] list pair is already JSONified
 				newList = list(set(oldList))
+				print 'New list:', newList
 				#Push to database
+				print 'Push to database'
 				cypher = 'MATCH (n) WHERE n.id="' + record["id"] + '" SET n.is={value} RETURN n'
 				parameters = {"value":newList}
 				response = send_cypher(cypher,parameters,port)
 
 				#Broadcast record update
+				print 'Broadcast update'
 				send_message(record_handle, {'key':'is','value':smiles, 'id': record['id']},  port)
 
 				#Push general notification
+				print 'General notification'
 				general_message(port,credentials,message,record["id"],"is",smiles)
 				return json.dumps(True)
 			else:
