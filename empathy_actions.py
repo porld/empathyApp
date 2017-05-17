@@ -155,8 +155,9 @@ def chemical2structure(keyword,isList):
 	print 'ACTION chemical2structure', keyword, isList, type(isList)
 	message = 'Search for structure: none found'
 	for entry in isList:
-		known = str(entry[0])
+		entry[0] = str(entry[0])
 		entry[1] = str(entry[1])
+		known = entry[0]
 		#Chase up ChEBI
 		if known is 'chebi':
 			print "ACTION Search ChEBI", entry[1]
