@@ -1160,10 +1160,11 @@ def queryMolecules():
 
 #Push a message to a specific user at <port>_<credentials>
 def general_message(port,credentials,message,record_id,key,value):
+	general_message = {"id":record_id,"key":key,"value":value,"message":message}
+	print 'Emit general message', general_message
 	try:
 		general_handle = port + '_' + credentials
-		general_message = {"id":record_id,"key":key,"value":value,"message":message}
-		send_message(general_handle, {'key':key,'value':value, 'id': id},  port)
+		send_message(general_handle, json.dumps(general_message),  port)
 		return True
 	except:
 		return False
@@ -1180,16 +1181,12 @@ def actionMolecule():
 	port = json_data['port'] 					#port
 
 	if action == "chemical2structure":
-		print 'Action: chemical2structure'
-		print 'Trying to find structure for', record['name'], record['is']
 		#First run action
 		try:
 			#Find name
 			name = record['name']										#Take primary name
 			isList = record['is']										#Take 'is' list
-			print 'Run action...'
 			smiles, message = actions.chemical2structure(name,isList) 	#Find small molecule identifiers
-			print '...done.', smiles, message
 
 			#If we got something then post result (fetch current then add updates)
 			if smiles:
@@ -1206,7 +1203,7 @@ def actionMolecule():
 				send_message(record_handle, {'key':'is','value':smiles, 'id': record['id']},  port)
 
 				#Push general notification
-				general_message(port,credentials,message,record["id"],"is","")
+				general_message(port,credentials,message,record["id"],"is",smiles)
 				return json.dumps(True)
 			else:
 				print 'actions.chemical2structure', 'no structure found', message
