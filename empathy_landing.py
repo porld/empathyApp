@@ -1179,47 +1179,34 @@ def actionMolecule():
 	action = json_data['action'] 				#action to take
 	port = json_data['port'] 					#port
 
-	if action == "smallMoleculeIdentifier":
+	if action == "chemical2structure":
 		#First run action
 		try:
 			#Find name
-			name = record['name']							#Take primary name
-			result = actions.smallMoleculeIdentifier(name) 	#Find small molecule identifiers
+			name = record['name']										#Take primary name
+			isList = record['is']										#Take 'is' list
+			smiles, message = actions.chemical2structure(name,isList) 	#Find small molecule identifiers
 
-			#Then post result (fetch current then add updates)
-			oldList = []
-			for row in record['is']:
-				oldList.append(json.dumps(row))
-			#Add updates
-			i = 0	#Check we have something
-			for row in result:
-				if len(row) > 0:
-					oldList.append(json.dumps(row))
-					i = i + 1
+			#If we got something then post result (fetch current then add updates)
+			if smiles:
+				oldList = record['is']:
+				oldList.append(smiles)
+				newList = list(set(oldList))
+				#Push to database
+				cypher = 'MATCH (n) WHERE n.id="' + record["id"] + '" SET n.is={value} RETURN n'
+				parameters = {"value":newList}
+				response = send_cypher(cypher,parameters,port)
 
-			#Flatten list
-			newList = list(set(oldList))
-
-			#Push to database and notify
-			if i > 0:
-				try:
-					#Push to database
-					cypher = 'MATCH (n) WHERE n.id="' + record["id"] + '" SET n.is={value} RETURN n'
-					parameters = {"value":newList}
-					response = send_cypher(cypher,parameters,port)
-
-					#Push notification
-					general_message(port,credentials,"New molecule identifiers added to " + name,record["id"],"isDescribe","")
-					return json.dumps(True)
-				except:
-					general_message(port,credentials,"No new molecule identifiers found for " + name,record["id"],"is","")
-					return json.dumps(False)
+				#Push notification
+				general_message(port,credentials,message,record["id"],"is","")
+				return json.dumps(True)
 			else:
-				general_message(port,credentials,"No new molecule identifiers found for " + name,record["id"],"is","")
+				general_message(port,credentials,message,record["id"],"is","")
 				return json.dumps(False)
 		except:
 			general_message(port,credentials,"Error finding structures for " + name,record["id"],"is","")
 			return json.dumps(False)
+
 	elif action == "smallMoleculeSynonyms":
 		#First run action
 		try:

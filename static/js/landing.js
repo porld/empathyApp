@@ -83,7 +83,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 
 	//-------------------------------------------------
 	//Actions
-	$scope.moleculeActions = [	{"name":"Suggest structure","description":"Use name to structure services to suggest a molecular structure","run":"smallMoleculeIdentifier"},
+	$scope.moleculeActions = [	{"name":"Suggest structure","description":"Tries to find a structure based upon existing identifiers or name to structure tools","run":"chemical2structure"},
 								{"name":"Find synonyms","description":"Search remote databases for alternative names for this molecule","run":"smallMoleculeSynonyms"},
 								{"name":"Cross-reference","description":"Find this molecule in other biological databases","run":"smallMoleculeCrossReference"},
 								{"name":"Find literature","description":"Find papers demonstrating this molecule in this organism","run":"smallMoleculeCooccurrence"},
