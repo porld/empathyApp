@@ -155,7 +155,6 @@ def chemical2structure(keyword,isList):
 	print 'chemical2structure', keyword, isList, type(isList)
 	message = 'Search for structure: none found'
 	for entry in isList:
-		entry = json.loads(entry)
 		known = entry[0]
 		print known
 		#Chase up ChEBI
