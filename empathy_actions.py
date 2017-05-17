@@ -165,28 +165,33 @@ def chemical2structure(keyword,isList):
 				message = 'Retrieved structure from ChEBI'
 				return json.dumps(["smiles",smiles]), message
 		elif known is 'kegg':
+			print "Search KEGG", entry[1]
 			smiles = kegg2smiles(entry[1])
 			if smiles:
 				message = 'Retrieved structure from KEGG'
 				return json.dumps(["smiles",smiles]), message
 		elif known is 'metacyc':
+			print "Search MetaCyc", entry[1]
 			smiles = metacyc2smiles(entry[1])
 			if smiles:
 				message = 'Retrieved structure from MetaCyc'
 				return json.dumps(["smiles",smiles]), message
 		elif known is 'pubchem':
+			print "Search Pubchem", entry[1]
 			smiles = pubchem2smiles(entry[1])
 			if smiles:
 				message = 'Retrieved structure from PubChem'
 				return json.dumps(["smiles",smiles]), message
 		else:
-			pass
+			print "Cannot use", entry[1]
 	#Last resort is CACTUS
 	smiles = cactvs_keyword2smiles(keyword)
 	if smiles:
+		print "Search CACTUS by name", keyword
 		message = 'Retrieved structure by "' + keyword + '" from CACTUS'
 		return json.dumps(["smiles",'?'+smiles]), message
 	else:
+		print "Could not find", keyword
 		return False, 'None found'
 #-----------------------------------------------------------------------------------------
 
