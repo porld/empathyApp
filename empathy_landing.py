@@ -1191,13 +1191,15 @@ def actionMolecule():
 			#If we got something then post result (fetch current then add updates)
 			if smiles:
 				print 'actions.chemical2structure', smiles, message
-				oldList = record['is']
-				print 'Old list:', oldList
-				oldList.append(smiles)		#The [type,smiles] list pair is already JSONified
-				newList = list(set(oldList))
+				print record['is']
+				newList = []
+				for entry in record['is']:
+					newList.append( json.dumps(entry) )		#The list from the client comes unwrapped but must be wrapped in the backend
+				newList.append( json.dumps(smiles) )
+				newList = list(set(newList))
 				print 'New list:', newList
 				#Push to database
-				print 'Push to database'
+				print 'Push list to database'
 				cypher = 'MATCH (n) WHERE n.id="' + record["id"] + '" SET n.is={value} RETURN n'
 				parameters = {"value":newList}
 				response = send_cypher(cypher,parameters,port)

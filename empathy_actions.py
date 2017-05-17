@@ -189,7 +189,7 @@ def chemical2structure(keyword,isList):
 			smiles = metacyc2smiles(entry[1])
 			if smiles:
 				message = 'Retrieved structure from MetaCyc'
-				return json.dumps(["smiles",smiles]), message
+				return ["smiles",smiles], message
 		elif 'pubchem' in known:
 			print "ACTION Search Pubchem", entry[1]
 			smiles = pubchem2smiles(entry[1])
