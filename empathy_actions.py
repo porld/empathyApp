@@ -152,46 +152,46 @@ def pubchem2smiles(pubchem):
 #-----------------------------------------------------------------------------------------
 #Jamboree overseers
 def chemical2structure(keyword,isList):
-	print 'chemical2structure', keyword, isList, type(isList)
+	print 'ACTION chemical2structure', keyword, isList, type(isList)
 	message = 'Search for structure: none found'
 	for entry in isList:
 		known = entry[0]
 		print known
 		#Chase up ChEBI
 		if 'chebi' in known:
-			print "Search ChEBI", entry[1]
+			print "ACTION Search ChEBI", entry[1]
 			smiles = chebi2smiles(entry[1])
 			if smiles:
 				message = 'Retrieved structure from ChEBI'
 				return json.dumps(["smiles",smiles]), message
-		elif known is 'kegg':
-			print "Search KEGG", entry[1]
+		elif known is 'kegg.compound':
+			print "ACTION Search KEGG", entry[1]
 			smiles = kegg2smiles(entry[1])
 			if smiles:
 				message = 'Retrieved structure from KEGG'
 				return json.dumps(["smiles",smiles]), message
 		elif known is 'metacyc':
-			print "Search MetaCyc", entry[1]
+			print "ACTION Search MetaCyc", entry[1]
 			smiles = metacyc2smiles(entry[1])
 			if smiles:
 				message = 'Retrieved structure from MetaCyc'
 				return json.dumps(["smiles",smiles]), message
 		elif known is 'pubchem':
-			print "Search Pubchem", entry[1]
+			print "ACTION Search Pubchem", entry[1]
 			smiles = pubchem2smiles(entry[1])
 			if smiles:
 				message = 'Retrieved structure from PubChem'
 				return json.dumps(["smiles",smiles]), message
 		else:
-			print "Cannot use", entry[1]
+			print "ACTION Cannot use", entry[1]
 	#Last resort is CACTUS
 	smiles = cactvs_keyword2smiles(keyword)
 	if smiles:
-		print "Search CACTUS by name", keyword
+		print "ACTION Search CACTUS by name", keyword
 		message = 'Retrieved structure by "' + keyword + '" from CACTUS'
 		return json.dumps(["smiles",'?'+smiles]), message
 	else:
-		print "Could not find", keyword
+		print "ACTION Could not find", keyword
 		return False, 'None found'
 #-----------------------------------------------------------------------------------------
 
