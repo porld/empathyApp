@@ -186,7 +186,6 @@ def chemical2structure(keyword,isList):
 		smiles = cactvs_keyword2smiles(keyword)
 		message = 'Retrieved structure by "' + keyword + '" from CACTUS'
 		return json.dumps(["smiles",'?'+smiles]), message
-		return matches, message
 	else:
 		return False, 'None found'
 #-----------------------------------------------------------------------------------------
