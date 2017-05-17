@@ -1187,7 +1187,9 @@ def actionMolecule():
 			#Find name
 			name = record['name']										#Take primary name
 			isList = record['is']										#Take 'is' list
+			print 'Run action...'
 			smiles, message = actions.chemical2structure(name,isList) 	#Find small molecule identifiers
+			print '...done.', smiles, message
 
 			#If we got something then post result (fetch current then add updates)
 			if smiles:
@@ -1204,9 +1206,11 @@ def actionMolecule():
 				general_message(port,credentials,message,record["id"],"is","")
 				return json.dumps(True)
 			else:
+				print 'actions.chemical2structure', 'no structure found', message
 				general_message(port,credentials,message,record["id"],"is","")
 				return json.dumps(False)
-		except:
+		except Exception, e:
+			print 'Error on actions.chemical2structure', str(e)
 			general_message(port,credentials,"Error finding structures for " + name,record["id"],"is","")
 			return json.dumps(False)
 
