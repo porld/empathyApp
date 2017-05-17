@@ -1189,7 +1189,7 @@ def actionMolecule():
 
 			#If we got something then post result (fetch current then add updates)
 			if smiles:
-				oldList = record['is']:
+				oldList = record['is']
 				oldList.append(smiles)
 				newList = list(set(oldList))
 				#Push to database
