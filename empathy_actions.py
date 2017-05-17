@@ -155,7 +155,8 @@ def chemical2structure(keyword,isList):
 	print 'ACTION chemical2structure', keyword, isList, type(isList)
 	message = 'Search for structure: none found'
 	for entry in isList:
-		known = entry[0]
+		known = str(entry[0])
+		entry[1] = str(entry[1])
 		#Chase up ChEBI
 		if known is 'chebi':
 			print "ACTION Search ChEBI", entry[1]
@@ -182,7 +183,7 @@ def chemical2structure(keyword,isList):
 				message = 'Retrieved structure from PubChem'
 				return json.dumps(["smiles",smiles]), message
 		else:
-			print "ACTION Cannot use", entry
+			print "ACTION Cannot use", entry, type(entry)
 	#Last resort is CACTUS
 	smiles = cactvs_keyword2smiles(keyword)
 	if smiles:
