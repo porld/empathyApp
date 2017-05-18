@@ -1286,7 +1286,7 @@ def actionMolecule():
 				smiles = smiles[1:len(smiles)-1]
 
 			#RUN ACTION
-			formula, charge, message = actions.smallMoleculeSynonyms(name)
+			formula, charge, message = actions.syncProperties(name)
 
 			#If we got something then post result (fetch current then add updates)
 			if formula:
