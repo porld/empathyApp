@@ -238,8 +238,8 @@
 						<ul class="right">
 							<!-- General messages -->
 							<li class="has-dropdown">
-								<a href="#" ng-if="unread"><i class="fi-mail"></i><sup><i class="fi-circle"></i></sup></a>
-								<a href="#" ng-if="!unread"><i class="fi-mail"></i><sup><i class="fi-circle"></i></sup></a>
+								<a href="#" ng-if="unread" style="color: orange"><i class="fi-mail"></i></a>
+								<a href="#" ng-if="!unread"><i class="fi-mail"></i></a>
 								<ul ng-repeat="msg in general_messages" class="dropdown">
 									<li ng-if="msg.unread"><a href="#" style="font-style: bold" ng-click="selection=msg.id;unread=False">{{msg.message}}</a></li>
 									<li ng-if="!msg.unread"><a href="#" ng-click="selection=msg.id;unread=false">{{msg.message}}</a></li>
