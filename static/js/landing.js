@@ -408,6 +408,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			$scope.latest = message;
 			message.read = false;
 			$scope.unseen = true;
+			console.log('General message:', message, $scope.unseen);
 			$scope.general_messages.push(message);
 			});
 
