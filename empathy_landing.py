@@ -1159,8 +1159,8 @@ def queryMolecules():
 #Action stations
 
 #Push a message to a specific user at <port>_<credentials>
-def general_message(port,credentials,message,record_id,key,value):
-	general_message = {"id":record_id,"key":key,"value":value,"message":message}
+def general_message(port,credentials,message,record_id):
+	general_message = {"id":record_id,"message":message}
 	print 'Emit general message', general_message
 	try:
 		general_handle = port + '_' + credentials
@@ -1216,17 +1216,16 @@ def actionMolecule():
 
 				#Push general notification
 				print 'General notification'
-				general_message(port,credentials,shortName + '\t' + message,record["id"],"is",smiles)
+				general_message(port,credentials,shortName + '\t' + message,record["id"])
 				
-
 				return json.dumps(True)
 			else:
-				general_message(port,credentials,shortName + '\tno structure found',record["id"],"is","")
+				general_message(port,credentials,shortName + '\tno structure found',record["id"])
 				return json.dumps(False)
 		#Error finding structure
 		except Exception, e:
 			print 'Error on actions.chemical2structure', str(e)
-			general_message(port,credentials, shortName + "\tstructure search error",record["id"],"is","")
+			general_message(port,credentials, shortName + "\tstructure search error",record["id"])
 			return json.dumps(False)
 
 	#SYNONYMS
