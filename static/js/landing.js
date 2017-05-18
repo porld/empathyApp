@@ -1390,7 +1390,7 @@ landingApp.directive('smilesViewer', function ($parse, $http) {
 				//Tidy smiles
 				if( smiles[0] == '?') {
 					smiles = smiles.substr(1,smiles.length);
-					//console.log('SMILES chop:', smiles);
+					console.log('SMILES chop:', smiles);
 					}
 
 				//Pick up element and clean out
@@ -1431,6 +1431,9 @@ landingApp.directive('smilesViewer', function ($parse, $http) {
 							//console.log(pdb);
 							loadPDB(pdb,scope.rotate);
 							});
+					}
+				else {
+					console.log('No smiles');
 					}
 
 				},true);//End watch
