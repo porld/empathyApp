@@ -236,6 +236,10 @@
 						</ul>
 						<!-- Right bar -->
 						<ul class="right">
+							<!-- Latest message -->
+							<li>
+								<a href="#" ng-click="message_selection(latest.id)">{{latest.message}}</a>
+							</li>
 							<!-- General messages -->
 							<li class="has-dropdown" ng-mouseover="unseen=false" >
 								<a href="#" ng-if="unseen" style="color: slateblue"><i class="fi-mail"></i></a>
