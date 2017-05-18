@@ -8,6 +8,9 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	$scope.socket_static_url = 'www.metabolicjamboree.co.uk:8082';
 	$scope.external_static_url = 'www.metabolicjamboree.co.uk:8081';
 
+	#For server to push messages to client
+	$scope.general_messages = [];
+
 	//Base64 encoding
 	function Base64(username,password) {
 		var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
@@ -404,10 +407,12 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.recon = reconstruction.name;
 		$scope.port = reconstruction.port;
 		$scope.fsid = reconstruction.fsid;
+		$scope.general_messages = [];
 
 		//Attach general message socket
 		socket.on($scope.port + '_' + $scope.credentials, function(message) {
 			console.log('General message', message);
+			$scope.general_messages.push(message);
 			});
 
 		$scope.recon_spinner = false;

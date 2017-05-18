@@ -238,12 +238,15 @@
 							<li ng-if="socket_status!='connected'"><a href="#" data-tooltip aria-haspopup="true" class="has-tip" title="{{socket_status}}" style="font-family:Montserrat; color: red;"><i class="fi-unlink"></i></a></li>
 							<li><a href="#" style="font-style: italic">{{recon}}</a></li>
 							<li class="has-dropdown">
+								<a href="#" style="font-family:Montserrat; font-weight: bold;">{{general_messages[general_messages.length-1]}}</a>
+								<ul ng-repeat="msg in general_messages" class="dropdown">
+									<li><a href="#" ng-click="selection=msg.id">{{msg.message}}</a></li>
+								</ul>					
+							</li>
+							<li class="has-dropdown">
 								<a href="#" style="font-family:Montserrat; font-weight: bold;">jamboree</a>
 								<ul ng-mouseover="invitation='';" class="dropdown">
 									<li><a href="#" data-reveal-id="newReconModal">Reconstructions</a></li>
-									<!--li ng-if="recon!=''"><a href="#" ng-click="getThreadList()" data-reveal-id="messageboardModal">Messages</a></li>
-									<li ng-if="recon!=''"><a href="#" data-reveal-id="importReconModal">Import data</a></li>
-									<li ng-if="recon!=''"><a href="#" data-reveal-id="importReconModal">Export data</a></li-->
 									<li><a href="#">Help</a></li>
 									<li><a href="#" ng-click="signOut()">Sign out</a></li>
 								</ul>					
