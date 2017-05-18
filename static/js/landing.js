@@ -1352,6 +1352,13 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 
 	//-------------------------------------------------
 
+	//-------------------------------------------------
+	//Message selection
+	$scope.message_selection = function(id) {
+		$scope.selection = id;
+		};
+	//-------------------------------------------------
+
 	$scope.$watch('selection', function(newValue, oldValue) {
 		console.log('SOCKET NOW',socket);
 		});
