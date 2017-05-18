@@ -1386,6 +1386,7 @@ landingApp.directive('smilesViewer', function ($parse, $http) {
 			scope.$watch('smiles', function(record) {
 				//Look for SMILES in record
 				console.log('DIRECTIVE smiles:', scope.smiles);
+				smiles = scope.smiles;
 
 				//Tidy smiles
 				if( smiles[0] == '?') {
