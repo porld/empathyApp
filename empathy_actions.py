@@ -92,7 +92,7 @@ def smallMoleculeSynonyms(keyword):
 		url = 'https://cactus.nci.nih.gov/chemical/structure/' + keyword + '/names'
 		content = requests.get(url)
 		if('Page not found (404)' in content.text):
-			return []
+			return False, 'synonym search error'
 		content = content.text
 		lines = content.split('\n')
 		possibles = []
