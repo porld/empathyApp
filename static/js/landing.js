@@ -677,6 +677,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				$scope.smiles = $scope.record.is[i][1];
 				}
 			};
+		console.log('Fetched SMILES', $scope.smiles);
 		}
 	
 	//Fetch the node by REST
@@ -799,7 +800,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 						$scope.initialiseList();
 						};
 						
-					//Update smiles if record.is and record.type is 'simple chemical'
+					//Update smiles if record.type is 'simple chemical' and key is 'is'
 					if($scope.record.type == 'simple chemical') {
 						if(key == 'is') {
 							fetchSmiles();
