@@ -414,7 +414,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			message = angular.fromJson(message);
 			console.log('General message', message);
 			message.read = false;
-			$scope.unread = true;
+			$scope.unseen = true;
 			$scope.general_messages.push(message);
 			console.log('General messages', $scope.general_messages);
 			});
