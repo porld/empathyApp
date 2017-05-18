@@ -1202,25 +1202,20 @@ def actionMolecule():
 					oldList.append( json.dumps(pair) )
 				oldList.append( smiles )
 				newList = list(set(oldList))
-				print 'New list:', newList
 
 				#Push to database
-				print 'Push list to database'
 				cypher = 'MATCH (n) WHERE n.id="' + record["id"] + '" SET n.is={value} RETURN n'
 				parameters = {"value":newList}
 				response = send_cypher(cypher,parameters,port)
 
 				#Broadcast record update
-				print 'Broadcast update'
 				send_message(record_handle, {'key':'is','value':newList, 'id': record['id']},  port)
 
 				#Push general notification
-				print 'General notification'
 				general_message(port,credentials,shortName + '\t' + message,record["id"])
-				
 				return json.dumps(True)
 			else:
-				general_message(port,credentials,shortName + '\tno structure found',record["id"])
+				general_message(port,credentials,shortName + '\t' + message,record["id"])
 				return json.dumps(False)
 		#Error finding structure
 		except Exception, e:
@@ -1230,25 +1225,43 @@ def actionMolecule():
 
 	#SYNONYMS
 	elif action == "smallMoleculeSynonyms":
-		#First run action
+		#Try to find synonyms
 		try:
-			name = record['name']
-			result = actions.smallMoleculeSynonyms(name)
-			#print 'ACTION:', result
-		except:
+			#Find name
+			name = record['name']										#Take primary name
+			shortName = name[0:19] + '...'								#Shorten name
+
+			#RUN ACTION
+			synonyms, message = actions.smallMoleculeSynonyms(name)
+
+			#If we got something then post result (fetch current then add updates)
+			if synonyms:
+
+				#Update 'synonyms' field
+				oldList = record['synonyms']
+				for syn in result:
+					oldList.append( syn )
+				newList = list(set(oldList))	#Flatten
+
+				#Push to database
+				cypher = 'MATCH (n) WHERE n.id="' + record["id"] + '" SET n.synonyms={value} RETURN n'
+				parameters = {"value":newList}
+				response = send_cypher(cypher,parameters,port)
+
+				#Broadcast record update
+				send_message(record_handle, {'key':'synonyms','value':newList, 'id': record['id']},  port)
+
+				#Push general notification
+				general_message(port,credentials,shortName + '\t' + message,record["id"])
+				return json.dumps(True)
+			else:
+				general_message(port,credentials,shortName + '\t' + message,record["id"])
+				return json.dumps(False)
+		#Error finding synonyms
+		except Exception, e:
+			print 'Error on actions.smallMoleculeSynonyms', str(e)
+			general_message(port,credentials, shortName + "\tsynonym search error",record["id"])
 			return json.dumps(False)
-		
-		#Then post result (fetch current then add updates)
-		oldList = record['synonyms']
-		#print "oldList:", oldList
-		for row in result:
-			oldList.append(row)
-		#print "newList 1:", oldList
-		newList = list(set(oldList))
-		#print "newList 2:", newList
-		#Push out new list and push notification
-		actionPush(port,record_handle,record,"synonyms",newList,username,password,"New synonyms added")			
-		return json.dumps(True)
 
 	#For actions we don't recognise
 	else:

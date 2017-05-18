@@ -88,16 +88,19 @@ def cactvs_keyword2inchi(keyword):
 #-----------------------------------------------------------------------------------------
 #CHEMICAL SYNONYMS
 def smallMoleculeSynonyms(keyword):
-	url = 'https://cactus.nci.nih.gov/chemical/structure/' + keyword + '/names'
-	content = requests.get(url)
-	if('Page not found (404)' in content.text):
-		return []
-	content = content.text
-	lines = content.split('\n')
-	possibles = []
-	for line in lines[1:(len(lines)-1)]:
-		possibles.append('?'+line)
-	return possibles[0:9]
+	try:
+		url = 'https://cactus.nci.nih.gov/chemical/structure/' + keyword + '/names'
+		content = requests.get(url)
+		if('Page not found (404)' in content.text):
+			return []
+		content = content.text
+		lines = content.split('\n')
+		possibles = []
+		for line in lines[1:(len(lines)-1)]:
+			possibles.append('?'+line)
+		return possibles[0:9], 'got synonyms from CACTUS'
+	except:
+		return False, 'synonym search error'
 #-----------------------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------------------------
@@ -147,10 +150,8 @@ def pubchem2smiles(pubchem):
 		return smiles
 	except:
 		return False
-#-----------------------------------------------------------------------------------------
 
-#-----------------------------------------------------------------------------------------
-#Jamboree overseers
+#Coordinator
 def chemical2structure(keyword,isList):
 	print 'ACTION chemical2structure', keyword, isList, type(isList)
 	message = 'Search for structure: none found'
