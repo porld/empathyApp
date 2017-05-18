@@ -1385,64 +1385,52 @@ landingApp.directive('smilesViewer', function ($parse, $http) {
 		link: function (scope, element, attrs) {
 			scope.$watch('smiles', function(record) {
 				//Look for SMILES in record
-				if(smiles) {
-					console.log('smiles:', scope.smiles);
-					/*
-					smiles = '';
-					for (i = 0; i < scope.record.is.length; i++) {
-						if( scope.record.is[i][0] == 'smiles' ) {
-							smiles = scope.record.is[i][1];
-							console.log('smilesViewer found:', smiles);
-							}
+				console.log('DIRECTIVE smiles:', scope.smiles);
+
+				//Tidy smiles
+				if( smiles[0] == '?') {
+					smiles = smiles.substr(1,smiles.length);
+					//console.log('SMILES chop:', smiles);
+					}
+
+				//Pick up element and clean out
+				var clear_id = '#' + scope.ngid
+				clear_element = angular.element(document.querySelector(clear_id));
+				clear_element.empty();
+	
+				if(smiles.length > 0 ) {
+					console.log('smiles viewer:', smiles, scope.dim, scope.rotate);
+					//Load PDB into Protein Viewer
+					function loadPDB(pdb,rotate) {
+						console.log('loadPDB');
+						var structure = pv.io.pdb(pdb);
+						var ligand = structure.select({rnames : ['UNL']});
+						//Attach protein viewer to element
+						var viewer = pv.Viewer(document.getElementById(scope.ngid), { quality : 'high', width: 'auto', height : 'auto', antialias : true, outline : false, });
+						viewer.on('viewerReady', function() {
+							viewer.clear();
+							viewer.ballsAndSticks('ligand', ligand);
+							viewer.centerOn(ligand);
+							viewer.autoZoom();
+							//viewer.fitParent();
+							viewer.spin(rotate);
+							});
 						};
-					*/
 
-					//console.log('PreSMILES:', smiles);
-					//console.log('End SMILES:', smiles.substr(smiles.length-1,1) );
-					if( smiles[0] == '?') {
-						smiles = smiles.substr(1,smiles.length);
-						//console.log('SMILES chop:', smiles);
-						}
-
-					//Pick up element and clean out
-					var clear_id = '#' + scope.ngid
-					clear_element = angular.element(document.querySelector(clear_id));
-					clear_element.empty();
-		
-					if(smiles.length > 0 ) {
-						console.log('smiles viewer:', smiles, scope.dim, scope.rotate);
-						//Load PDB into Protein Viewer
-						function loadPDB(pdb,rotate) {
-							console.log('loadPDB');
-							var structure = pv.io.pdb(pdb);
-							var ligand = structure.select({rnames : ['UNL']});
-							//Attach protein viewer to element
-							var viewer = pv.Viewer(document.getElementById(scope.ngid), { quality : 'high', width: 'auto', height : 'auto', antialias : true, outline : false, });
-							viewer.on('viewerReady', function() {
-								viewer.clear();
-								viewer.ballsAndSticks('ligand', ligand);
-								viewer.centerOn(ligand);
-								viewer.autoZoom();
-								//viewer.fitParent();
-								viewer.spin(rotate);
-								});
-							};
-
-						//Send for structure
-						url = 'https://' + scope.external + '/chemistry/smiles_post/' + scope.dim;
-						$http.post(url, angular.toJson({"smiles":smiles}) )
-							.success(function(data) {
-								console.log('Triggered: smiles2PDB');
-								})
-							.error(function (data, status) {
-								console.log('Error',status,data);
-								})
-							.then(function(data) {
-								pdb = data.data;
-								//console.log(pdb);
-								loadPDB(pdb,scope.rotate);
-								});
-						}
+					//Send for structure
+					url = 'https://' + scope.external + '/chemistry/smiles_post/' + scope.dim;
+					$http.post(url, angular.toJson({"smiles":smiles}) )
+						.success(function(data) {
+							console.log('Triggered: smiles2PDB');
+							})
+						.error(function (data, status) {
+							console.log('Error',status,data);
+							})
+						.then(function(data) {
+							pdb = data.data;
+							//console.log(pdb);
+							loadPDB(pdb,scope.rotate);
+							});
 					}
 
 				},true);//End watch
