@@ -242,7 +242,7 @@
 								<a href="#" ng-if="!unread" style="color: white"><i class="fi-mail"></i></a>
 								<ul ng-repeat="msg in general_messages" class="dropdown">
 									<li ng-if="msg.unread"><a href="#" style="font-style: bold" ng-click="selection=msg.id;unread=False">{{msg.message}}</a></li>
-									<li ng-if="!msg.unread"><a href="#" ng-click="selection=msg.id;unread=False">{{msg.message}}</a></li>
+									<li ng-if="!msg.unread"><a href="#" ng-click="selection=msg.id;unread=false">{{msg.message}}</a></li>
 								</ul>					
 							</li>
 							<!-- Connection status -->

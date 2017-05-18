@@ -412,8 +412,8 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		//Attach general message socket
 		socket.on($scope.port + '_' + $scope.credentials, function(message) {
 			console.log('General message', message);
-			message['read'] = False;
-			$scope.unread = True;
+			message['read'] = false;
+			$scope.unread = true;
 			$scope.general_messages.push(message);
 			});
 
