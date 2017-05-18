@@ -1171,44 +1171,6 @@
 									</div>
 								</div>
 
-								<!--References (isDescribedBy) -->
-								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
-									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="describedBy_view" ng-click="describedBy_view=!describedBy_view">
-										<div class="row">
-											References
-										</div>
-									</div>
-									<div class="large-12 medium-12 small-12 columns">							
-										<div class="row animate-show-hide" ng-show="describedBy_view">
-											<!-- isDescribedBy list -->
-											<span ng-repeat="desc in record.isDescribedBy | orderBy">
-												<small>
-													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="desc[1].length>25" ng-click="curateJsonText('isDescribedBy', desc[0],desc[1])" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{desc[0]}}:{{desc[1]}}">{{desc[0]}}:{{desc[1] | limitTo:25}}...</span>
-														<span ng-if="desc[1].length<26" ng-click="curateJsonText('isDescribedBy', desc[0],desc[1])" style="text-transform:none">{{desc[0]}}:{{desc[1]}}</span>
-														<span ng-click="jsonListPop('isDescribedBy',desc)">
-															<i style="color: #666666" class="fi-x-circle"></i>
-														</span>
-													</span>
-												</small>
-											</span>
-											<!-- Add isDescribedBy -->
-											<span ng_model="add_describedBy" ng-init="add_describedBy=false" ng-click="add_describedBy=!add_describedBy">
-												<small><i class="fi-plus"></i></small>
-											</span>
-										</div>
-										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_describedBy" ng-model="new_describedBy">
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add source" ng-model="new_describedBy['source']">
-											</div>
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add identifier" ng-blur="add_describedBy=false;jsonListPush('isDescribedBy',new_describedBy);new_describedBy={};" ng-model="new_describedBy['id']">
-											</div>
-										</div>
-									</div>
-								</div>
-
 							</div>
 
 						</div>
