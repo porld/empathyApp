@@ -8,7 +8,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	$scope.socket_static_url = 'www.metabolicjamboree.co.uk:8082';
 	$scope.external_static_url = 'www.metabolicjamboree.co.uk:8081';
 
-	#For server to push messages to client
+	//For server to push messages to client
 	$scope.general_messages = [];
 
 	//Base64 encoding
