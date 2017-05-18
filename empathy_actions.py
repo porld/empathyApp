@@ -216,4 +216,4 @@ def chemical2structure(keyword,isList):
 
 #Tests
 #print chemical2structure("glucose", [ [u'chebi', u'CHEBI:37447']])
-#print syncProperties("C(C(C(=O)[O-])N)C(=O)[O-]")
+#print syncProperties("Nc1nc(O)c2N=C(CNc2n1)CO[P](O)(=O)O[P](O)(O)=O")

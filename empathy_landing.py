@@ -1283,12 +1283,13 @@ def actionMolecule():
 
 			#Trim smiles if not curated
 			if '?' in smiles:
+				print 'Trim', smiles
 				smiles = smiles[1:len(smiles)-1]
 
 			print 'PROPERTIES:', smiles
 
 			#RUN ACTION
-			formula, charge, message = actions.syncProperties(name)
+			formula, charge, message = actions.syncProperties(smiles)
 
 			#If we got something then post result (fetch current then add updates)
 			if formula:
