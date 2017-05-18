@@ -1202,6 +1202,7 @@ def actionMolecule():
 				newList = list(set(newList))
 				print 'New list:', newList
 
+				'''
 				#Push to database
 				print 'Push list to database'
 				cypher = 'MATCH (n) WHERE n.id="' + record["id"] + '" SET n.is={value} RETURN n'
@@ -1211,19 +1212,21 @@ def actionMolecule():
 				#Broadcast record update
 				print 'Broadcast update'
 				send_message(record_handle, {'key':'is','value':newList, 'id': record['id']},  port)
+				'''
 
 				#Push general notification
 				print 'General notification'
-				general_message(port,credentials,shortName + ': ' + message,record["id"],"is",smiles)
+				general_message(port,credentials,shortName + '\t' + message,record["id"],"is",smiles)
+				
 
 				return json.dumps(True)
 			else:
-				general_message(port,credentials,shortName + ': no structure found',record["id"],"is","")
+				general_message(port,credentials,shortName + '\tno structure found',record["id"],"is","")
 				return json.dumps(False)
 		#Error finding structure
 		except Exception, e:
 			print 'Error on actions.chemical2structure', str(e)
-			general_message(port,credentials, shortName + ": structure search error",record["id"],"is","")
+			general_message(port,credentials, shortName + "\tstructure search error",record["id"],"is","")
 			return json.dumps(False)
 
 	#SYNONYMS
