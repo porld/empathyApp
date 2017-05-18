@@ -644,6 +644,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//Change label
 	$scope.change_label = function(label) {
 		console.log('Change label');
+		$scope.smiles = ''; //Wipe out SMILES if it exists
 		colours = ['gray','gray','gray'];
 		if(label == 'molecule') {
 			$scope.colours = ['gray','gray','white'];
@@ -667,6 +668,16 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		console.log('LABEL AND LISTLABEL:', $scope.label,$scope.listLabel);
 		return colours;
 		};
+
+	//Pull SMILES from record
+	function fetchSmiles() {
+		$scope.smiles = '';
+		for (i = 0; i < $scope.record.is.length; i++) {
+			if($scope.record.is[i][0] == 'smiles') {
+				$scope.smiles = $scope.record.is[i][1];
+				}
+			};
+		}
 	
 	//Fetch the node by REST
 	function fetchNode(selection) {
@@ -721,14 +732,11 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 					//$scope.record.notifications = unpackJson($scope.record.notifications);					
 					//Trigger ancillary functions
 					if($scope.label == 'molecule') { //Compartments and molecules have parent compartments
-						//Pull smiles from record
-						$scope.smiles = '';
-						for (i = 0; i < $scope.record.is.length; i++) {
-							if($scope.record.is[i][0] == 'smiles') {
-								$scope.smiles = $scope.record.is[i][1];
-								}
-							};
-						console.log('SMILES', $scope.smiles);
+						//If simple chemical then pull smiles from record
+						if($scope.record.type == 'simple chemical') {
+							fetchSmiles();
+							console.log('SMILES', $scope.smiles);
+							}
 						//Compartment list
 						fetchCompartmentList();
 						}
@@ -790,6 +798,13 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 						console.log('Update grid');
 						$scope.initialiseList();
 						};
+						
+					//Update smiles if record.is and record.type is 'simple chemical'
+					if($scope.record.type == 'simple chemical') {
+						if(key == 'is') {
+							fetchSmiles();
+							}
+						}
 					
 					}
 				$scope.spinner = false;
