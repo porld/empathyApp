@@ -101,7 +101,7 @@ def syncProperties(smiles):
 		mol = Chem.MolFromSmiles(smiles)
 		formula = CalcMolFormula(mol)
 		charge = GetFormalCharge(mol)
-		formula = formula.replace(charge,'')
+		formula = formula.replace(str(charge),'')
 		return formula, charge, 'calculated properties from structure'
 	except:
 		return False, False, 'property calculation error'
