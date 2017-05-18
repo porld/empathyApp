@@ -412,11 +412,11 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		//Attach general message socket
 		socket.on($scope.port + '_' + $scope.credentials, function(message) {
 			message = angular.fromJson(message);
-			console.log('General message', message);
+			//console.log('General message', message);
 			message.read = false;
 			$scope.unseen = true;
 			$scope.general_messages.push(message);
-			console.log('General messages', $scope.general_messages);
+			//console.log('General messages', $scope.general_messages);
 			});
 
 		$scope.recon_spinner = false;
