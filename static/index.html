@@ -520,12 +520,19 @@
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="property_view">
+											<!-- Formula -->
+											<div class="large-3 medium-3 small-3 columns">
+												<label for="molecule-formula" class="right inline">Formula</label>
+											</div>
+											<div class="large-9 medium-9 small-9 columns">
+												<input type="text" ng-model="record.formula" ng-blur="updateText('formula',record.formula); ">
+											</div>
 											<!-- Charge -->
 											<div class="large-3 medium-3 small-3 columns">
 												<label for="molecule-charge" class="right inline">Charge</label>
 											</div>
 											<div class="large-9 medium-9 small-9 columns">
-												<input id="molecule-charge" style="padding: 0px; margin: 0px; border: none; background-color: #f3f3f3" type="text" ng-model="molecule_charge" ng-init="valueFromJsonList('property','charge')" ng-blur="updateJsonText('property','charge',molecule_charge);">
+												<input type="text" ng-model="record.charge" ng-blur="updateText('charge',record.charge); ">
 											</div>
 										</div>
 									</div>
