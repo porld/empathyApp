@@ -721,6 +721,11 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 					//$scope.record.notifications = unpackJson($scope.record.notifications);					
 					//Trigger ancillary functions
 					if($scope.label == 'molecule') { //Compartments and molecules have parent compartments
+						for (i = 0; i < $scope.record.is.length; i++) {
+							if($scope.record.is[i][0] == 'smiles') {
+								$scope.smiles = $scope.record.is[i][1];
+								}
+							};
 						fetchCompartmentList();
 						}
 					//smilesFromRecord(); //Disabled as smilesViewer takes care of this now
@@ -1368,16 +1373,17 @@ landingApp.directive('smilesViewer', function ($parse, $http) {
     var molObject = {
 		restrict: 'E',
 		replace: true,
-		scope: {record: '=',
+		scope: {smiles: '=',
 				dim: '=',
 				rotate: '=',
 				ngid: '=',
 				external: '='},
 		link: function (scope, element, attrs) {
-			scope.$watch('record.is', function(record) {
+			scope.$watch('smiles', function(record) {
 				//Look for SMILES in record
 				if(record.is) {
-					console.log('record.is:', scope.record.is);
+					console.log('smiles:', scope.smiles);
+					/*
 					smiles = '';
 					for (i = 0; i < scope.record.is.length; i++) {
 						if( scope.record.is[i][0] == 'smiles' ) {
@@ -1385,12 +1391,13 @@ landingApp.directive('smilesViewer', function ($parse, $http) {
 							console.log('smilesViewer found:', smiles);
 							}
 						};
+					*/
 
-					console.log('PreSMILES:', smiles);
-					console.log('End SMILES:', smiles.substr(smiles.length-1,1) );
+					//console.log('PreSMILES:', smiles);
+					//console.log('End SMILES:', smiles.substr(smiles.length-1,1) );
 					if( smiles[0] == '?') {
 						smiles = smiles.substr(1,smiles.length);
-						console.log('SMILES chop:', smiles);
+						//console.log('SMILES chop:', smiles);
 						}
 
 					//Pick up element and clean out
