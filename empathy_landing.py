@@ -1218,12 +1218,12 @@ def actionMolecule():
 
 				return json.dumps(True)
 			else:
-				general_message(port,credentials,shortName + ': no structure found',,record["id"],"is","")
+				general_message(port,credentials,shortName + ': no structure found',record["id"],"is","")
 				return json.dumps(False)
 		#Error finding structure
 		except Exception, e:
 			print 'Error on actions.chemical2structure', str(e)
-			general_message(port,credentials, shortName + ": structure search error,record["id"],"is","")
+			general_message(port,credentials, shortName + ": structure search error",record["id"],"is","")
 			return json.dumps(False)
 
 	#SYNONYMS
