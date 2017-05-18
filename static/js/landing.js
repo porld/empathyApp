@@ -721,11 +721,15 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 					//$scope.record.notifications = unpackJson($scope.record.notifications);					
 					//Trigger ancillary functions
 					if($scope.label == 'molecule') { //Compartments and molecules have parent compartments
+						//Pull smiles from record
+						$scope.smiles = '';
 						for (i = 0; i < $scope.record.is.length; i++) {
 							if($scope.record.is[i][0] == 'smiles') {
 								$scope.smiles = $scope.record.is[i][1];
 								}
 							};
+						console.log('SMILES', $scope.smiles);
+						//Compartment list
 						fetchCompartmentList();
 						}
 					//smilesFromRecord(); //Disabled as smilesViewer takes care of this now
