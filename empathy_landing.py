@@ -1239,7 +1239,7 @@ def actionMolecule():
 
 				#Update 'synonyms' field
 				oldList = record['synonyms']
-				for syn in result:
+				for syn in synonyms:
 					oldList.append( syn )
 				newList = list(set(oldList))	#Flatten
 
