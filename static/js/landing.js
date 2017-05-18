@@ -87,10 +87,10 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//-------------------------------------------------
 	//Actions
 	$scope.moleculeActions = [	{"name":"Suggest structure","description":"Use name to structure services to suggest a molecular structure","run":"chemical2structure"},
-								{"name":"Find synonyms","description":"Search remote databases for alternative names for this molecule","run":"smallMoleculeSynonyms"} ];
+								{"name":"Find synonyms","description":"Search remote databases for alternative names for this molecule","run":"smallMoleculeSynonyms"},
+								{"name":"Sync properties","description":"Generate properties from structure (overrides current values)","run":"syncProperties"} ];
 	$scope.reactionActions = [	{"name":"Balance reaction","description":"Try to tweak the reaction into balance","run":"reactionBalancer"},
 								{"name":"Find literature","description":"Find papers demonstrating this molecule in this organism","run":"smallMoleculeCooccurrence"}	];
-
 	$scope.compartmentActions = [];
 
 	//-------------------------------------------------

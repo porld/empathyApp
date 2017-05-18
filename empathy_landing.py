@@ -1263,6 +1263,61 @@ def actionMolecule():
 			general_message(port,credentials, shortName + "\tsynonym search error",record["id"])
 			return json.dumps(False)
 
+	#SYNONYMS
+	elif action == "syncProperties":
+		try:
+			#Find name
+			name = record['name']										#Take primary name
+			shortName = name[0:19] + '...'								#Shorten name
+
+			smiles = False
+			for pair in record['is']:
+				if 'smiles' in pair[0]:
+					smiles = pair[1]
+
+			#Bail out if no smiles
+			if not smiles:
+				message = 'no structure available'
+				general_message(port,credentials,shortName + '\t' + message,record["id"])
+				return json.dumps(False)
+
+			#Trim smiles if not curated
+			if '?' in smiles:
+				smiles = smiles[1:len(smiles)-1]
+
+			#RUN ACTION
+			formula, charge, message = actions.smallMoleculeSynonyms(name)
+
+			#If we got something then post result (fetch current then add updates)
+			if formula:
+				#Push formula to database
+				cypher = 'MATCH (n) WHERE n.id="' + record["id"] + '" SET n.formula={value} RETURN n'
+				parameters = {"value":formula}
+				response = send_cypher(cypher,parameters,port)
+
+				#Broadcast record update
+				send_message(record_handle, {'key':'synonyms','value':newList, 'id': record['id']},  port)
+
+				#Push charge to database
+				cypher = 'MATCH (n) WHERE n.id="' + record["id"] + '" SET n.charge={value} RETURN n'
+				parameters = {"value":charge}
+				response = send_cypher(cypher,parameters,port)
+
+				#Broadcast record update
+				send_message(record_handle, {'key':'synonyms','value':newList, 'id': record['id']},  port)
+
+				#Push general notification
+				general_message(port,credentials,shortName + '\t' + message,record["id"])
+				return json.dumps(True)
+			else:
+				general_message(port,credentials,shortName + '\t' + message,record["id"])
+				return json.dumps(False)
+		#Error finding synonyms
+		except Exception, e:
+			print 'Error on actions.smallMoleculeSynonyms', str(e)
+			general_message(port,credentials, shortName + "\tsynonym search error",record["id"])
+			return json.dumps(False)
+
 	#For actions we don't recognise
 	else:
 		print 'Did not recognise that action'

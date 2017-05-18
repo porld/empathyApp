@@ -1,19 +1,10 @@
 from rdkit import Chem
+from rdkit.Chem.rdMolDescriptors import CalcMolFormula
+from rdkit.Chem.rdmolops import GetFormalCharge
 import requests, json, time, xmltodict, libchebipy
 
 #-----------------------------------------------------------------------------------------
 #Chemical converters
-def pickInchi(inchis):
-	if 'CHEBI' in inchis:
-		return inchis['CHEBI'], 'CHEBI'
-	elif 'KEGG' in inchis:
-		return inchis['KEGG'], 'KEGG'
-	elif 'PUBCHEM' in inchis:
-		return inchis['PUBCHEM'], 'PUBCHEM'
-	elif 'MetaCyc' in inchis:
-		return inchis['MetaCyc'], 'MetaCyc'
-	else:
-		return '', ''
 
 #Mol string to RDKit mol
 def molString2mol(molString):
@@ -102,6 +93,19 @@ def smallMoleculeSynonyms(keyword):
 	except:
 		return False, 'synonym search error'
 #-----------------------------------------------------------------------------------------
+
+#-----------------------------------------------------------------------------------------
+#CHEMICAL PROPERTIES
+def syncProperties(smiles):
+	try:
+		mol = Chem.MolFromSmiles(smiles)
+		formula = CalcMolFormula(mol)
+		charge = GetFormalCharge(mol)
+		return formula, charge, 'calculated properties from structure'
+	except:
+		return False, False, 'property calculation error'
+#-----------------------------------------------------------------------------------------
+
 
 #-----------------------------------------------------------------------------------------
 #CHEMICAL ID TO IDENTITY
@@ -210,5 +214,6 @@ def chemical2structure(keyword,isList):
 		return False, 'no structure found'
 #-----------------------------------------------------------------------------------------
 
-#Test
+#Tests
 #print chemical2structure("glucose", [ [u'chebi', u'CHEBI:37447']])
+#print syncProperties("C(C(C(=O)[O-])N)C(=O)[O-]")
