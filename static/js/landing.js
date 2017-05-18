@@ -87,18 +87,11 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//-------------------------------------------------
 	//Actions
 	$scope.moleculeActions = [	{"name":"Suggest structure","description":"Use name to structure services to suggest a molecular structure","run":"chemical2structure"},
-								{"name":"Find synonyms","description":"Search remote databases for alternative names for this molecule","run":"smallMoleculeSynonyms"},
-								{"name":"Cross-reference","description":"Find this molecule in other biological databases","run":"smallMoleculeCrossReference"},
-								{"name":"Find literature","description":"Find papers demonstrating this molecule in this organism","run":"smallMoleculeCooccurrence"},
-								{"name":"Convert to SMILES","description":"Make InChI into SMILES","run":"smallMoleculeInChIToSmiles"}	];
-
-	$scope.reactionActions = [	{"name":"Auto-balance","description":"Try to tweak the reaction into balance","run":"reactionBalancer"},
-								{"name":"Find synonyms","description":"Search remote databases for alternatives names for this reaction","run":"reactionSynonyms"},
-								{"name":"Cross-reference","description":"Find this reaction in other biological databases","run":"reactionCrossReference"},
+								{"name":"Find synonyms","description":"Search remote databases for alternative names for this molecule","run":"smallMoleculeSynonyms"} ];
+	$scope.reactionActions = [	{"name":"Balance reaction","description":"Try to tweak the reaction into balance","run":"reactionBalancer"},
 								{"name":"Find literature","description":"Find papers demonstrating this molecule in this organism","run":"smallMoleculeCooccurrence"}	];
 
-	$scope.compartmentActions = [	{"name":"Find synonyms","description":"Search remote databases for alternative names for this compartment","run":"compartmentSynonyms"},
-									{"name":"Cross-reference","description":"Find this molecule in other biological databases","run":"smallMoleculeCrossReference"}	];
+	$scope.compartmentActions = [];
 
 	//-------------------------------------------------
 
