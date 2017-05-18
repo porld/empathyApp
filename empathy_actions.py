@@ -202,11 +202,11 @@ def chemical2structure(keyword,isList):
 	smiles = cactvs_keyword2smiles(keyword)
 	if smiles:
 		print "ACTION Search CACTUS by name", keyword
-		message = 'Retrieved structure by "' + keyword + '" from CACTUS'
+		message = 'got structure from CACTUS'
 		return json.dumps(["smiles",'?'+smiles]), message
 	else:
 		print "ACTION Could not find", keyword
-		return False, 'None found'
+		return False, 'no structure found'
 #-----------------------------------------------------------------------------------------
 
 #Test

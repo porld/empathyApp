@@ -1197,12 +1197,13 @@ def actionMolecule():
 				print 'actions.chemical2structure', smiles, message
 
 				#Update 'is' field
-				newList = record['is']
-				newList.append( smiles )
-				newList = list(set(newList))
+				oldList = []
+				for pair in record['is']:
+					oldList.append( json.dumps(pair) )
+				oldList.append( json.dumps(smiles) )
+				newList = list(set(oldList))
 				print 'New list:', newList
 
-				'''
 				#Push to database
 				print 'Push list to database'
 				cypher = 'MATCH (n) WHERE n.id="' + record["id"] + '" SET n.is={value} RETURN n'
@@ -1212,7 +1213,6 @@ def actionMolecule():
 				#Broadcast record update
 				print 'Broadcast update'
 				send_message(record_handle, {'key':'is','value':newList, 'id': record['id']},  port)
-				'''
 
 				#Push general notification
 				print 'General notification'
