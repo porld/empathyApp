@@ -1263,7 +1263,7 @@ def actionMolecule():
 			general_message(port,credentials, shortName + "\tsynonym search error",record["id"])
 			return json.dumps(False)
 
-	#SYNONYMS
+	#SYNC PROPERTIES
 	elif action == "syncProperties":
 		try:
 			#Find name
@@ -1284,6 +1284,8 @@ def actionMolecule():
 			#Trim smiles if not curated
 			if '?' in smiles:
 				smiles = smiles[1:len(smiles)-1]
+
+			print 'PROPERTIES:', smiles
 
 			#RUN ACTION
 			formula, charge, message = actions.syncProperties(name)
