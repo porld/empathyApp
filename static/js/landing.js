@@ -415,6 +415,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			message['read'] = false;
 			$scope.unread = true;
 			$scope.general_messages.push(message);
+			console.log('General messages', $scope.general_messages);
 			});
 
 		$scope.recon_spinner = false;
