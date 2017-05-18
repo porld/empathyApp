@@ -1200,7 +1200,7 @@ def actionMolecule():
 				oldList = []
 				for pair in record['is']:
 					oldList.append( json.dumps(pair) )
-				oldList.append( json.dumps(smiles) )
+				oldList.append( smiles )
 				newList = list(set(oldList))
 				print 'New list:', newList
 
