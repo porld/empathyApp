@@ -1374,7 +1374,7 @@ landingApp.directive('smilesViewer', function ($parse, $http) {
 				ngid: '=',
 				external: '='},
 		link: function (scope, element, attrs) {
-			scope.$watch('record', function(record) {
+			scope.$watch('record.is', function(record) {
 				//Look for SMILES in record
 				if(record.is) {
 					console.log('record.is:', scope.record.is);
