@@ -238,8 +238,8 @@
 						<ul class="right">
 							<!-- General messages -->
 							<li class="has-dropdown">
-								<a href="#" ng-if="unseen" ng-mouseover="unseen=!unseen" style="color: white"><i class="fi-mail"></i></a>
-								<a href="#" ng-if="!unseen" style="color: gray"><i class="fi-mail"></i></a>
+								<a href="#" ng-if="unseen" ng-mouseover="unseen=false" style="color: teal"><i class="fi-mail"></i></a>
+								<a href="#" ng-if="!unseen" style="color: white"><i class="fi-mail"></i></a>
 								<ul class="dropdown">
 									<li ng-repeat="msg in general_messages | orderBy:'-'">
 										<a href="#" style="color: white" ng-click="message_selection(msg.id)">{{msg.message}}</a>
