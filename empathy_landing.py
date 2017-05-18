@@ -1180,6 +1180,8 @@ def actionMolecule():
 	action = json_data['action'] 				#action to take
 	port = json_data['port'] 					#port
 
+	print 'ACTION', action
+
 	#CHEMICAL TO STRUCTURE
 	if action == "chemical2structure":
 		#Try to find structure
@@ -1265,6 +1267,7 @@ def actionMolecule():
 
 	#SYNC PROPERTIES
 	elif action == "syncProperties":
+		print 'syncProperties'
 		try:
 			#Find name
 			name = record['name']										#Take primary name
@@ -1299,7 +1302,7 @@ def actionMolecule():
 				response = send_cypher(cypher,parameters,port)
 
 				#Broadcast record update
-				send_message(record_handle, {'key':'synonyms','value':newList, 'id': record['id']},  port)
+				send_message(record_handle, {'key':'formula','value':formula, 'id': record['id']},  port)
 
 				#Push charge to database
 				cypher = 'MATCH (n) WHERE n.id="' + record["id"] + '" SET n.charge={value} RETURN n'
@@ -1307,7 +1310,7 @@ def actionMolecule():
 				response = send_cypher(cypher,parameters,port)
 
 				#Broadcast record update
-				send_message(record_handle, {'key':'synonyms','value':newList, 'id': record['id']},  port)
+				send_message(record_handle, {'key':'charge','value':charge, 'id': record['id']},  port)
 
 				#Push general notification
 				general_message(port,credentials,shortName + '\t' + message,record["id"])
@@ -1317,8 +1320,8 @@ def actionMolecule():
 				return json.dumps(False)
 		#Error finding synonyms
 		except Exception, e:
-			print 'Error on actions.smallMoleculeSynonyms', str(e)
-			general_message(port,credentials, shortName + "\tsynonym search error",record["id"])
+			print 'Error on actions.syncProperties', str(e)
+			general_message(port,credentials, shortName + "\tproperty sync error",record["id"])
 			return json.dumps(False)
 
 	#For actions we don't recognise
