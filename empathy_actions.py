@@ -161,7 +161,7 @@ def chemical2structure(keyword,isList):
 		#Chase up ChEBI
 		if 'smiles' in known:
 			print "ACTION Already got SMILES", entry[1]
-			message = 'Already had structure'
+			message = 'already had structure'
 			return False, message
 		elif 'InChI' in known:
 			print "ACTION Convert InChI", entry[1]
@@ -170,31 +170,31 @@ def chemical2structure(keyword,isList):
 				inchi = inchi.replace('?','')
 			smiles = inchi2smiles(inchi)
 			if smiles:
-				message = 'Generated structure from existing InChI'
+				message = 'built structure from InChI'
 				return json.dumps(["smiles",smiles]), message
 		elif 'chebi' in known:
 			print "ACTION Search ChEBI", entry[1]
 			smiles = chebi2smiles(entry[1])
 			if smiles:
-				message = 'Retrieved structure from ChEBI'
+				message = 'got structure from ChEBI'
 				return json.dumps(["smiles",smiles]), message
 		elif 'kegg.compound' in known:
 			print "ACTION Search KEGG", entry[1]
 			smiles = kegg2smiles(entry[1])
 			if smiles:
-				message = 'Retrieved structure from KEGG'
+				message = 'got structure from KEGG'
 				return json.dumps(["smiles",smiles]), message
 		elif 'metacyc' in known:
 			print "ACTION Search MetaCyc", entry[1]
 			smiles = metacyc2smiles(entry[1])
 			if smiles:
-				message = 'Retrieved structure from MetaCyc'
+				message = 'got structure from MetaCyc'
 				return ["smiles",smiles], message
 		elif 'pubchem' in known:
 			print "ACTION Search Pubchem", entry[1]
 			smiles = pubchem2smiles(entry[1])
 			if smiles:
-				message = 'Retrieved structure from PubChem'
+				message = 'got structure from PubChem'
 				return json.dumps(["smiles",smiles]), message
 		else:
 			print "ACTION Cannot use", entry

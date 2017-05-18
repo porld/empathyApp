@@ -1180,21 +1180,28 @@ def actionMolecule():
 	action = json_data['action'] 				#action to take
 	port = json_data['port'] 					#port
 
+	#CHEMICAL TO STRUCTURE
 	if action == "chemical2structure":
-		#First run action
+		#Try to find structure
 		try:
 			#Find name
 			name = record['name']										#Take primary name
+			shortName = name[0:19] + '...'								#Shorten name
 			isList = record['is']										#Take 'is' list
-			smiles, message = actions.chemical2structure(name,isList) 	#Find small molecule identifiers
+
+			#RUN ACTION
+			smiles, message = actions.chemical2structure(name,isList) 	#Find chemical structure
 
 			#If we got something then post result (fetch current then add updates)
 			if smiles:
 				print 'actions.chemical2structure', smiles, message
+
+				#Update 'is' field
 				newList = record['is']
 				newList.append( smiles )
 				newList = list(set(newList))
 				print 'New list:', newList
+
 				#Push to database
 				print 'Push list to database'
 				cypher = 'MATCH (n) WHERE n.id="' + record["id"] + '" SET n.is={value} RETURN n'
@@ -1203,21 +1210,23 @@ def actionMolecule():
 
 				#Broadcast record update
 				print 'Broadcast update'
-				send_message(record_handle, {'key':'is','value':smiles, 'id': record['id']},  port)
+				send_message(record_handle, {'key':'is','value':newList, 'id': record['id']},  port)
 
 				#Push general notification
 				print 'General notification'
-				general_message(port,credentials,message,record["id"],"is",smiles)
+				general_message(port,credentials,shortName + ': ' + message,record["id"],"is",smiles)
+
 				return json.dumps(True)
 			else:
-				print 'actions.chemical2structure', 'no structure found', message
-				general_message(port,credentials,message,record["id"],"is","")
+				general_message(port,credentials,shortName + ': no structure found',,record["id"],"is","")
 				return json.dumps(False)
+		#Error finding structure
 		except Exception, e:
 			print 'Error on actions.chemical2structure', str(e)
-			general_message(port,credentials,"Error finding structures for " + name,record["id"],"is","")
+			general_message(port,credentials, shortName + ": structure search error,record["id"],"is","")
 			return json.dumps(False)
 
+	#SYNONYMS
 	elif action == "smallMoleculeSynonyms":
 		#First run action
 		try:
