@@ -1381,7 +1381,7 @@ landingApp.directive('smilesViewer', function ($parse, $http) {
 		link: function (scope, element, attrs) {
 			scope.$watch('smiles', function(record) {
 				//Look for SMILES in record
-				if(record.is) {
+				if(smiles) {
 					console.log('smiles:', scope.smiles);
 					/*
 					smiles = '';
