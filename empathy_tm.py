@@ -41,10 +41,10 @@ def queryCalliope(triples):
 		url = 'http://nactem10.mib.man.ac.uk:5004/triplesAPI'
 		content = requests.post(url,json=query )
 		response = content.json()
-		print 'Calliope server says', response
 		hits = response['hits']['hits']
-		return hits, 'found ' + len(hits) + '  hits'
+		return hits, 'found ' + str(len(hits)) + '  hits'
 	except Exception, e:
+		print 'queryCalliope error', str(e)
 		return str(e), 'query error'
 
 #Reaction to Calliope format (json, list of strings)
@@ -85,9 +85,11 @@ def calliopeCoordinator(rxn,org):
 		print 'Malformed query'
 		return False, 'query failure'
 
-
+'''
 #Test
 rxn = {}
 rxn['listOfReactants'] = [{'name':'glucose'},{'name':'ATP'}]
 rxn['listOfProducts'] = [{'name':'glucose 6-phosphate'},{'name':'ADP'}]
-print calliopeCoordinator(rxn,['yeast','Saccharomyces','S. cerevisiae'])
+response, hitCount = calliopeCoordinator(rxn,['yeast','Saccharomyces','S. cerevisiae'])
+print response
+'''
