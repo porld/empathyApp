@@ -1,4 +1,4 @@
-import requests, json
+import requests, json, re
 
 #Some very common names (like water) confound the cooccurrence metric, so filter them out (BODGE!)
 def naughtyCheck(name):
@@ -67,18 +67,21 @@ def rxn2triples(record,organism):
 
 		#Get reactants
 		for mol in record['listOfReactants']:
-			if naughtyCheck(mol['name']):
-				molNames = [ mol['name'] ]
-				triple = buildTriple('Chemical',molNames)		
+			name = mol['name']
+			name = re.sub(r"^\s+", "", name)
+			name = re.sub(r"\s+$", "", name)
+			if naughtyCheck(name):
+				triple = buildTriple('Chemical', [name])		
 				triples.append(triple)
 
 		#Get products
 		for mol in record['listOfProducts']:
-			if naughtyCheck(mol['name']):
-				molNames = [ mol['name'] ]
-				triple = buildTriple('Chemical',molNames)		
-				triples.append(triple)
-				
+			name = mol['name']
+			name = re.sub(r"^\s+", "", name)
+			name = re.sub(r"\s+$", "", name)
+			if naughtyCheck(name):
+				triple = buildTriple('Chemical', [name])		
+				triples.append(triple)				
 		return triples
 	except Exception, e:
 		print str(e)
@@ -98,6 +101,6 @@ def calliopeCoordinator(rxn,org):
 #Test
 rxn = {}
 rxn['listOfReactants'] = [{'name':'glucose'},{'name':'ATP'}]
-rxn['listOfProducts'] = [{'name':'glucose 6-phosphate'},{'name':'ADP'},{'name':'H+'}]
+rxn['listOfProducts'] = [{'name':'glucose 6-phosphate'},{'name':'ADP'},{'name':'H+ '}]
 response, hitCount = calliopeCoordinator(rxn,['yeast','Saccharomyces','S. cerevisiae'])
 print response
