@@ -1003,6 +1003,7 @@
 									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="isDescribedBy_view" ng-click="isDescribedBy_view=!isDescribedBy_view">
 										<div class="row">
 											References
+											<span ng-show="isDescribedBy_view">&nbsp;{{ref}}/{{record.isDescribedBy.length}}</span>
 										</div>
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
@@ -1010,7 +1011,7 @@
 											<!-- isDescribedBy list -->
 											<div class="small-1 medium-1 large-1 columns" ng-click="refTick('down',record.isDescribedBy.length-1)"><i class="fi-arrow-left"></i></div>
 											<div class="small-10 medium-10 large-10 columns" style="bgcolor: white">
-												<a href="https://www.ncbi.nlm.nih.gov/pubmed/{{record.isDescribedBy[ref].pmid}}">{{record.isDescribedBy[ref].pmid}}</a>
+												<a target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/{{record.isDescribedBy[ref].pmid}}">{{record.isDescribedBy[ref].pmid}}</a>
 												<br>
 												{{record.isDescribedBy[ref].highlight}}
 											</div>
