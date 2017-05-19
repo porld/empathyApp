@@ -6,6 +6,7 @@ from flask_mail import Mail, Message
 import sys, subprocess, uuid, os, json, requests, socket, time, pickle, passwordmeter, copy, datetime
 import empathy_actions as actions
 import empathy_libsbml as libsbml
+import empathy_tm as tm
 
 HOST = 'www.metabolicjamboree.co.uk'
 PORT = 8080
@@ -1322,6 +1323,66 @@ def actionMolecule():
 		except Exception, e:
 			print 'Error on actions.syncProperties', str(e)
 			general_message(port,credentials, shortName + "\tproperty sync error",record["id"])
+			return json.dumps(False)
+
+	#For actions we don't recognise
+	else:
+		print 'Did not recognise that action'
+		return json.dumps(False)		
+
+	return json.dumps(True)
+
+@auth.login_required
+def actionReaction():
+	json_data = request.get_json(force=True)
+	credentials = json_data['credentials']		#user credentials (Base 64)
+	record_handle = json_data['record_handle'] 	#<port>_<record_id>
+	record = json_data['record'] 				#record
+	organism = json_data['organism']
+	action = json_data['action'] 				#action to take
+	port = json_data['port'] 					#port
+
+	print 'ACTION', action
+
+	#REACTION TO LITERATURE
+	if action == "rxn2text":
+		#Try to find structure
+		try:
+			#Find name
+			name = record['name']										#Take primary name
+			shortName = name[0:19] + '...'								#Shorten name
+
+			#RUN ACTION
+			calliope = tm.calliopeCoordinator(record,organism) 	#Find chemical structure
+
+			#If we got something then post result (fetch current then add updates)
+			if calliope:
+				print 'tm.calliopeCoordinator', calliope
+
+				#Update 'isDescribedBy' field
+				oldList = record['isDescribed']:
+				for entry in calliope
+					oldList.append(entry)
+				newList = list(set(oldList))
+
+				#Push to database
+				cypher = 'MATCH (n) WHERE n.id="' + record["id"] + '" SET n.isDescribedBy={value} RETURN n'
+				parameters = {"value":newList}
+				response = send_cypher(cypher,parameters,port)
+
+				#Broadcast record update
+				send_message(record_handle, {'key':'isDescribedBy','value':newList, 'id': record['id']},  port)
+
+				#Push general notification
+				general_message(port,credentials,shortName + '\tliterature found',record["id"])
+				return json.dumps(True)
+			else:
+				general_message(port,credentials,shortName + '\tliterature not found',record["id"])
+				return json.dumps(False)
+		#Error finding structure
+		except Exception, e:
+			print 'Error on tm.calliopeCoordinator', str(e)
+			general_message(port,credentials, shortName + "\tliterature search error",record["id"])
 			return json.dumps(False)
 
 	#For actions we don't recognise

@@ -192,9 +192,6 @@
 							<li data-tooltip aria-haspopup="true" class="has-tip" title="Create new {{label}}"><a href="#" ng-click="createNode()">+</a></li>
 							<li ng-if="selection==''"><a href="#" style="color:gray">-</a></li>
 							<li data-tooltip aria-haspopup="true" class="has-tip" title="Delete current {{label}}" ng-if="selection!=''"><a href="#" ng-click="destroyNode()">-</a></li>
-							<!--li><a href="#">{{selection}}</a></li-->
-							<!--li><a href="#">{{record_handle}}</a></li-->
-
 							<!-- Compartment actions -->
 							<li ng-if="!recon=='' && selection!='' && label=='compartment'" class="has-dropdown">
 								<a href="#">
@@ -214,7 +211,7 @@
 								</a>
 								<ul class="dropdown">
 									<li style="padding: 3px" ng-repeat="a in reactionActions" ng-class-even="'eventext'" ng-class-odd="'oddtext'" >
-										<a href="#" ng-click="moleculeAction(a)" data-tooltip aria-haspopup="true" class="has-tip" title="{{a.description}}">{{a.name}}</a>
+										<a href="#" ng-click="reactionAction(a)" data-tooltip aria-haspopup="true" class="has-tip" title="{{a.description}}">{{a.name}}</a>
 									</li>
 								</ul>					
 							</li>

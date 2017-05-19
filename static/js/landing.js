@@ -2,6 +2,9 @@ var landingApp = angular.module('landingApp', ['ngTouch','ngSanitize', 'ui.grid'
 
 landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window', '$filter', 'uiGridConstants', function ($scope, $http, $rootScope, $window, $filter, uiGridConstants) {
 
+	//TEMPORARY MEASURE (see issue #45)
+	$scope.organisms = ['yeast','S. cerevisiae']
+	
 	//-------------------------------------------------
 	//ENV
 	$scope.static_url = 'www.metabolicjamboree.co.uk';
@@ -90,7 +93,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 								{"name":"Find synonyms","description":"Search remote databases for alternative names for this molecule","run":"smallMoleculeSynonyms"},
 								{"name":"Sync properties","description":"Generate properties from structure (overrides current values)","run":"syncProperties"} ];
 	$scope.reactionActions = [	{"name":"Balance reaction","description":"Try to tweak the reaction into balance","run":"reactionBalancer"},
-								{"name":"Find literature","description":"Find papers demonstrating this molecule in this organism","run":"smallMoleculeCooccurrence"}	];
+								{"name":"Find literature","description":"Find papers demonstrating this molecule in this organism","run":"rxn2text"}	];
 	$scope.compartmentActions = [];
 
 	//-------------------------------------------------
@@ -1360,6 +1363,18 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		console.log('Run molecule action:', action);
 		url = 'https://' + $scope.static_url + '/actionMolecule'
 		$http.post(url, angular.toJson({"port":$scope.port,"record":$scope.record,"action":action.run, "credentials":$scope.credentials, "record_handle":$scope.port+'_'+$scope.selection}) )
+			.success(function(data) {
+				console.log('Triggered:', action.run);
+				})
+			.error(function (data, status) {
+				console.log('Error', status, data);
+				});
+		};
+
+	$scope.reactionAction = function(action) {
+		console.log('Run reaction action:', action);
+		url = 'https://' + $scope.static_url + '/actionReaction'
+		$http.post(url, angular.toJson({"port":$scope.port,"record":$scope.record,"action":action.run, "organism":$scope.organism,"credentials":$scope.credentials, "record_handle":$scope.port+'_'+$scope.selection}) )
 			.success(function(data) {
 				console.log('Triggered:', action.run);
 				})
