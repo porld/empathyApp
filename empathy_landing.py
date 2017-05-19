@@ -1360,8 +1360,8 @@ def actionReaction():
 				print 'tm.calliopeCoordinator', calliope
 
 				#Update 'isDescribedBy' field
-				oldList = record['isDescribed']:
-				for entry in calliope
+				oldList = record['isDescribedBy']
+				for entry in calliope:
 					oldList.append(entry)
 				newList = list(set(oldList))
 
