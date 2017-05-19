@@ -1006,19 +1006,13 @@
 										</div>
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
-										<div class="row animate-show-hide" ng-show="isDescribedBy_view">
+										<div class="row animate-show-hide" ng-show="isDescribedBy_view" ng-init="ref=0">
 											<!-- isDescribedBy list -->
-											<span ng-repeat="desc in record.isDescribedBy | orderBy">
-												<small>
-													<span style="margin: 2px 2px 2px 2px; background: #e4e4e4; color: #666666" class="round label">
-														<span ng-if="desc[1].length>25" ng-click="curateJsonText('isDescribedBy', desc[0],desc[1])" style="text-transform:none; font-weight: normal; color: #666666" data-tooltip aria-haspopup="true" class="has-tip" title="{{desc[0]}}:{{desc[1]}}">{{desc[0]}}:{{desc[1] | limitTo:25}}...</span>
-														<span ng-if="desc[1].length<26" ng-click="curateJsonText('isDescribedBy', desc[0],desc[1])" style="text-transform:none">{{desc[0]}}:{{desc[1]}}</span>
-														<span ng-click="jsonListPop('isDescribedBy',desc)">
-															<i style="color: #666666" class="fi-x-circle"></i>
-														</span>
-													</span>
-												</small>
-											</span>
+											<div class="small-1 medium-1 large-1 columns" ng-click="ref = ref-1">L</div>
+											<div class="small-10 medium-10 large-10 columns">
+												{{record.isDescribedBy[ref]}}
+											</div>
+											<div class="small-1 medium-1 large-1 columns" ng-click="ref = ref+1">R</div>
 											<!-- Add isDescribedBy -->
 											<span ng_model="add_isDescribedBy" ng-init="add_isDescribedBy=false" ng-click="add_isDescribedBy=!add_isDescribedBy">
 												<small><i class="fi-plus"></i></small>
