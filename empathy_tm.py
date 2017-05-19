@@ -53,20 +53,12 @@ def rxn2triples(record,organism):
 		#Get reactants
 		for mol in record['listOfReactants']:
 			molNames = [mol['name']]
-			for syn in mol['synonyms']:
-				if '?' in syn:
-					syn = syn.replace('?','')
-				molNames.append(syn)
 			triple = buildTriple('Chemical',molNames)
 			triples.append(triple)
 
 		#Get products
 		for mol in record['listOfProducts']:
 			molNames = [mol['name']]
-			for syn in mol['synonyms']:
-				if '?' in syn:
-					syn = syn.replace('?','')
-				molNames.append(syn)
 			triple = buildTriple('Chemical',molNames)		
 			triples.append(triple)
 
