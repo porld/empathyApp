@@ -1007,15 +1007,15 @@
 										</div>
 									</div>
 									<div class="large-12 medium-12 small-12 columns">							
-										<div class="row animate-show-hide" ng-show="isDescribedBy_view" ng-init="ref=0">
+										<div class="row animate-show-hide" ng-show="isDescribedBy_view" ng-init="ref=1">
 											<!-- isDescribedBy list -->
-											<div class="small-1 medium-1 large-1 columns" ng-click="refTick('down',record.isDescribedBy.length-1)"><i class="fi-arrow-left"></i></div>
+											<div class="small-1 medium-1 large-1 columns" ng-click="ref=refTick(ref,'down',record.isDescribedBy.length-1)"><i class="fi-arrow-left"></i></div>
 											<div class="small-10 medium-10 large-10 columns" style="bgcolor: white">
-												<a target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/{{record.isDescribedBy[ref].pmid}}">{{record.isDescribedBy[ref].pmid}}</a>
+												<a target="_blank" href="https://www.ncbi.nlm.nih.gov/pubmed/{{record.isDescribedBy[ref-1].pmid}}">{{record.isDescribedBy[ref-1].pmid}}</a>
 												<br>
-												{{record.isDescribedBy[ref].highlight}}
+												{{record.isDescribedBy[ref-1].highlight}}
 											</div>
-											<div class="small-1 medium-1 large-1 columns" ng-click="refTick('up',record.isDescribedBy.length-1)"><i class="fi-arrow-right"></i></div>
+											<div class="small-1 medium-1 large-1 columns" ng-click="ref=refTick(ref,'up',record.isDescribedBy.length-1)"><i class="fi-arrow-right"></i></div>
 											<!-- Add isDescribedBy -->
 											<span ng_model="add_isDescribedBy" ng-init="add_isDescribedBy=false" ng-click="add_isDescribedBy=!add_isDescribedBy">
 												<small><i class="fi-plus"></i></small>
