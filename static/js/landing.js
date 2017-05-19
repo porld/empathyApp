@@ -1277,7 +1277,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				}
 			}
 		else if(way == 'down') {
-			if(now == 0) {
+			if(now == 1) {
 				return max;
 				}
 			else {

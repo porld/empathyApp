@@ -1038,19 +1038,6 @@
 											<!-- Tick up -->
 											<div class="small-1 medium-1 large-1 columns" ng-click="ref=refTick(ref,'up',record.isDescribedBy.length-1)"><i class="fi-arrow-right"></i></div>
 										</div>
-										<!-- Add isDescribedBy -->
-										<div class="row" ng_model="add_isDescribedBy" ng-init="add_isDescribedBy=false" ng-click="add_isDescribedBy=!add_isDescribedBy">
-											<small><i class="fi-plus"></i></small>
-										</div>
-										<!-- Source -->
-										<div class="row animate-show-hide" ng-show="add_isDescribedBy" ng-model="new_isDescribedBy">
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add source" ng-model="new_isDescribedBy['source']">
-											</div>
-											<div class="large-6 medium-6 small-6 columns">
-												<input type="text" placeholder="Add identifier" ng-blur="add_isDescribedBy=false;jsonListPush('isDescribedBy',new_isDescribedBy);new_isDescribedBy={};" ng-model="new_isDescribedBy['id']">
-											</div>
-										</div>
 									</div>
 								</div>
 
