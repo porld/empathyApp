@@ -1268,6 +1268,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//Reference ticker
 	$scope.ref = 0;
 	$scope.refTick = function(way,max) {
+		console.log('Ref tick', way, max);
 		if(way == 'up') {
 			if($scope.ref == max ) {
 				$scope.ref = 1;
@@ -1284,6 +1285,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				$scope.ref = $scope.ref - 1;
 				}
 			}
+		console.log('Ref', $scope.ref);
 		};
 
 	//Notification ticker
