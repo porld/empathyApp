@@ -26,6 +26,7 @@ def processCalliope(hits):
 			processed['id'] = hit['_id']
 			processed['pmid'] = hit["_source"]["MedlineCitation"]["pmid"]["content"]
 			processed['highlight'] = json.dumps(highlight)
+			processed['curated'] = 'uncurated'
 			results.append(json.dumps (processed) ) #Stored in database as list of JSON 
 	print 'Calliope hits', len(results)
 	return results
