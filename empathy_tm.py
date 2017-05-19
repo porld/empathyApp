@@ -50,17 +50,20 @@ def rxn2triples(record,organism):
 		triple = buildTriple('Species',organism)
 		triples.append(triple)
 
+		#Gather chemical names
+		molNames = []
+
 		#Get reactants
 		for mol in record['listOfReactants']:
-			molNames = [mol['name']]
-			triple = buildTriple('Chemical',molNames)
-			triples.append(triple)
+			molNames.append( mol['name'] )
 
 		#Get products
 		for mol in record['listOfProducts']:
-			molNames = [mol['name']]
-			triple = buildTriple('Chemical',molNames)		
-			triples.append(triple)
+			molNames.append( mol['name'] )
+
+		#Build chemical triple
+		triple = buildTriple('Chemical',molNames)		
+		triples.append(triple)
 
 		return triples
 	except Exception, e:
@@ -79,7 +82,7 @@ def calliopeCoordinator(rxn,org):
 
 #Test
 rxn = {}
-rxn['listOfReactants'] = [{'name':'glucose','synonyms':[]},{'name':'ATP','synonyms':['adenosine triphosphate']}]
-rxn['listOfProducts'] = [{'name':'glucose-6-phosphate','synonyms':['G6P']},{'name':'ADP','synonyms':[]}]
-for res in calliopeCoordinator(rxn,['yeast','Saccharomyces','S. cerevisiae']):
-	print res
+rxn['listOfReactants'] = [{'name':'D-glucose','synonyms':[]},{'name':'ATP','synonyms':[]}]
+rxn['listOfProducts'] = [{'name':'D-glucose 6-phosphate','synonyms':[]},{'name':'ADP','synonyms':[]}]
+print calliopeCoordinator(rxn,['yeast','Saccharomyces','S. cerevisiae'])
+
