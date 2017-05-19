@@ -2,7 +2,7 @@ import requests, json, re
 
 #Some very common names (like water) confound the cooccurrence metric, so filter them out (BODGE!)
 def naughtyCheck(name):
-	naughty = ['water', 'proton', 'H+']
+	naughty = ['water', 'proton', 'H+','H2O']
 	if name not in naughty:
 		return True
 	else:

@@ -1006,7 +1006,7 @@
 											<span ng-show="isDescribedBy_view">&nbsp;{{ref}}/{{record.isDescribedBy.length}}</span>
 										</div>
 									</div>
-									<div class="large-12 medium-12 small-12 columns">							
+									<div ng-if="record.isDescribedBy.length>0" class="large-12 medium-12 small-12 columns">							
 										<div class="row animate-show-hide" ng-show="isDescribedBy_view" ng-init="ref=1">
 											<!-- Tick down -->
 											<div class="small-1 medium-1 large-1 columns" ng-click="ref=refTick(ref,'down',record.isDescribedBy.length)"><i class="fi-arrow-left"></i></div>
