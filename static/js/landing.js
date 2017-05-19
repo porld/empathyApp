@@ -3,7 +3,7 @@ var landingApp = angular.module('landingApp', ['ngTouch','ngSanitize', 'ui.grid'
 landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window', '$filter', 'uiGridConstants', function ($scope, $http, $rootScope, $window, $filter, uiGridConstants) {
 
 	//TEMPORARY MEASURE (see issue #45)
-	$scope.organisms = ['yeast','S. cerevisiae']
+	$scope.organism = ['yeast','S. cerevisiae']
 	
 	//-------------------------------------------------
 	//ENV
