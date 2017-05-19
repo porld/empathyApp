@@ -1372,7 +1372,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		};
 
 	$scope.reactionAction = function(action) {
-		console.log('Run reaction action:', action);
+		console.log('Run reaction action:', action. $scope.organism);
 		url = 'https://' + $scope.static_url + '/actionReaction'
 		$http.post(url, angular.toJson({"port":$scope.port,"record":$scope.record,"action":action.run, "organism":$scope.organism,"credentials":$scope.credentials, "record_handle":$scope.port+'_'+$scope.selection}) )
 			.success(function(data) {
