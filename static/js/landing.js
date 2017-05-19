@@ -692,6 +692,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 			//Reset a few selections to enable selection of same value as previous
 			$scope.typeChoice = '';
 			$scope.compChoice = '';
+			$scope.ref = 1;
 			url = 'https://' + $scope.static_url + '/fetchSelection';
 			$http.post(url, angular.toJson(bundle) )
 				.success(function(data) {
