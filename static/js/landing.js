@@ -707,7 +707,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 					console.log('RECORD',$scope.record);
 					//Reset tickers and associates
 					$scope.notTicker = 1;
-					$scope.refTicker = 1;
+					$scope.ref = 0;
 					$scope.notification = '';
 					$scope.reference = '';
 
@@ -1266,31 +1266,24 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		};
 	
 	//Reference ticker
-	$scope.refTicker = 1;
+	$scope.ref = 0;
 	$scope.refTick = function(way,max) {
-		console.log('refTick', $scope.refTicker);
 		if(way == 'up') {
-			if($scope.refTicker == max ) {
-				$scope.refTicker = 1;
+			if($scope.ref == max ) {
+				$scope.ref = 1;
 				}
 			else {
-				$scope.refTicker = $scope.refTicker + 1;
+				$scope.ref = $scope.ref + 1;
 				}
-			$scope.reference = $scope.record.references[$scope.refTicker-1];
 			}
 		else if(way == 'down') {
-			if($scope.refTicker == 1) {
-				$scope.refTicker = max;
+			if($scope.ref == 0) {
+				$scope.ref = max;
 				}
 			else {
-				$scope.refTicker = $scope.refTicker - 1;
+				$scope.ref = $scope.ref - 1;
 				}
-			$scope.reference = $scope.record.references[$scope.refTicker-1];
 			}
-		else {
-			$scope.reference =	$scope.record.references[0];
-			}
-		console.log('Reference', $scope.reference);
 		};
 
 	//Notification ticker
