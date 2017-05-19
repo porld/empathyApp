@@ -1347,7 +1347,7 @@ def actionReaction():
 
 	#REACTION TO LITERATURE
 	if action == "rxn2text":
-		#Try to find structure
+		#Try to find literature
 		try:
 			#Find name
 			name = record['name']										#Take primary name

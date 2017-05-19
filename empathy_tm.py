@@ -10,6 +10,7 @@ def buildTriple(type,word_form):
 
 #Calliope response procesing
 def processCalliope(hits):
+	print 'Processing Calliope results...'
 	results = []
 	for hit in hits:
 		for highlight in hit["highlight"]:
@@ -22,6 +23,7 @@ def processCalliope(hits):
 
 #Calliope query
 def queryCalliope(triples):
+	print 'Querying Calliope...'
 	query = {
 	"triples": triples,
 	"highlight": {
@@ -43,6 +45,7 @@ def queryCalliope(triples):
 
 #Reaction to Calliope format (json, list of strings)
 def rxn2triples(record,organism):
+	print 'Building triples...'
 	triples = []
 
 	try:
@@ -72,6 +75,7 @@ def rxn2triples(record,organism):
 
 #Pipeline
 def calliopeCoordinator(rxn,org):
+	print 'Hitting Calliope...'
 	triples = rxn2triples(rxn,org)
 	if triples:
 		hits = queryCalliope(triples)
