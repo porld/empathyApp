@@ -1332,6 +1332,7 @@ def actionMolecule():
 
 	return json.dumps(True)
 
+@app.route('/actionReaction', methods=['POST'])
 @auth.login_required
 def actionReaction():
 	json_data = request.get_json(force=True)
