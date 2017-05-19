@@ -163,6 +163,8 @@ def chemical2structure(keyword,isList):
 	for entry in isList:
 		entry[0] = str(entry[0])
 		entry[1] = str(entry[1])
+		if '?' in entry[1][0]:
+			entry[1] = entry[1].replace('?','')
 		known = entry[0]
 		#Chase up ChEBI
 		if 'smiles' in known:
@@ -216,5 +218,5 @@ def chemical2structure(keyword,isList):
 #-----------------------------------------------------------------------------------------
 
 #Tests
-#print chemical2structure("glucose", [ [u'chebi', u'CHEBI:37447']])
+#print chemical2structure("glucose", [ [u'chebi', u'?CHEBI:37447']])
 #print syncProperties("Nc1nc(O)c2N=C(CNc2n1)CO[P](O)(=O)O[P](O)(O)=O")
