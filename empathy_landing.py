@@ -1354,7 +1354,7 @@ def actionReaction():
 			shortName = name[0:19] + '...'								#Shorten name
 
 			#RUN ACTION
-			calliope = tm.calliopeCoordinator(record,organism) 	#Find chemical structure
+			calliope, msg = tm.calliopeCoordinator(record,organism) 	#Find chemical structure
 
 			#If we got something then post result (fetch current then add updates)
 			if calliope:
@@ -1375,10 +1375,10 @@ def actionReaction():
 				send_message(record_handle, {'key':'isDescribedBy','value':newList, 'id': record['id']},  port)
 
 				#Push general notification
-				general_message(port,credentials,shortName + '\tliterature found',record["id"])
+				general_message(port,credentials,shortName + '\t' + msg,record["id"])
 				return json.dumps(True)
 			else:
-				general_message(port,credentials,shortName + '\tliterature not found',record["id"])
+				general_message(port,credentials,shortName + '\t' + msg,record["id"])
 				return json.dumps(False)
 		#Error finding structure
 		except Exception, e:

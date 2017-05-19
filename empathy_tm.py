@@ -28,21 +28,24 @@ def queryCalliope(triples):
 	query = {
 	"triples": triples,
 	"highlight": {
-	   "number_of_fragments":3,
-		"fragment_size":100,
+	   "number_of_fragments":5,
+		"fragment_size":150,
 		"tag_schema":"styled",
 		"fields":{"*":{"pre_tags":["<b>"],"post_tags":["</b>"]}}
 	},
 	"from": 0,
 	"size": 10
 	}
+	print query
 	try:
 		url = 'http://nactem10.mib.man.ac.uk:5004/triplesAPI'
 		content = requests.post(url,json=query )
 		response = content.json()
-		return response['hits']['hits']
+		print 'Calliope server says', response
+		hits = response['hits']['hits']
+		return hits, 'found ' + len(hits) + '  hits'
 	except Exception, e:
-		return str(e)
+		return str(e), 'query error'
 
 #Reaction to Calliope format (json, list of strings)
 def rxn2triples(record,organism):
@@ -76,16 +79,15 @@ def calliopeCoordinator(rxn,org):
 	print 'Hitting Calliope...'
 	triples = rxn2triples(rxn,org)
 	if triples:
-		hits = queryCalliope(triples)
-		return processCalliope(hits)
+		hits, calliope_msg = queryCalliope(triples)
+		return processCalliope(hits), calliope_msg
 	else:
 		print 'Malformed query'
-		return False
+		return False, 'query failure'
 
-'''
+
 #Test
 rxn = {}
-rxn['listOfReactants'] = [{'name':'D-glucose','synonyms':[]},{'name':'ATP','synonyms':[]}]
-rxn['listOfProducts'] = [{'name':'D-glucose 6-phosphate','synonyms':[]},{'name':'ADP','synonyms':[]}]
+rxn['listOfReactants'] = [{'name':'glucose'},{'name':'ATP'}]
+rxn['listOfProducts'] = [{'name':'glucose 6-phosphate'},{'name':'ADP'}]
 print calliopeCoordinator(rxn,['yeast','Saccharomyces','S. cerevisiae'])
-'''
