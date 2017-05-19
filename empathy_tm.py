@@ -84,9 +84,10 @@ def calliopeCoordinator(rxn,org):
 		print 'Malformed query'
 		return False
 
+'''
 #Test
 rxn = {}
 rxn['listOfReactants'] = [{'name':'D-glucose','synonyms':[]},{'name':'ATP','synonyms':[]}]
 rxn['listOfProducts'] = [{'name':'D-glucose 6-phosphate','synonyms':[]},{'name':'ADP','synonyms':[]}]
 print calliopeCoordinator(rxn,['yeast','Saccharomyces','S. cerevisiae'])
-
+'''
