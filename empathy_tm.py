@@ -99,9 +99,11 @@ def calliopeCoordinator(rxn,org):
 		print 'Malformed query'
 		return False, 'query failure'
 
+'''
 #Test
 rxn = {}
 rxn['listOfReactants'] = [{'name':'glucose'},{'name':'ATP'}]
 rxn['listOfProducts'] = [{'name':'glucose 6-phosphate'},{'name':'ADP'},{'name':'H+ '}]
 response, hitCount = calliopeCoordinator(rxn,['yeast','Saccharomyces','S. cerevisiae'])
 print response
+'''
