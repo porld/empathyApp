@@ -1010,7 +1010,8 @@
 											<!-- isDescribedBy list -->
 											<div class="small-1 medium-1 large-1 columns" ng-click="refTick('down',record.isDescribedBy.length-1)"><i class="fi-arrow-left"></i></div>
 											<div class="small-10 medium-10 large-10 columns">
-												{{record.isDescribedBy[ref]}}
+												{{record.isDescribedBy[ref].pmid}}<br>
+												{{record.isDescribedBy[ref].highlight}}
 											</div>
 											<div class="small-1 medium-1 large-1 columns" ng-click="refTick('up',record.isDescribedBy.length-1)"><i class="fi-arrow-right"></i></div>
 											<!-- Add isDescribedBy -->
