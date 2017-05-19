@@ -1267,21 +1267,21 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		};
 	
 	//Reference ticker
-	$scope.refTick = function(way,max) {
+	$scope.refTick = function(now,way,max) {
 		if(way == 'up') {
-			if($scope.ref == max ) {
-				$scope.ref = 1;
+			if(now == max ) {
+				return 1;
 				}
 			else {
-				$scope.ref = $scope.ref + 1;
+				return now + 1;
 				}
 			}
 		else if(way == 'down') {
-			if($scope.ref == 0) {
-				$scope.ref = max;
+			if($now == 0) {
+				return max;
 				}
 			else {
-				$scope.ref = $scope.ref - 1;
+				return now - 1;
 				}
 			}
 		};
