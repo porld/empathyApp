@@ -271,6 +271,14 @@ def checkLive():
 	username = json_data['username']
 	recon_name = json_data['recon_name']
 	port = json_data['port']
+	#Check for orgs (synonyms)
+	if json_data['orgs']:
+		orgs = json_data['orgs']
+		whack = orgs.split(';')
+		orgs = []
+		for o in whack:
+			orgs.append(strip(o))
+	#Check for notes
 	if json_data['notes']:
 		notes = json_data['notes']
 	else:
@@ -301,7 +309,7 @@ def checkLive():
 		time.sleep(3) #Just wait a minute
 		#print 'Create reconstruction node'
 		node_id = str(uuid.uuid4())
-		properties = {"id": node_id, "founder":username,"name":recon_name,"notes":notes}
+		properties = {"id": node_id, "founder":username,"name":recon_name,"notes":notes,"orgs":orgs}
 		#print properties
 		cypher = "CREATE (n:recon {props}) RETURN n"
 		parameters = {"props": properties}

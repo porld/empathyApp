@@ -72,14 +72,21 @@
 						<div class="row">&nbsp;</div>
 						<!-- Create reconstruction -->
 						<div class="row"><b>Create reconstruction</b></div>
+						<!-- Name -->
 						<div class="row" ng-init="new_recon_name;recon_spinner=false">
 							<input ng-model="new_recon_name" placeholder="Reconstruction name"></input>
 						</div>
-						<div class="row" ng-init="new_recon_notes">
-							<textarea ng-model="new_recon_notes" placeholder="Notes"></textarea>
+						<!-- Names -->
+						<div class="row" ng-init="new_recon_orgs">
+							<textarea ng-model="new_recon_orgs" placeholder="List of organism names (separate with ;)"></textarea>
 						</div>
+						<!-- Notes -->
+						<div class="row" ng-init="new_recon_notes">
+							<textarea ng-model="new_recon_notes" placeholder="About this reconstruction"></textarea>
+						</div>
+						<!-- Create button -->
 						<div class="row">
-							<button ng-if="new_recon_name.length>0 && !recon_spinner" href="#" ng-click="launch_docker(new_recon_name,new_recon_notes);recon_spinner=true">Create</button><br>
+							<button ng-if="new_recon_name.length>0 && new_recon_orgs.length>0 && new_recon_notes.length>0 && !recon_spinner" href="#" ng-click="launch_docker(new_recon_name,new_recon_orgs,new_recon_notes);recon_spinner=true">Create</button><br>
 						</div>
 						<!-- Spinner -->
 						<div class="row">

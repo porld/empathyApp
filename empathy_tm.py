@@ -18,11 +18,11 @@ def buildTriple(type,word_form):
 
 #Calliope response procesing
 def processCalliope(hits):
-	print 'Processing Calliope results...', hits
+	print 'Processing Calliope results...'
 	results = []
 	for hit in hits:
 		for highlight in hit["highlight"]:
-			print highlight
+			#print highlight
 			processed = {}
 			processed['id'] = hit['_id']
 			processed['pmid'] = hit["_source"]["MedlineCitation"]["pmid"]["content"]
@@ -46,7 +46,7 @@ def queryCalliope(triples):
 	"from": 0,
 	"size": 20
 	}
-	print query
+	#print query
 	try:
 		url = 'http://nactem10.mib.man.ac.uk:5004/triplesAPI'
 		content = requests.post(url,json=query )
