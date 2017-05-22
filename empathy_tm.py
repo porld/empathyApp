@@ -37,10 +37,10 @@ def queryCalliope(triples):
 	query = {
 	"triples": triples,
 	"highlight": {
-	   "number_of_fragments":5,
-		"fragment_size":150,
+	   "number_of_fragments":10,
+		"fragment_size":200,
 		"tag_schema":"styled",
-		"fields":{"*":{"pre_tags":["<b>"],"post_tags":["</b>"]}}
+		"fields":{"*":{"pre_tags":[""],"post_tags":[""]}}
 	},
 	"from": 0,
 	"size": 10
