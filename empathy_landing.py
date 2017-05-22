@@ -266,7 +266,7 @@ def launch_neo4j_docker():
 @app.route('/checkLive', methods=['POST'])
 @auth.login_required
 def checkLive():
-	print 'Check live'
+	print 'Check live', json_data
 	json_data = request.get_json(force=True)
 	username = json_data['username']
 	recon_name = json_data['recon_name']
