@@ -964,13 +964,14 @@
 								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
 									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="isDescribedBy_view" ng-click="isDescribedBy_view=!isDescribedBy_view">
 										<div class="row">
-											<div class="large-6 medium-6 small-6 columns" style="text-align: left">References</div>
-											<div class="large-3 medium-3 small-3 columns" ng-show="isDescribedBy_view" style="text-align: right">{{ref}}/{{record.isDescribedBy.length}}</div>
-											<div class="large-3 medium-3 small-3 columns" ng-show="isDescribedBy_view" style="text-align: right"><i ng-click="record.isDescribedBy=[]" class="fi-trash"></i></div>
-											<div class="large-6 medium-6 small-6 columns" ng-show="!isDescribedBy_view" style="text-align: right">&nbsp;</div>
+											References
 										</div>
 									</div>
 									<div ng-if="record.isDescribedBy.length>0" class="large-12 medium-12 small-12 columns">							
+										<div class="row animate-show-hide" ng-show="isDescribedBy_view">
+											<div class="large-3 medium-3 small-3 columns" style="text-align: left">{{ref}}/{{record.isDescribedBy.length}}</div>
+											<div class="large-9 medium-9 small-9 columns" style="text-align: right"><i ng-click="record.isDescribedBy=[]" class="fi-trash"></i></div>
+										</div>
 										<div class="row animate-show-hide" ng-show="isDescribedBy_view" ng-init="ref=1">
 											<!-- Tick down -->
 											<div class="small-1 medium-1 large-1 columns" ng-click="ref=refTick(ref,'down',record.isDescribedBy.length)"><i class="fi-arrow-left"></i></div>
