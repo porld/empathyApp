@@ -22,6 +22,7 @@ def processCalliope(hits):
 	results = []
 	for hit in hits:
 		for highlight in hit["highlight"]:
+			print highlight
 			processed = {}
 			processed['id'] = hit['_id']
 			processed['pmid'] = hit["_source"]["MedlineCitation"]["pmid"]["content"]
@@ -37,10 +38,10 @@ def queryCalliope(triples):
 	query = {
 	"triples": triples,
 	"highlight": {
-	   "number_of_fragments":10,
-		"fragment_size":200,
+	   "number_of_fragments":5,
+		"fragment_size":150,
 		"tag_schema":"styled",
-		"fields":{"*":{"pre_tags":[""],"post_tags":[""]}}
+		"fields":{"*":{"pre_tags":["<b>"],"post_tags":["</b>"]}}
 	},
 	"from": 0,
 	"size": 10
