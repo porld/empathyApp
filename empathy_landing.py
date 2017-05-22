@@ -278,7 +278,8 @@ def checkLive():
 		whack = orgs.split(';')
 		orgs = []
 		for o in whack:
-			orgs.append(strip(o))
+			o = o.strip('\s+')
+			orgs.append(o)
 	#Check for notes
 	if json_data['recon_notes']:
 		notes = json_data['recon_notes']
