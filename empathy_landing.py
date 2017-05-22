@@ -286,7 +286,7 @@ def checkLive():
 	else:
 		notes = 'None provided'
 
-	print recon_name, recon_orgs, recon_notes
+	print recon_name, orgs, notes
 
 	url = 'http://localhost:' + port + '/db/data/transaction/commit'
 	print 'Hitting', url
