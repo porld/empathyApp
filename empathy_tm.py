@@ -18,7 +18,7 @@ def buildTriple(type,word_form):
 
 #Calliope response procesing
 def processCalliope(hits):
-	print 'Processing Calliope results...'
+	print 'Processing Calliope results...', hits
 	results = []
 	for hit in hits:
 		for highlight in hit["highlight"]:
