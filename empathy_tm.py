@@ -38,13 +38,13 @@ def queryCalliope(triples):
 	query = {
 	"triples": triples,
 	"highlight": {
-	   "number_of_fragments":5,
-		"fragment_size":150,
+	   "number_of_fragments":1,
+		"fragment_size":200,
 		"tag_schema":"styled",
 		"fields":{"*":{"pre_tags":["<b>"],"post_tags":["</b>"]}}
 	},
 	"from": 0,
-	"size": 10
+	"size": 20
 	}
 	print query
 	try:
@@ -52,7 +52,7 @@ def queryCalliope(triples):
 		content = requests.post(url,json=query )
 		response = content.json()
 		hits = response['hits']['hits']
-		return hits, 'found ' + str(len(hits)) + '  hits'
+		return hits, 'found ' + str(len(hits)) + '  papers'
 	except Exception, e:
 		print 'queryCalliope error', str(e)
 		return str(e), 'query error'
