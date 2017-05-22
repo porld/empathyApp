@@ -345,7 +345,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				console.log('Port:', $scope.port);
 				console.log('Check live and activate');
 				url = 'https://' + $scope.static_url + '/checkLive';
-				$http.post(url,angular.toJson({"username":$scope.username,"port":$scope.port,"recon_name":recon_name,"notes":notes,"orgs":orgs}))
+				$http.post(url,angular.toJson({"username":$scope.username,"port":$scope.port,"recon_name":recon_name,"recon_notes":notes,"recon_orgs":orgs}))
 					.success(function(data) {
 						console.log('Response', data);
 						})
