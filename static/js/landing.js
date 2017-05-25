@@ -1174,7 +1174,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 				}
 			};
 		if($scope.compName === '') {
-			$scope.record.inCompartment = '';
 			$scope.compName = 'Unknown';
 			}
 		};
