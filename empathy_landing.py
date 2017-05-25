@@ -409,7 +409,6 @@ def fetchList(label,port):
 		print 'Molecule list'
 		
 		#First build the compartment id to name mapping
-		print 'Fetch compartments...'
 		cypher = "MATCH (n:compartment) RETURN n.id AS id, n.name AS name ORDER BY name"
 		response = send_cypher(cypher,{},port)
 		cypher_response = response.json()
@@ -417,22 +416,20 @@ def fetchList(label,port):
 		for row in cypher_response["results"][0]["data"]:
 			id = row["row"][0]
 			name = row["row"][1]
-			print id, name
 			compartmentIdToName[id] = name
-		print compartmentIdToName
 
 		print 'Fetch ', label
-		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.inCompartment AS compartment, n.name AS name, n.tags AS tags ORDER BY name"
+		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.inCompartment AS compartmentId, n.name AS name, n.tags AS tags ORDER BY name"
 		response = send_cypher(cypher,{},port)
 		cypher_response = response.json()
 		for row in cypher_response["results"][0]["data"]:
 			id = row["row"][0]
-			compartment = row["row"][1]
+			compartmentId = row["row"][1]
 			#Dereference compartment id
 			try:
-				compartmentName = compartmentIdToName[id]
-			except:
-				compartmentName = 'error'
+				compartmentName = compartmentIdToName[compartmentId]
+			except Exception, e:
+				compartmentName = str(e)
 			name = row["row"][2]
 			tags = row["row"][3]
 			name = name + '_[' + compartmentName + ']'
@@ -1050,6 +1047,17 @@ def fetchSelection():
 	record = data["results"][0]["data"][0]["row"][0]
 
 	if label == 'reaction':
+		#Compartment id to name resolver
+		#First build the compartment id to name mapping
+		cypher = "MATCH (n:compartment) RETURN n.id AS id, n.name AS name ORDER BY name"
+		response = send_cypher(cypher,{},port)
+		cypher_response = response.json()
+		compartmentIdToName = {}
+		for row in cypher_response["results"][0]["data"]:
+			id = row["row"][0]
+			name = row["row"][1]
+			compartmentIdToName[id] = name
+
 		#Fetch edges
 		cypher = "MATCH (r:reaction)-[l]->(m:molecule) WHERE r.id='" + selection + "' RETURN l,TYPE(l) AS type,m.id AS moleculeId, m.name AS moleculeName, m.inCompartment AS compartment"
 		edgeResponse = send_cypher(cypher,{},port)
@@ -1065,7 +1073,8 @@ def fetchSelection():
 			type = edge[1]
 			moleculeId = edge[2]
 			moleculeName = edge[3]
-			moleculeCompartment = str( edge[4] )
+			moleculeCompartmentId = str( edge[4] )
+			moleculeCompartment = compartmentIdToName[moleculeCompartmentId]
 			if type == 'hasReactant':
 				reactants.append({"id":moleculeId,"name":moleculeName,"properties":edgeProperties,"compartment":moleculeCompartment})
 			elif type == 'hasModifier':
