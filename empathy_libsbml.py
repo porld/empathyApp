@@ -240,19 +240,21 @@ def collectCyphers(model):
 	#Compartments
 	print 'Collect compartments'
 	compartments = model['compartments']
-	compartmentIdToName = {}
+	compartmentIdToSource = {}
 	for comp in compartments:
 		#print comp
 		properties = {}
 		compartmentIdToName[comp['id']] = comp['name']
 		properties["id"] = str(uuid.uuid4())
+		#Map the source id to the new id
+		compartmentIdToSource[ comp['id'] ] = properties["id"]
 		properties["type"] = "compartment"
 		properties["name"] = comp['name']
 		properties["sourceId"] = comp['id']	
 		properties["source"] = "SBML"
 		properties["synonyms"] = []
 		properties["tags"] = ["compartment",comp['id']]
-		properties["inCompartment"] = comp['inCompartment']
+		#properties["inCompartment"] = comp['inCompartment']
 		properties["notes"] = comp['notes']
 		#Map SBO to EMPATHY
 		properties = annotationMapper(properties,comp)	
@@ -271,9 +273,13 @@ def collectCyphers(model):
 		properties["source"] = "SBML"
 		properties["synonyms"] = []
 		properties["tags"] = [mol["type"],mol['id']]
-		compartmentId = mol['inCompartment'] #Pick up compartment id
-		compartmentName = compartmentIdToName[compartmentId] #Resolve compartment id
-		properties["inCompartment"] = compartmentName
+
+		#Pick up compartment id
+		compartmentId = mol['inCompartment']
+		#Map to new id
+		newCompartmentId = compartmentIdToName(compartmentId)		
+		properties["inCompartment"] = newCompartmentId
+
 		properties["notes"] = mol['notes']
 		#Map SBO to EMPATHY
 		properties = annotationMapper(properties,mol)	
