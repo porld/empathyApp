@@ -383,7 +383,18 @@
 							
 							<!-- Compartment Name -->
 							<div ng-if="label=='compartment'" class="large-12 medium-12 small-12 columns" style="padding: 0px; margin: 0px">
-								<b><input style="font-size:20pt;border:none; outline:none; padding: 0px; margin: 0px" type="text" ng-model="record.name" ng-blur="updateText('name',record.name); "></b>
+								<!-- Name -->
+								<div class="row">
+									<div class="small-12 medium-12 large-12 columns" style="color: #666666; text-align: right">
+										<b><input style="font-size:20pt;border:none; outline:none; padding: 0px; margin: 0px" type="text" ng-model="record.name" ng-blur="updateText('name',record.name); "></b>
+									</div>									
+								</div>
+								<!-- Source id -->
+								<div class="row">
+									<div class="small-12 medium-12 large-12 columns" style="color: #666666; text-align: right">
+										<small>{{record.sourceId}}</small>
+									</div>									
+								</div>
 							</div>
 
 							<!-- Reaction Name and balance -->
@@ -402,6 +413,12 @@
 										<i>{{record.balance}}</i>
 									</div>
 								</div>
+								<!-- Source id -->
+								<div class="row">
+									<div class="small-12 medium-12 large-12 columns" style="color: #666666; text-align: right">
+										<small>{{record.sourceId}}</small>
+									</div>									
+								</div>
 							</div>
 
 							<!-- Molecule Name and type-->
@@ -416,9 +433,13 @@
 								</div>
 								<!-- Type -->
 								<div class="row">
-									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-init="typeFlicker=0" ng-init="typeChoice=record.type" ng-click="typeFlicker=type_flicker(typeFlicker);updateText('type',typeChoice)">
+									<div class="small-5 medium-5 large-5 columns" style="color: #666666" ng-init="typeFlicker=0" ng-init="typeChoice=record.type" ng-click="typeFlicker=type_flicker(typeFlicker);updateText('type',typeChoice)">
 										<i>{{record.type}}</i>
 									</div>
+									<!-- Source id -->
+									<div class="small-7 medium-7 large-7 columns" style="color: #666666; text-align: right">
+										<small>{{record.sourceId}}</small>
+									</div>									
 								</div>
 							</div>
 							

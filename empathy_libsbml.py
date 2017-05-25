@@ -251,7 +251,7 @@ def collectCyphers(model):
 		properties["sourceId"] = comp['id']	
 		properties["source"] = "SBML"
 		properties["synonyms"] = []
-		properties["tags"] = ["compartment"]
+		properties["tags"] = ["compartment",comp['id']]
 		properties["inCompartment"] = comp['inCompartment']
 		properties["notes"] = comp['notes']
 		#Map SBO to EMPATHY
@@ -270,7 +270,7 @@ def collectCyphers(model):
 		properties["sourceId"] = mol['id']	
 		properties["source"] = "SBML"
 		properties["synonyms"] = []
-		properties["tags"] = [mol["type"]]
+		properties["tags"] = [mol["type"],mol['id']]
 		compartmentId = mol['inCompartment'] #Pick up compartment id
 		compartmentName = compartmentIdToName[compartmentId] #Resolve compartment id
 		properties["inCompartment"] = compartmentName
@@ -291,7 +291,7 @@ def collectCyphers(model):
 		properties["sourceId"] = rxn['id']	
 		properties["source"] = "SBML"
 		properties["synonyms"] = []
-		properties["tags"] = ["reaction"]
+		properties["tags"] = ["reaction",rxn['id']]
 		properties["notes"] = rxn['notes']
 		#Map SBO to EMPATHY
 		properties = annotationMapper(properties,rxn)	
