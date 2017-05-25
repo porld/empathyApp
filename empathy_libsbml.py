@@ -338,11 +338,11 @@ def sbml2cyphers(sbml):
 	cyphers = collectCyphers(model)
 	return cyphers
 
+'''
 f = open('yeast_7.6_recon.xml', 'r')
 sbml = f.read()
 parseSBML(sbml)
 cyphers = sbml2cyphers(sbml)
-'''
 for cypher in cyphers:
 	properties = cypher[1]
 	if 'type' in properties:
