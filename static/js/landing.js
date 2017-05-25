@@ -798,8 +798,8 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 					$scope.record[key] = value;
 					$scope.$apply();
 			
-					//Update grid if name or tags have changed
-					if( (key == 'name') || (key == 'tags') ) {
+					//Update grid if name, tags or compartment have changed
+					if( (key == 'name') || (key == 'tags') || (key == 'inCompartment') ) {
 						console.log('Update grid');
 						$scope.initialiseList();
 						};
