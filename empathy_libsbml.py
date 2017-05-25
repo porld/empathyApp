@@ -69,14 +69,14 @@ def getAnnotations(sbmlObject):
 						previous = annotations[qual]
 						uri = attributes.getValue(i)
 						uri = uri.replace("http://identifiers.org/","")
-						key,val = uri.split('/')
+						key,val = uri.split('/',1)
 						previous.append( json.dumps([key,val]) )
 						annotations[qual] = previous
 					return annotations
 			else:
 				return annotations
 		except Exception, e:
-			print 'Annotation exception', str(e), sbmlObject.getId()
+			print 'Annotation exception', str(e), id
 			return annotations
 	except Exception, e:
 		print 'Exception:', str(e)
@@ -333,9 +333,11 @@ def sbml2cyphers(sbml):
 	cyphers = collectCyphers(model)
 	return cyphers
 
+
 '''
 f = open('yeast_7.6_recon.xml', 'r')
 sbml = f.read()
+parseSBML(sbml)
 cyphers = sbml2cyphers(sbml)
 for cypher in cyphers:
 	properties = cypher[1]
