@@ -403,10 +403,19 @@ nodeBlank = {"id":"", "type":"", "source":"", "sourceId":"", "name":"",	"synonym
 
 #-----------------------------------------------------------------------------------------
 def fetchList(label,port):
-	#Don't look for compartment (no such thing for reactions)	
 	print 'Fetch list:', label
 	new_list = []
 	if 'molecule' in label:
+		#First build the compartment id to name mapping
+		cypher = "MATCH (n:compartment) RETURN n.id AS id, n.name AS name"
+		response = send_cypher(cypher,{},port)
+		cypher_response = response.json()
+		compartmentIdToName = {}
+		for row in cypher_response["results"][0]["data"]:
+			id = str(row["row"][0])
+			name = str(row["row"][1])
+			compartmentIdToName[id] = name
+
 		print 'Fetch ', label
 		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.inCompartment AS compartment, n.name AS name, n.tags AS tags ORDER BY name"
 		response = send_cypher(cypher,{},port)
@@ -414,9 +423,11 @@ def fetchList(label,port):
 		for row in cypher_response["results"][0]["data"]:
 			id = row["row"][0]
 			compartment = str(row["row"][1])
+			#Dereference compartment id
+			compartmentName = compartmentIdToName[str(id)]
 			name = row["row"][2]
 			tags = row["row"][3]
-			name = name + '_[' + compartment + ']'
+			name = name + '_[' + compartmentName + ']'
 			new_list.append({"id":id,"name":name,"tags":tags})
 	else:
 		print 'Fetch', label
