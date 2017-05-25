@@ -155,6 +155,9 @@ def parseSBML(sbml):
 			if mol.getSBOTermID() == 'SBO:0000247':
 				molecule["type"] = 'simple chemical'
 				molecule["tags"] = ['simple chemical']
+			elif mol.getSBOTermID() == 'SBO:0000252':
+				molecule["type"] = 'macromolecule'
+				molecule["tags"] = ['macromolecule']
 			elif mol.getSBOTermID() == 'SBO:0000245':
 				molecule["type"] = 'macromolecule'
 				molecule["tags"] = ['macromolecule']
