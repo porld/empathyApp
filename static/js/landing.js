@@ -1167,21 +1167,22 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//Look up compartment name on record load (loaded when fetchCompartmentList fulfils promise)
 	function compartmentNameFromList() {
 		//console.log('Looking for', $scope.record.inCompartment, 'in', $scope.compartmentList);
-		$scope.compName = '';
+		var compName = '';
 		for (k = 0; k < $scope.compartmentList.length; k++) {
 			if ($scope.compartmentList[k]["id"] === $scope.record.inCompartment) {
-				$scope.compName = $scope.compartmentList[k]["name"];
+				compName = $scope.compartmentList[k]["name"];
 				}
 			};
-		if($scope.compName === '') {
-			$scope.compName = 'Unknown';
+		if(compName === '') {
+			return 'unknown compartment';
 			}
+		return compName
 		};
 
 	//$watch for changes to inCompartment
 	$scope.$watch('record.inCompartment', function(newValue, oldValue) {
-		//console.log('$watch picked up change:', oldValue, '>', newValue);
-		compartmentNameFromList();
+		console.log('$watch picked up record.inCompartment change:', oldValue, '>', newValue);
+		$scope.record.compartmentName = compartmentNameFromList();
 		});
 
 	//Fetch compartment list (for specifying molecules, parent compartments, etc.). Note this is a direct RESTful load.

@@ -463,12 +463,12 @@
 								<div class="row" style="background-color: #f3f3f3; border-radius: 10px; padding: 5px; margin: 5px;">
 									<div class="small-12 medium-12 large-12 columns" style="color: #666666" ng-model="compartment_view" ng-click="compartment_view=!compartment_view">
 										<div class="row">
-											Compartment&nbsp;<small><i>{{compName}}</i></small><br>
+											Compartment&nbsp;<small><i>{{record.compName}}</i></small><br>
 										</div>
 									</div>
 									<div class="large-12 medium-12 small-12 columns">
 										<div class="row animate-show-hide" ng-show="compartment_view">
-											<select name="cellSelect" id="cellSelect" ng-model="compChoice" ng-change="updateText('inCompartment',compChoice);compartmentNameFromList();">
+											<select name="cellSelect" id="cellSelect" ng-model="compChoice" ng-change="updateText('inCompartment',compChoice)">
 												<option ng-repeat="comp in compartmentList" value="{{comp.id}}">{{comp.name}}</option>
 											</select>
 										</div>
