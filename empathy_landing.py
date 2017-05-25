@@ -406,15 +406,20 @@ def fetchList(label,port):
 	print 'Fetch list:', label
 	new_list = []
 	if 'molecule' in label:
+		print 'Molecule list'
+		
 		#First build the compartment id to name mapping
-		cypher = "MATCH (n:compartment) RETURN n.id AS id, n.name AS name"
+		print 'Fetch compartments...'
+		cypher = "MATCH (n:compartment) RETURN n.id AS id, n.name AS name ORDER BY name"
 		response = send_cypher(cypher,{},port)
 		cypher_response = response.json()
 		compartmentIdToName = {}
 		for row in cypher_response["results"][0]["data"]:
-			id = str(row["row"][0])
-			name = str(row["row"][1])
+			id = row["row"][0]
+			name = row["row"][1]
+			print id, name
 			compartmentIdToName[id] = name
+		print compartmentIdToName
 
 		print 'Fetch ', label
 		cypher = "MATCH (n:" + label + ") RETURN n.id AS id, n.inCompartment AS compartment, n.name AS name, n.tags AS tags ORDER BY name"
@@ -422,9 +427,12 @@ def fetchList(label,port):
 		cypher_response = response.json()
 		for row in cypher_response["results"][0]["data"]:
 			id = row["row"][0]
-			compartment = str(row["row"][1])
+			compartment = row["row"][1]
 			#Dereference compartment id
-			compartmentName = compartmentIdToName[str(id)]
+			try:
+				compartmentName = compartmentIdToName[id]
+			except:
+				compartmentName = 'error'
 			name = row["row"][2]
 			tags = row["row"][3]
 			name = name + '_[' + compartmentName + ']'
