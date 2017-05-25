@@ -170,7 +170,6 @@ def parseSBML(sbml):
 			molecule["sourceId"] = mol.getId()
 			molecule["synonyms"] = []
 			molecule["inCompartment"] = mol.getCompartment() #This is a compartment id
-			print molecule
 			annotations = getAnnotations(mol)
 			for qual in annotations.keys():		
 				molecule[qual] = annotations[qual]
@@ -244,7 +243,6 @@ def collectCyphers(model):
 	for comp in compartments:
 		#print comp
 		properties = {}
-		compartmentIdToName[comp['id']] = comp['name']
 		properties["id"] = str(uuid.uuid4())
 		#Map the source id to the new id
 		compartmentIdToSource[ comp['id'] ] = properties["id"]
@@ -277,7 +275,7 @@ def collectCyphers(model):
 		#Pick up compartment id
 		compartmentId = mol['inCompartment']
 		#Map to new id
-		newCompartmentId = compartmentIdToName(compartmentId)		
+		newCompartmentId = compartmentIdToSource[compartmentId]
 		properties["inCompartment"] = newCompartmentId
 
 		properties["notes"] = mol['notes']
@@ -340,11 +338,11 @@ def sbml2cyphers(sbml):
 	cyphers = collectCyphers(model)
 	return cyphers
 
-'''
 f = open('yeast_7.6_recon.xml', 'r')
 sbml = f.read()
 parseSBML(sbml)
 cyphers = sbml2cyphers(sbml)
+'''
 for cypher in cyphers:
 	properties = cypher[1]
 	if 'type' in properties:
