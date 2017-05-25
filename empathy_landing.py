@@ -832,9 +832,11 @@ def importSBML():
 			response2 = send_cypher(cypher2,{},port)
 			cypher_response = response2.json()
 			new_list = []
+			compartmentIdToName = {} #For molecule naming (dereferencing compartment identifiers to names)
 			for row in cypher_response["results"][0]["data"]:
 				id = row["row"][0]
 				name = row["row"][1]
+				compartmentIdToName[id] = name
 				tags = row["row"][2]
 				new_list.append({"id":id,"name":name,"tags":tags})
 			send_message(port+"_compartment", new_list,  port)				
@@ -850,7 +852,8 @@ def importSBML():
 			for row in cypher_response["results"][0]["data"]:
 				id = row["row"][0]
 				name = row["row"][1]
-				compartment = str( row["row"][2] )
+				compartmentId = row["row"][2]
+				compartment = compartmentIdToName[compartmentId]
 				tags = row["row"][3]
 				name = name + '_[' + compartment + ']'
 				new_list.append({"id":id,"name":name,"tags":tags})
