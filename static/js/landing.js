@@ -1182,7 +1182,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	//$watch for changes to inCompartment
 	$scope.$watch('record.inCompartment', function(newValue, oldValue) {
 		console.log('$watch picked up record.inCompartment change:', oldValue, '>', newValue);
-		$scope.record.compartmentName = compartmentNameFromList();
+		$scope.record.compName = compartmentNameFromList();
 		});
 
 	//Fetch compartment list (for specifying molecules, parent compartments, etc.). Note this is a direct RESTful load.
