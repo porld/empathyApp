@@ -180,6 +180,15 @@ def chemical2structure(keyword,isList):
 			if smiles:
 				message = 'built structure from InChI'
 				return json.dumps(["smiles",smiles]), message
+		elif 'inchi' in known:
+			print "ACTION Convert InChI", entry[1]
+			inchi = entry[1]
+			if '?' in inchi:
+				inchi = inchi.replace('?','')
+			smiles = inchi2smiles(inchi)
+			if smiles:
+				message = 'built structure from InChI'
+				return json.dumps(["smiles",smiles]), message
 		elif 'chebi' in known:
 			print "ACTION Search ChEBI", entry[1]
 			smiles = chebi2smiles(entry[1])
