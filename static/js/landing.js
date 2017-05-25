@@ -1138,7 +1138,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.spinner = false;
 		$scope.recon_spinner = false;
 		$scope.change_label('molecule');
-
 		};
 	//End run_app
 	//-------------------------------------------------

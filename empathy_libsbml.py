@@ -170,6 +170,7 @@ def parseSBML(sbml):
 			molecule["sourceId"] = mol.getId()
 			molecule["synonyms"] = []
 			molecule["inCompartment"] = mol.getCompartment() #This is a compartment id
+			print molecule
 			annotations = getAnnotations(mol)
 			for qual in annotations.keys():		
 				molecule[qual] = annotations[qual]
@@ -332,7 +333,6 @@ def sbml2cyphers(sbml):
 	model = parseSBML(sbml)
 	cyphers = collectCyphers(model)
 	return cyphers
-
 
 '''
 f = open('yeast_7.6_recon.xml', 'r')
