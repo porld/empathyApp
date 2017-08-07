@@ -80,16 +80,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.socket_status = 'Failed to reconnect';
 		});
 
-	//Socket: client pinged
-	socket.on('ping', function() {
-		console.log('Client pinged', socket);
-		});
-
-	//Socket: server ponged
-	socket.on('pong', function() {
-		console.log('Server ponged', socket);
-		});		
-
 	$scope.disconnect = function() {
 		console.log('Disconnecting');
 		socket.disconnect();
