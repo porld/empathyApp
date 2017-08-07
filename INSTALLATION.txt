@@ -47,15 +47,23 @@ SETTING UP THE EMPATHY WEB APP
 	Werkzeug==0.11.15
 	xmltodict==0.10.2
 
+Special instructions for reaction balancer
+1. conda install -c bioconda cobra
+2. git clone
+
 5. Set up port redirect (cannot run Werkzeug on 80)
 5.1 sudo /sbin/iptables -t nat -I PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 8080
 
 6. Generate security certificates using certbot/letsencrypt (https://certbot.eff.org/#ubuntuxenial-other)
-6.1 Use certbot in standalone mode:  sudo letsencrypt certonly --standalone -d metabolicjamboree.co.uk -d www.metabolicjamboree.co.uk
-certbot certonly --standalone -d metabolicjamboree.co.uk -d www.metabolicjamboree.co.uk --config-dir . --work-dir . --logs-dir .
-6.2 sudo cp certificates into local folder 'certs'
-6.3 Set up and copy over daily cronjob to renew certificates
+6.1 Use certbot in standalone mode
+	#What happens here is the python server is attached to the webroot
+	sudo python -m SimpleHTTPServer 80 & ##THIS IS DANGEROUS. SHUT IT DOWN ASAP
+	sudo certbot certonly --webroot -w /home/paul_d_dobson/SimpleServer -d metabolicjamboree.co.uk -d www.metabolicjamboree.co.uk
+	#SHUT DOWN THE PYTHON SERVER
 
+6.2 sudo cp certificates into local folder 'certs'
+	sudo cp /etc/letsencrypt/live/metabolicjamboree.co.uk/fullchain.pem .
+	sudo cp /etc/letsencrypt/live/metabolicjamboree.co.uk/privkey.pem .
 
 7. Run Flask-socket
 python empathy_socket.py &
