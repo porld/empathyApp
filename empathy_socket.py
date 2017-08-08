@@ -11,10 +11,13 @@ print 'Socket handler for messaging and push'
 #-----------------------------------------------------------------------------------------
 #SOCKET APP
 socketio = SocketIO(app)
-@socketio.on('Jamboree connection', namespace='/mq')
+
+#This is a socket endpoint
+@socketio.on('connect', namespace='/mq')
 def test_connect():
     print 'Jamboree client connected'
 
+#This is a RESTful endpoint
 @app.route('/socket', methods=['POST'])
 def socketHandler():
 	json_data = request.get_json(force=True)

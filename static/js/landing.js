@@ -48,17 +48,16 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		return 'Basic ' + output;
 		};
 
+	/*
 	//Connect to broadcast server
 	console.log('SOCKET Connecting to broadcast server',$scope.socket_static_url);
 	var socket = io.connect('https://' + $scope.socket_static_url + '/mq', {reconnection: true})
-	socket.emit('connect',{data: 'Connected!'})
 	console.log('SOCKET connection', socket);
 	
-	/*
 	//Connect to message socket	
 	$scope.socketId = 'No connection';
 	$scope.socket_status = '';
-	socket.on('Jamboree connection', function() {
+	socket.on('connect', function() {
 		console.log('SOCKET Jamboree connected to socket:', socket.id);
 		$scope.socketId = socket.id;
 		$scope.socket = true;
