@@ -46,6 +46,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		return 'Basic ' + output;
 		};
 
+	/*
 	//Connect to broadcast server
 	console.log('SOCKET Connecting to broadcast server');
 	var socket = io.connect('https://' + $scope.socket_static_url + '/mq', {reconnection: true})
@@ -55,7 +56,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	$scope.socket_status = '';
 	socket.on('connect', function() {
 		console.log('SOCKET Connected to socket:', socket.id);
-		console.log('SOCKET', socket);
 		$scope.socketId = socket.id;
 		$scope.socket = true;
 		$scope.socket_status = 'connected';
@@ -85,6 +85,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		socket.disconnect();
 		console.log(socket);
 		};
+	*/
 	//-------------------------------------------------
 
 	//-------------------------------------------------
