@@ -11,9 +11,9 @@ print 'Socket handler for messaging and push'
 #-----------------------------------------------------------------------------------------
 #SOCKET APP
 socketio = SocketIO(app)
-@socketio.on('connect', namespace='/mq')
+@socketio.on('Jamboree connection', namespace='/mq')
 def test_connect():
-    print 'Client connected'
+    print 'Jamboree client connected'
 
 @app.route('/socket', methods=['POST'])
 def socketHandler():

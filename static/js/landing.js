@@ -7,9 +7,11 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	
 	//-------------------------------------------------
 	//ENV
-	$scope.static_url = 'www.metabolicjamboree.co.uk';
-	$scope.socket_static_url = 'www.metabolicjamboree.co.uk:8082';
-	$scope.external_static_url = 'www.metabolicjamboree.co.uk:8081';
+	var base_url = 'www.metabolicjamboree.co.uk';
+	//var base_url = 'localhost';
+	$scope.static_url = base_url;
+	$scope.socket_static_url = base_url + ':8082';
+	$scope.external_static_url = base_url + '8081';
 
 	//For server to push messages to client
 	$scope.general_messages = [];
@@ -47,21 +49,22 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		};
 
 	//Connect to broadcast server
-	console.log('SOCKET Connecting to broadcast server');
+	console.log('SOCKET Connecting to broadcast server',$scope.socket_static_url);
 	var socket = io.connect('https://' + $scope.socket_static_url + '/mq', {reconnection: true})
+	socket.emit('connect',{data: 'Connected!'})
+	console.log('SOCKET connection', socket);
 	
 	//Connect to message socket	
 	$scope.socketId = 'No connection';
 	$scope.socket_status = '';
-	socket.on('connect', function() {
-		console.log('SOCKET Connected to socket:', socket.id);
+	socket.on('Jamboree connection', function() {
+		console.log('SOCKET Jamboree connected to socket:', socket.id);
 		$scope.socketId = socket.id;
 		$scope.socket = true;
 		$scope.socket_status = 'connected';
 		$scope.$apply();
 		});
 
-	/*
 	//Socket error
 	socket.on('error', function() {
 		console.log('Socket error', socket);
@@ -90,7 +93,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		console.log(socket);
 		$scope.$apply();
 		};
-	*/
 
 	//-------------------------------------------------
 
