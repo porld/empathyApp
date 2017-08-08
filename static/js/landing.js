@@ -61,6 +61,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.$apply();
 		});
 
+	/*
 	//Socket error
 	socket.on('error', function() {
 		console.log('Socket error', socket);
@@ -89,6 +90,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		console.log(socket);
 		$scope.$apply();
 		};
+	*/
 
 	//-------------------------------------------------
 
