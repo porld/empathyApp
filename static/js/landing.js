@@ -46,11 +46,11 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		return 'Basic ' + output;
 		};
 
-	/*
 	//Connect to broadcast server
 	console.log('SOCKET Connecting to broadcast server');
 	var socket = io.connect('https://' + $scope.socket_static_url + '/mq', {reconnection: true})
-
+	
+	/*
 	//Connect to message socket	
 	$scope.socketId = 'No connection';
 	$scope.socket_status = '';
@@ -66,26 +66,31 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	socket.on('error', function() {
 		console.log('Socket error', socket);
 		$scope.socket_status = 'error';
+		$scope.$apply();
 		});
 
 	//Socket reconnect
 	socket.on('reconnect', function() {
 		console.log('Reconnecting socket', socket);
 		$scope.socket_status = 'reconnecting';
+		$scope.$apply();
 		});
 
 	//Socket reconnection failure
 	socket.on('reconnect_failed', function() {
 		console.log('Failed to reconnect socket', socket);
 		$scope.socket_status = 'Failed to reconnect';
+		$scope.$apply();
 		});
 
 	$scope.disconnect = function() {
 		console.log('Disconnecting');
 		socket.disconnect();
 		console.log(socket);
+		$scope.$apply();
 		};
 	*/
+
 	//-------------------------------------------------
 
 	//-------------------------------------------------
