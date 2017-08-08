@@ -54,6 +54,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	socket.emit('connect',{data: 'Connected!'})
 	console.log('SOCKET connection', socket);
 	
+	/*
 	//Connect to message socket	
 	$scope.socketId = 'No connection';
 	$scope.socket_status = '';
@@ -93,6 +94,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		console.log(socket);
 		$scope.$apply();
 		};
+	*/
 
 	//-------------------------------------------------
 
