@@ -1,4 +1,4 @@
-var landingApp = angular.module('landingApp', ['ngTouch','ngSanitize', 'ui.grid', 'ui.grid.selection', 'ui.grid.autoResize']);
+var landingApp = angular.module('landingApp', ['ngRoute','ngTouch','ngSanitize', 'ui.grid', 'ui.grid.selection', 'ui.grid.autoResize']);
 
 landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window', '$filter', 'uiGridConstants', function ($scope, $http, $rootScope, $window, $filter, uiGridConstants) {
 
