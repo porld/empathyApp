@@ -1450,5 +1450,5 @@ def index():
 if __name__ == '__main__':
 	#https://github.com/enginebai/PyMessager
 	context = ('certs/fullchain.pem', 'certs/privkey.pem')
-	app.run(host='0.0.0.0',debug=False, ssl_context=context, port=PORT, threaded=True)
+	app.run(host='0.0.0.0',debug=True, ssl_context=context, port=PORT, threaded=True)
 	#app.run(host='0.0.0.0',debug=True, port=PORT, threaded=True)
