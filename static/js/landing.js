@@ -53,7 +53,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 	var socket = io.connect('https://' + $scope.socket_static_url + '/mq', {reconnection: true})
 	console.log('SOCKET connection', socket);
 	
-	/*
 	//Connect to message socket	
 	$scope.socketId = 'No connection';
 	$scope.socket_status = '';
@@ -65,18 +64,17 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.$apply();
 		});
 
-	//Socket error
-	socket.on('error', function() {
-		console.log('Socket error', socket);
-		$scope.socket_status = 'error';
-		$scope.$apply();
-		});
-
 	//Socket connect_error
 	socket.on('connect_error', function() {
 		console.log('Socket connect_error', socket);
 		$scope.socket_status = 'Attempting to reconnect';
-		var socket = io.connect('https://' + $scope.socket_static_url + '/mq', {reconnection: true})
+		});
+
+	/*
+	//Socket error
+	socket.on('error', function() {
+		console.log('Socket error', socket);
+		$scope.socket_status = 'error';
 		$scope.$apply();
 		});
 
