@@ -48,6 +48,7 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		return 'Basic ' + output;
 		};
 
+	/*
 	//Connect to broadcast server
 	console.log('SOCKET Connecting to broadcast server',$scope.socket_static_url);
 	var socket = io.connect('https://' + $scope.socket_static_url + '/mq', {reconnection: true})
@@ -70,7 +71,6 @@ landingApp.controller('landingCtrl', ['$scope', '$http', '$rootScope', '$window'
 		$scope.socket_status = 'Attempting to reconnect';
 		});
 
-	/*
 	//Socket error
 	socket.on('error', function() {
 		console.log('Socket error', socket);
